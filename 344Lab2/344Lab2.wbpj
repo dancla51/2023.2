@@ -2,10 +2,10 @@
 <Storage>
   <Project Version="9.1">
     <base-designpoint-name valType="String">0</base-designpoint-name>
-    <timestamp-max valType="Int64">2841</timestamp-max>
+    <timestamp-max valType="Int64">3142</timestamp-max>
     <framework-build-version valType="String">22.1.217.0</framework-build-version>
     <external-version-string valType="String">2022 R1</external-version-string>
-    <last-saved-utc valType="String">07/25/2023 03:02:43</last-saved-utc>
+    <last-saved-utc valType="String">07/25/2023 03:39:58</last-saved-utc>
     <managed-categories valType="String">[report, misc, progress]</managed-categories>
     <logHistory valType="StringArray">
       <ArrayEntry Index="0">dcla189@EN424267:C:\Users\dcla189\AppData\Local\Temp\WorkbenchLogs\CoreEvents19148.log</ArrayEntry>
@@ -31,7 +31,11 @@
 "310ca189-baa3-433b-9c34-99baa4f35af4": "/Schematic/Template:Transient Thermal (ANSYS)",
 "72d0e51c-5d2c-46be-bdb0-c8cf51528942": "/Schematic/ComponentTemplate:GeometryCellTemplate",
 "d0004683-99f2-4d5f-b795-9c6ef20e866a": "/Schematic/System:Geom",
-"3581b423-3ad2-409b-bec7-7312f52927a3": "/FileContainer/FileReference:F3"
+"3581b423-3ad2-409b-bec7-7312f52927a3": "/FileContainer/FileReference:F3",
+"5194027e-dcb5-4839-958e-f60a49004184": "/FileContainer/FileReference:F6",
+"f88fa6f6-04c6-4274-9d08-0c630b81b34e": "/FileContainer/FileReference:F5",
+"7d3df384-8c31-4698-b3a1-b77f4b147e1b": "/Schematic/Component:Geometry 1",
+"1f0fd543-fc00-4308-b90a-82d9f2d5a97b": "/Schematic/System:Geom 1"
 }</ReferenceList>
       </ProjectReferenceList>
       <DesignPointReferenceListCollection />
@@ -62,7 +66,7 @@
       <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
       <deleted-sources valType="String">[]</deleted-sources>
       <last-updated valType="Int64">0</last-updated>
-      <last-modified-by-usage valType="String">{"Extrinsic": 2543, "Input": 1521, "Output": 1521}</last-modified-by-usage>
+      <last-modified-by-usage valType="String">{"Extrinsic": 3137, "Input": 1521, "Output": 1521}</last-modified-by-usage>
       <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
       <contains-significant-data valType="Boolean">false</contains-significant-data>
       <Object Name="/FileContainer/FileReference:F1" Version="1.0">
@@ -73,12 +77,22 @@
       <Object Name="/FileContainer/FileReference:F2" Version="1.0">
         <class-type valType="String">FileReference</class-type>
         <object-name valType="String">F2</object-name>
-        <member-data valType="String">{"DisplayText": "act.dat", "FileType": $$f8a3cf00-617a-4223-bbb4-564b815ab33e, "DependentFiles": [], "ContainerAssociations": [], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\act.dat", "ReferenceCount": 11}</member-data>
+        <member-data valType="String">{"DisplayText": "act.dat", "FileType": $$f8a3cf00-617a-4223-bbb4-564b815ab33e, "DependentFiles": [], "ContainerAssociations": [], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\act.dat", "ReferenceCount": 12}</member-data>
       </Object>
       <Object Name="/FileContainer/FileReference:F3" Version="1.0">
         <class-type valType="String">FileReference</class-type>
         <object-name valType="String">F3</object-name>
         <member-data valType="String">{"DisplayText": "Geom.agdb", "FileType": $$cc26ded1-cfae-4dff-9b58-f85bb5877f71, "DependentFiles": [], "ContainerAssociations": ["Geometry"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\Geom\DM\Geom.agdb", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F6" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F6</object-name>
+        <member-data valType="String">{"DisplayText": "Geom-1.agdb", "FileType": $$cc26ded1-cfae-4dff-9b58-f85bb5877f71, "DependentFiles": [], "ContainerAssociations": ["Geometry 1"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\dp0\Geom-1\DM\Geom-1.agdb", "ReferenceCount": 1}</member-data>
+      </Object>
+      <Object Name="/FileContainer/FileReference:F5" Version="1.0">
+        <class-type valType="String">FileReference</class-type>
+        <object-name valType="String">F5</object-name>
+        <member-data valType="String">{"DisplayText": "AirFoil.agdb", "FileType": $$cc26ded1-cfae-4dff-9b58-f85bb5877f71, "DependentFiles": [], "ContainerAssociations": ["Geometry 1"], "SkipForDesignPointDuplication": False, "IsDeletable": True, "ExternalSource": None, "LastDownloadFromRepository": -1, "Location": r"$(ProjectName)_files\user_files\AirFoil.agdb", "ReferenceCount": 1}</member-data>
       </Object>
     </Container>
     <Container Name="Messages" Version="1.0">
@@ -97,13 +111,13 @@
       <maxUpdateOrder valType="Double">1</maxUpdateOrder>
       <deleted-sources valType="String">[]</deleted-sources>
       <last-updated valType="Int64">0</last-updated>
-      <last-modified-by-usage valType="String">{"Extrinsic": 2839, "Input": 2840, "Output": 1525}</last-modified-by-usage>
+      <last-modified-by-usage valType="String">{"Extrinsic": 3126, "Input": 3130, "Output": 1525}</last-modified-by-usage>
       <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
       <contains-significant-data valType="Boolean">false</contains-significant-data>
       <Object Name="/Parameters/DesignPoint:0" Version="1.0">
         <class-type valType="String">DesignPoint</class-type>
         <object-name valType="String">0</object-name>
-        <member-data valType="String">{"DisplayText": "DP 0", "JustDuplicated": False, "PartiallyRetainedData": [], "ValidRetainedData": [], "ErrorsOnLastUpdate": {}, "LastUpdateInformation": {}, "Parameters": {}, "ParameterErrors": {}, "CurrentValues": {}, "ParameterStatus": {}, "Note": None, "IsUpToDate": True, "Exported": True, "Retained": True, "CurrentStateExported": False, "IsDataModelValid": True, "HasRetainedData": True, "HasBeenSolved": True, "UpdateOrder": 1}</member-data>
+        <member-data valType="String">{"DisplayText": "DP 0", "JustDuplicated": False, "PartiallyRetainedData": [], "ValidRetainedData": [], "ErrorsOnLastUpdate": {}, "LastUpdateInformation": {}, "Parameters": {}, "ParameterErrors": {}, "CurrentValues": {}, "ParameterStatus": {}, "Note": None, "IsUpToDate": False, "Exported": True, "Retained": True, "CurrentStateExported": False, "IsDataModelValid": True, "HasRetainedData": True, "HasBeenSolved": True, "UpdateOrder": 1}</member-data>
       </Object>
       <Object Name="/Parameters/DesignPointReportSetting:Design Points Report Setting" Version="1.0">
         <class-type valType="String">DesignPointReportSetting</class-type>
@@ -118,13 +132,20 @@
       <storage-scheme-id valType="String">version-1-format</storage-scheme-id>
       <deleted-sources valType="String">[]</deleted-sources>
       <last-updated valType="Int64">0</last-updated>
-      <last-modified-by-usage valType="String">{"Extrinsic": 1958, "Input": 1964, "Output": 1528}</last-modified-by-usage>
+      <last-modified-by-usage valType="String">{"Extrinsic": 2902, "Input": 2903, "Output": 1528}</last-modified-by-usage>
       <outputs-generated-by-type valType="String">{}</outputs-generated-by-type>
       <contains-significant-data valType="Boolean">false</contains-significant-data>
       <Object Name="/Schematic/System:Geom" Version="1.0">
         <class-type valType="String">System</class-type>
         <object-name valType="String">Geom</object-name>
-        <member-data valType="String">{"DisplayText": "Geometry", "Components": [$$4df7bcf2-9457-4988-8600-f93f54276a01], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsTypeDisplayString": "Any", "IsCreated": "True", "VOLATILE:SystemName": "Geom"}, "SystemType": "Geometry", "HeaderText": "Geometry", "SystemTypeAbbreviation": "Geom", "UniqueSystemDirectoryName": "Geom", "Physics": ["Any"], "AnalysisType": None, "SystemHelpId": "wb2sb_geomapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$669843c3-1242-4bbf-afd8-a4f818b7aba1, "Notes": None, "LayoutChildren": [], "LayoutIndex": 1}</member-data>
+        <member-data valType="String">{"DisplayText": "Lab2 Pt1", "Components": [$$4df7bcf2-9457-4988-8600-f93f54276a01], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsTypeDisplayString": "Any", "IsCreated": "True", "VOLATILE:SystemName": "Geom"}, "SystemType": "Geometry", "HeaderText": "Geometry", "SystemTypeAbbreviation": "Geom", "UniqueSystemDirectoryName": "Geom", "Physics": ["Any"], "AnalysisType": None, "SystemHelpId": "wb2sb_geomapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$669843c3-1242-4bbf-afd8-a4f818b7aba1, "Notes": None, "LayoutChildren": [], "LayoutIndex": 1}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
+      </Object>
+      <Object Name="/Schematic/System:Geom 1" Version="1.0">
+        <class-type valType="String">System</class-type>
+        <object-name valType="String">Geom 1</object-name>
+        <member-data valType="String">{"DisplayText": "Lab2 Pt2", "Components": [$$7d3df384-8c31-4698-b3a1-b77f4b147e1b], "ComponentGroups": [], "SystemVisible": True, "RequiredComponents": [], "ExcludedComponentTemplates": [], "Attributes": {"PhysicsTypeDisplayString": "Any", "IsCreated": "True", "VOLATILE:SystemName": "Geom 1"}, "SystemType": "Geometry", "HeaderText": "Geometry", "SystemTypeAbbreviation": "Geom", "UniqueSystemDirectoryName": "Geom-1", "Physics": ["Any"], "AnalysisType": None, "SystemHelpId": "wb2sb_geomapp", "AdditionalSystemHelpId": None, "IsParametric": False, "CreatedFromTemplate": $$669843c3-1242-4bbf-afd8-a4f818b7aba1, "Notes": None, "LayoutChildren": [], "LayoutIndex": 2}</member-data>
+        <properties-setByUserFlag-data valType="String">["DisplayText"]</properties-setByUserFlag-data>
       </Object>
       <Object Name="/Schematic/SchematicSettings:Schematic Settings" Version="1.0">
         <class-type valType="String">SchematicSettings</class-type>
@@ -186,6 +207,11 @@
         <object-name valType="String">Geometry</object-name>
         <member-data valType="String">{"DisplayText": "Geometry", "ImageName": "cad_designmodeler", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Geometry", "_overwrittenUpdatable": None, "Template": $$72d0e51c-5d2c-46be-bdb0-c8cf51528942, "InSystem": $$d0004683-99f2-4d5f-b795-9c6ef20e866a, "MasterSources": {"Sources": []}, "Notes": None, "UsedLicenses": None, "ActiveTransferComponents": [], "Solver": None, "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
       </Object>
+      <Object Name="/Schematic/Component:Geometry 1" Version="1.0">
+        <class-type valType="String">Component</class-type>
+        <object-name valType="String">Geometry 1</object-name>
+        <member-data valType="String">{"DisplayText": "Geometry", "ImageName": "cad_designmodeler", "ComponentStateOnLastFailure": "UpToDate", "AlwaysBePartOfDpUpdate": False, "FullyUpToDateOnDps": None, "CoupledClients": [], "SubComponents": [], "DataSharedFrom": None, "DataSharing": "None", "DataContainer": "Geometry 1", "_overwrittenUpdatable": None, "Template": $$72d0e51c-5d2c-46be-bdb0-c8cf51528942, "InSystem": $$1f0fd543-fc00-4308-b90a-82d9f2d5a97b, "MasterSources": {"Sources": []}, "Notes": None, "UsedLicenses": None, "ActiveTransferComponents": [], "Solver": None, "IsFailedState": False, "UpdateConditionParameter": None}</member-data>
+      </Object>
     </Container>
     <Container Name="ReportDataContainer" Version="1.0">
       <container-type valType="String">Ansys.ProjectReporting.Addin:ReportDataContainer</container-type>
@@ -219,7 +245,7 @@
       <Object Name="/Units/UnitSystemProjectSettings:UnitSystemProjectSettings" Version="1.0">
         <class-type valType="String">UnitSystemProjectSettings</class-type>
         <object-name valType="String">UnitSystemProjectSettings</object-name>
-        <member-data valType="String">{"DisplayText": "UnitSystemProjectSettings", "DataContainerUnitSystemRegistry": {"Geometry": "DesignModelerUnitSystem_mm"}}</member-data>
+        <member-data valType="String">{"DisplayText": "UnitSystemProjectSettings", "DataContainerUnitSystemRegistry": {"Geometry": "DesignModelerUnitSystem_mm", "Geometry 1": "DesignModelerUnitSystem_mm"}}</member-data>
       </Object>
       <Object Name="/Units/UnitSystem:UnitSys" Version="1.0">
         <class-type valType="String">UnitSystem</class-type>

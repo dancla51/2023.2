@@ -17,3 +17,12 @@ Save(Overwrite=True)
 Save(Overwrite=True)
 Save(Overwrite=True)
 Save(Overwrite=True)
+geometry1.Exit()
+system1.DisplayText = "Lab2 Pt1"
+system2 = template1.CreateSystem()
+system2.DisplayText = "Lab2 Pt2"
+geometry2 = system2.GetContainer(ComponentName="Geometry")
+geometry2.Edit()
+geometry2.Exit()
+geometry2.Edit()
+Save(Overwrite=True)
