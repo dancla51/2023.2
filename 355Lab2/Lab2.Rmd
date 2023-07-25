@@ -62,18 +62,19 @@ set.seed(2)
 thisData$Type <- as.factor(thisData$Type)
 impData <- thisData$Rings
 for (t in levels(thisData$Type)) {
-  thisMissing <- thisData %>% filter(Type==t) %>% is.na() %>% as.data.frame()
-  numDraws <- as.data.frame(thisMissing)$Rings %>% sum()
-  p=thisData %>% filter(Type==t) %>% filter(!as.data.frame(thisMissing)$Rings) %>% select(Rings) 
-  hotDeck <- sample(p$Rings, numDraws, replace = TRUE) #With replacement
-  impData[thisMissing$Rings]<-hotDeck
+  thisMissing <- thisData$Type==t & is.na(thisData$Rings)
+  numDraws <- thisMissing %>% sum()
+  hotDeck <- thisData$Rings[thisData$Type==t & !is.na(thisData$Rings)] %>% sample(numDraws, replace = TRUE) #With replacement
+  impData[thisMissing]<-hotDeck
 }
 
-impData %>% as.numeric() 
+MeanHotDeck = impData %>% as.numeric() %>% +1.5 %>% t.test() 
 
 
 ```
 
+The `MeanHotDeck` is `r MeanHotDeck$conf.int`, which is slightly off the true value.
+the error is `r MeanHotDeck$conf.int - TrueMean`
 
 
 

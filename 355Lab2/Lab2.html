@@ -412,6 +412,20 @@ slightly off the true value. the error is -0.1157236, 0.0899264</p>
 MeanImputeNA = thisData$Rings %&gt;% as.numeric() %&gt;% replace_na(SampleMean) %&gt;% +1.5 %&gt;% t.test()</code></pre>
 <p>The <code>MeanImputeNA</code> is 11.3281272, 11.5140756, which is
 slightly off the true value. the error is -0.1058728, 0.0800756</p>
+<p>Estimate using hot deck implementation</p>
+<pre class="r"><code>set.seed(2)
+thisData$Type &lt;- as.factor(thisData$Type)
+impData &lt;- thisData$Rings
+for (t in levels(thisData$Type)) {
+  thisMissing &lt;- thisData$Type==t &amp; is.na(thisData$Rings)
+  numDraws &lt;- thisMissing %&gt;% sum()
+  hotDeck &lt;- thisData$Rings[thisData$Type==t &amp; !is.na(thisData$Rings)] %&gt;% sample(numDraws, replace = TRUE) #With replacement
+  impData[thisMissing]&lt;-hotDeck
+}
+
+MeanHotDeck = impData %&gt;% as.numeric() %&gt;% +1.5 %&gt;% t.test() </code></pre>
+<p>The <code>MeanHotDeck</code> is 11.3115857, 11.5055079, which is
+slightly off the true value. the error is -0.1224143, 0.0715079</p>
 
 
 
