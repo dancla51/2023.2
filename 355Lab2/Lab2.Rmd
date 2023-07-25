@@ -55,6 +55,22 @@ MeanImputeNA = thisData$Rings %>% as.numeric() %>% replace_na(SampleMean) %>% +1
 The `MeanImputeNA` is `r MeanImputeNA$conf.int`, which is slightly off the true value.
 the error is `r MeanImputeNA$conf.int - TrueMean`
 
+Estimate using hot deck implementation
+
+```{r}
+set.seed(2)
+thisData$Type <- as.factor(thisData$Type)
+impData <- thisData$Rings
+for (t in levels(thisData$Type)) {
+  thisMissing <- thisData %>% filter(Type==t) %>% is.na() %>% as.data.frame()
+  numDraws <- thisMissing$Rings %>% sum()
+  hotDeck <- !ThisMissing$Rings %>% sample(numDraws, replace = TRUE) #With replacement
+  #impData[thisMissing]<-hotDeck
+}
+
+
+
+```
 
 
 
