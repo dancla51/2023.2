@@ -10,4 +10,66 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+```{r}
+# Download Data
+path <- "http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/"
+abalone <- read.csv(paste(path,"abalone.data",sep=""), header = FALSE)
+names(abalone) <- c("Type", "Length", "Diameter", "Height", "Whole.weight",
+"Shucked.weight", "Viscera.weight", "Shell.weight", "Rings")
+summary(abalone)
+```
+
+```{r}
+#Drop 10% of the data
+nMissing <- 400
+nData <- dim(abalone)[1]
+thisData <- abalone
+set.seed(100)
+missingInd <- sample(1:nData,size=nMissing,replace=FALSE)
+thisData$Rings[missingInd] <- NA
+```
+
+Estimation using complete data
+Start by computing a 95% confidence interval for the mean age of the paua in the population using only
+complete data (be careful to account for the relationship between age and number of rings). note that the output from the earlier summary function tells us the sample average is about **11.434**
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
