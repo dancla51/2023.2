@@ -392,7 +392,7 @@ summary(abalone)</code></pre>
 nMissing &lt;- 400
 nData &lt;- dim(abalone)[1]
 thisData &lt;- abalone
-set.seed(100)
+set.seed(1)
 missingInd &lt;- sample(1:nData,size=nMissing,replace=FALSE)
 thisData$Rings[missingInd] &lt;- NA</code></pre>
 <p>Estimation using complete data Start by computing a 95% confidence
@@ -401,6 +401,17 @@ complete data (be careful to account for the relationship between age
 and number of rings). note that the output from the earlier summary
 function tells us the sample average is about
 <strong>11.434</strong></p>
+<pre class="r"><code>TrueMean=11.434
+
+
+MeanIgnoreNA = t.test(thisData$Rings+1.5, na.rm=TRUE)</code></pre>
+<p>The <code>MeanIgnoreNA</code> is 11.3182764, 11.5239264, which is
+slightly off the true value. the error is -0.1157236, 0.0899264</p>
+<p>Estimation using mean imputation</p>
+<pre class="r"><code>SampleMean = mean(thisData$Rings,na.rm=TRUE)
+MeanImputeNA = thisData$Rings %&gt;% as.numeric() %&gt;% replace_na(SampleMean) %&gt;% +1.5 %&gt;% t.test()</code></pre>
+<p>The <code>MeanImputeNA</code> is 11.3281272, 11.5140756, which is
+slightly off the true value. the error is -0.1058728, 0.0800756</p>
 
 
 

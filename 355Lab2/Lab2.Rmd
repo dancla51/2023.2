@@ -24,7 +24,7 @@ summary(abalone)
 nMissing <- 400
 nData <- dim(abalone)[1]
 thisData <- abalone
-set.seed(100)
+set.seed(1)
 missingInd <- sample(1:nData,size=nMissing,replace=FALSE)
 thisData$Rings[missingInd] <- NA
 ```
@@ -34,15 +34,26 @@ Start by computing a 95% confidence interval for the mean age of the paua in the
 complete data (be careful to account for the relationship between age and number of rings). note that the output from the earlier summary function tells us the sample average is about **11.434**
 
 ```{r}
+TrueMean=11.434
+
+
+MeanIgnoreNA = t.test(thisData$Rings+1.5, na.rm=TRUE)
+```
+
+The `MeanIgnoreNA` is `r MeanIgnoreNA$conf.int`, which is slightly off the true value.
+the error is `r MeanIgnoreNA$conf.int - TrueMean`
+
+
+Estimation using mean imputation
+
+```{r}
+SampleMean = mean(thisData$Rings,na.rm=TRUE)
+MeanImputeNA = thisData$Rings %>% as.numeric() %>% replace_na(SampleMean) %>% +1.5 %>% t.test()
 
 ```
 
-
-
-
-
-
-
+The `MeanImputeNA` is `r MeanImputeNA$conf.int`, which is slightly off the true value.
+the error is `r MeanImputeNA$conf.int - TrueMean`
 
 
 
