@@ -34,12 +34,14 @@ def power_w_deflate(Mat, tolerance = 10**-12):
     return(eigenpairs)
 
 if __name__ == "__main__":
-    # Test with given matrix
-    Mat = np.matrix([[2, -1],[ -1, 2]])
+    # Test matrix
+    Mat1 = np.matrix([[2, -1], [-1, 2]])
+    Mat2 = np.matrix([[2, -1, 0], [-1, 2, -1], [0, -1, 2]])
 
-    all_eigenpairs = power_w_deflate(Mat, tolerance=10**-18)
-    print(all_eigenpairs[0][1][1,0])
-    l=1
-    v=[2,3]
+    # Find all eigenpairs using power method with deflation
+    all_eigenpairs = power_w_deflate(Mat2, tolerance=10**-18)
+    # Print results
     for e in range(len(all_eigenpairs)):
-        print("For pair %f, eigenvalue is: %2f , eigenvector is: [%5.3f, %5.3f]" % (e+1, all_eigenpairs[e][0], all_eigenpairs[e][1][0,0], all_eigenpairs[e][1][1,0]))
+        prints1 = (e+1, all_eigenpairs[e][0])
+        prints2 = ['%5.3f' % all_eigenpairs[e][1][i, 0] for i in range(len(all_eigenpairs))]
+        print("For pair %i, eigenvalue is: %5.3f & eigenvector is: " % prints1, prints2)
