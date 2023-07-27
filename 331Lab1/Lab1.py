@@ -17,13 +17,29 @@ def power(Mat, tolerance = 10**-12):
         gamma_new = np.matmul(x.T,np.matmul(Mat,x))
         # Calc relative change
         rel_change = (gamma_new-gamma)/gamma_new
-        gamma=gamma_new
+        gamma = gamma_new
 
-    return gamma,x
+    return gamma[0,0], x
+
+def power_w_deflate(Mat, tolerance = 10**-12):
+    n = len(Mat)
+    eigenpairs = []
+    for i in range(n):
+        eigenpair = power(Mat)
+        eigenpairs.append(eigenpair)
+        # Find value of deflation and deflate the matrix
+        deflation = eigenpairs[i][0] * np.matmul(eigenpairs[i][1], eigenpairs[i][1].T)
+        Mat = Mat - deflation
+
+    return(eigenpairs)
 
 if __name__ == "__main__":
     # Test with given matrix
     Mat = np.matrix([[2, -1],[ -1, 2]])
 
-    l, v = power(Mat)
-    print("The eigenvalue is: %2f , and the eigenvector is: (%5.3f, %5.3f)" % (1,v[0,0], v[1,0]))
+    all_eigenpairs = power_w_deflate(Mat, tolerance=10**-18)
+    print(all_eigenpairs[0][1][1,0])
+    l=1
+    v=[2,3]
+    for e in range(len(all_eigenpairs)):
+        print("For pair %f, eigenvalue is: %2f , eigenvector is: [%5.3f, %5.3f]" % (e+1, all_eigenpairs[e][0], all_eigenpairs[e][1][0,0], all_eigenpairs[e][1][1,0]))
