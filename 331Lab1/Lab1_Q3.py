@@ -22,19 +22,20 @@ def plot_results(real, tols, founds):
 
     # Plot found values
     for i, tol in enumerate(tols):
-        plt.plot([tol]*10, founds[1], 'b^')
-    plt.plot(0, 0, 'b^', label="Calculated Values")
+        plt.plot([tol]*10, founds[1], 'b.')
+    plt.plot(0, 0, 'b+', label="Calculated Values")
 
     # Plot real values (with horizontal lines)
     for ele in real:
-        plt.plot([1e-8, 1e-2], [ele]*2, 'r-')
+        plt.plot([1e-8, 1e-2], [ele]*2, 'r--')
     plt.plot(0, 0, 'r-', label="True Values")
 
     plt.xlabel("Tolerance")
     plt.ylabel("Frequency (Hz)")
     plt.legend(bbox_to_anchor=(0.5, 1.15), loc='upper center')
     plt.semilogx()
-    plt.savefig("Freq_by_tolerance")
+    #plt.savefig("Freq_by_tolerance")
+    plt.show()
 
 
 def solve_freq_modes(N,K):
