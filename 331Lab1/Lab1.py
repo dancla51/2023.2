@@ -41,6 +41,15 @@ if __name__ == "__main__":
     Mat2 = np.matrix([[2, -1, 0], [-1, 2, -1], [0, -1, 2]])
 
     # Find all eigenpairs using power method with deflation
+    all_eigenpairs = power_w_deflate(Mat1, tolerance=10 ** -18)
+    # Print results
+    for e in range(len(all_eigenpairs)):
+        prints1 = (e + 1, all_eigenpairs[e][0])
+        prints2 = ['%5.3f' % all_eigenpairs[e][1][i, 0] for i in range(len(all_eigenpairs))]
+        print("For pair %i, eigenvalue is: %5.3f & eigenvector is: " % prints1, prints2)
+
+    print("\n")
+    # Find all eigenpairs using power method with deflation
     all_eigenpairs = power_w_deflate(Mat2, tolerance=10 ** -18)
     # Print results
     for e in range(len(all_eigenpairs)):

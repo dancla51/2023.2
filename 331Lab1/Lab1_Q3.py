@@ -35,8 +35,15 @@ def plot_results(real, tols, founds):
     plt.legend(bbox_to_anchor=(0.5, 1.15), loc='upper center')
     plt.semilogx()
     #plt.savefig("Freq_by_tolerance")
-    plt.show()
+    #plt.show()
 
+def print_results(real, tols, founds):
+    # Print all frequencies with progression
+    for ev_num in range(len(real)):
+        print("\nFor the %ith frequency, I calculated:" % (ev_num+1))
+        for i in range(len(founds)):
+            print("%5.6f Hz from a tolerance of %1.1e" % (founds[i][ev_num], tols[i]))
+        print("%5.6f Hz is the true value" % real[ev_num])
 
 def solve_freq_modes(N,K):
     A_mat = construct_system(N, K)
@@ -54,6 +61,7 @@ def solve_freq_modes(N,K):
     real_eig = np.sort(np.linalg.eig(A_mat)[0])[::-1]
     real_freq = np.sqrt(real_eig) / (2*np.pi)
     plot_results(real_freq, tols, freqs_from_tols)
+    print_results(real_freq, tols, freqs_from_tols)
 
 
 if __name__ == "__main__":
