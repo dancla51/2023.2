@@ -1,0 +1,82 @@
+---
+title: 'Lab template'
+subtitle: "STATS 369"
+author: "Your name"
+output:
+  html_document:
+    highlight: pygments
+    theme: readable
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+*It is good practice to have all your general set up at the start of your document. Imagine this is the beginning of a new Rmd. This is where I would set any general chunk options, as well as where I would load my libraries. If I realise I need additional libraries later, I would come back here and add them.*
+
+*Notes from me are in italics.*
+
+```{r setup, message = FALSE}
+# Set code to show
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load libraries
+library(tidyverse)
+
+library(glue) # awesome package that we don't have time to talk about
+library(lubridate) # helps make dates much easier
+
+library(TMDb) # provides access to the API
+library(keyring) # for storing our API key
+
+library(polite)
+```
+
+
+
+
+
+
+
+## Task 1
+
+*Use headings to organise your submission and make it easy for your marker to find your answers*
+
+```{r}
+# Is the hashtag/octothrope is inside a code chunk, then it is a comment
+# You will be expected to comment your code sufficiently clearly
+# so that others with reasonable R knowledge could follow your work
+```
+
+
+## Task 2
+
+An example of some commentary about my work...
+
+```{r}
+# Some commented code
+x = 2+2
+```
+
+The result of my calculation is `r x`. That is some inline R code being run!
+
+I can also multiply by 10 to get `r x*10`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
