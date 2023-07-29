@@ -63,10 +63,19 @@ def solve_freq_modes(N,K):
     plot_results(real_freq, tols, freqs_from_tols)
     print_results(real_freq, tols, freqs_from_tols)
 
+def solve_simple(N,K):
+    # Solve for default tolerance
+    A_mat = construct_system(N, K)
+    all_eigenpairs = Lab1.power_w_deflate(A_mat) # Use default tolerance
+    # Print results
+    for i,pair in enumerate(all_eigenpairs):
+        print("The %ith frequency is %f" % (i+1, np.sqrt(pair[0]) / (2*np.pi) ))
+        print("The %ith eigenvector is" % (i+1), pair[1].reshape([1, len(pair[1])]), "\n")
 
 if __name__ == "__main__":
     # Test with spring constants of
-    solve_freq_modes(10, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+    #solve_freq_modes(10, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+    solve_simple(10, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
 
 
