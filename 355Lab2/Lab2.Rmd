@@ -117,10 +117,59 @@ Alternatively, The Mean from our BootStrapping is `r Inorm`.
 
 
 
+Task: Estimation using multiple imputation
+
+```{r}
+set.seed(4)
+nImps <- 500
+MIEst <- numeric(nImps)
+MIvar <- numeric(nImps)
+for (i in 1:nImps) {
+  impData <- thisData$Rings
+  for (t in levels(thisData$Type)) {
+    thisMissing <- thisData$Type==t & is.na(thisData$Rings)
+    numDraws <- thisMissing %>% sum()
+    hotDeck <- thisData$Rings[thisData$Type==t & !is.na(thisData$Rings)] %>% sample(numDraws, replace = TRUE)
+    impData[thisMissing]<-hotDeck
+  }
+  # Calculate mean and variance
+  MIEst[i] <- impData %>% as.numeric() %>% mean()
+  MIvar[i] <- 1/4177 * 1/4176 * sum((impData-MIEst[i])**2)
+}
+# Point Estimate
+ptEst <- mean(MIEst+1.5)
+ptEst
+
+```
+
+```{r}
+#Within Imp Variance
+WEst <- 1/nImps * sum(MIvar)
+WEst
+```
+
+```{r}
+# Between
+BEst <- 1/(nImps-1) * sum((ptEst-(MIEst+1.5))**2)
+BEst
+```
 
 
+```{r}
+# Estimate of fraction of info lost due to missing data
+TEst <- WEst+((nImps+1)/nImps)*BEst
+gamma <- (nImps+1)/nImps * BEst / TEst
+gamma
 
+```
 
+```{r}
+#Degrees of freedom and conf interval
+df <- (nImps-1)*(1 + 1/(nImps+1)*WEst/BEst)**2
+wdth <- ***K***
+c(ptEst-wdth,ptEst+wdth)
+
+```
 
 
 
