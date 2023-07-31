@@ -31,52 +31,120 @@ library(keyring) # for storing our API key
 library(polite)
 ```
 
-
-
-
-
-
-
 ## Task 1
 
 *Use headings to organise your submission and make it easy for your marker to find your answers*
 
 ```{r}
-# Is the hashtag/octothrope is inside a code chunk, then it is a comment
-# You will be expected to comment your code sufficiently clearly
-# so that others with reasonable R knowledge could follow your work
+# Bow
+bow_imdb <- bow("https://www.imdb.com/search/keyword/?keywords=christmas&ref_=kw_nxt&sort=moviemeter,asc&mode=detail&page=2&title_type=movie")
+bow_imdb
 ```
-
+The default crawl delay for the IMDB website is 5 seconds
+_________________________________________________________
 
 ## Task 2
 
-An example of some commentary about my work...
+No, we can't ethically scrape IMDB without their permission. Despite the polite message saying the path is able to be scraped, we should not scrape IMDB because in their T's and C's they explicitly say that "You may not use data mining, robots, screen scraping, or similar data gathering and extraction tools on this site, except with our express written consent as noted below." (from https://www.imdb.com/conditions). As we do not have explicit written permission, it is unethical to scrape IMDB.
 
 ```{r}
-# Some commented code
-x = 2+2
+# Sign in
+# key_set("TMDB_API")
+# b58beee5ecf98a1792d3d9fb24a5c1b1
 ```
 
-The result of my calculation is `r x`. That is some inline R code being run!
 
-I can also multiply by 10 to get `r x*10`.
+## Task 3
+
+```{r}
+genres = read_csv("genres.csv")
+head(genres)
+```
+This dataset is not tidy.
+
+Making it tidy:
+
+```{r}
+tidy_genres = pivot_longer(genres, cols = "28":"37", names_to = "number", values_to = "genre")
+head(tidy_genres)
+```
+
+```{r}
+# From Liza
+search_keyword <- function(api_key, query, page=1){
+    if(page<1 || page>1000){
+        stop("page must be a number between 1 and 1000")
+    }
+    l <- list(page=page)
+    l <- l[!is.na(l)]
+    
+    params <- paste("&", names(l), "=",l, sep="", collapse="")
+    url <- fromJSON(GET(URLencode(url<-
+                                    paste(                          "http://api.themoviedb.org/3/search/keyword?api_key=",
+                                      api_key,
+                                      "&query=",
+                                      query,
+                                      params,
+                                      sep = ""
+                                    )))$url)
+    
+    return(url)
+}
+```
+
+```{r}
+# a function that runs this for command for any given page
+one_page <- function(x) search_keyword(key_get("TMDB_API"), query = "christmas", page = x)
+
+# a vector of the pages, from 1 to the max page for this search
+pages <- 1:one_page(1)$total_pages
+
+# now use map_dfr (map specifcally for returning data frames) instead of a for loop
+christmas_keywords <- map_dfr(pages, function(x) one_page(x)$results)
+christmas_keywords
+```
+
+
+## Task 4: Find a set of key word you're interested in
+
+```{r}
+alien_page <- function(x) search_keyword(key_get("TMDB_API"), query = "alien", page = x)
+alien_pages <- 1:alien_page(1)$total_pages
+alien_keywords <- map_dfr(alien_pages, function(x) alien_page(x)$results)
+head(alien_keywords)
+```
+
+Searching for movies and writing to a new csv file:
+
+## Task 5 - Set up a search of your own
+
+```{r}
+# search for all alien sci-fi movies
+alien_ids <- glue_collapse(alien_keywords$id, sep="|")
+
+alien_sci_fi <- function(x) discover_movie(key_get("TMDB_API"), 
+                                       with_genres = 878, 
+                                       with_keywords = alien_ids, 
+                                       page = x)
+alien_sf_pages <- 1:alien_sci_fi(1)$total_pages
+aliens_sf <- map_dfr(alien_sf_pages, function(x) alien_sci_fi(x)$results)
+head(aliens_sf)
+write_csv(aliens_sf, "aliens_sci_fi.csv")
+
+```
+
+
+## Task 6 - Ugly Graph
+
+```{r}
+
+ggplot(aliens_sf, aes(vote_average, log(sqrt(vote_count)+4)-pi, col=id)) + geom_line() + theme(plot.background = element_rect(fill="blue"))
+
+```
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+THIS IS VERY UGLY INDEED
 
 
 

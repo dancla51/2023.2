@@ -77,6 +77,26 @@ The `MeanHotDeck` is `r MeanHotDeck$conf.int`, which is slightly off the true va
 the error is `r MeanHotDeck$conf.int - TrueMean`
 
 
+BOOTSTRAP:
+
+```{r}
+# Bootstrapping
+set.seed(3)
+numBoots <- 200
+bootReps <- numeric(numBoots)
+for (i in 1:numBoots) {
+  thisBootInd <- filter(thisData, !is.na(thisData$Rings))$Rings %>% sample(1, replace = TRUE)
+  thisBoot <- thisData[thisBootInd,]
+  
+  for (t in levels(thisData$Type)) {
+    thisMissing <- thisData$Type==t & is.na(thisData$Rings)
+    numDraws <- thisMissing %>% sum()
+    hotDeck <- thisData$Rings[thisData$Type==t & !is.na(thisData$Rings)] %>% sample(numDraws, replace = TRUE) #With replacement
+    thisBoot$Rings[thisMissing]<-hotDeck
+  }
+  bootReps[i] <- mean(thisBoot$Rings+1.5)
+}
+```
 
 
 
