@@ -166,16 +166,43 @@ gamma
 ```{r}
 #Degrees of freedom and conf interval
 df <- (nImps-1)*(1 + 1/(nImps+1)*WEst/BEst)**2
-wdth <- ***K***
+wdth <- 1 # FIX
 c(ptEst-wdth,ptEst+wdth)
 
 ```
 
 
 
+## Distribution Fitting
+
+```{r}
+install.packages("fitdistrplus",
+repo = "https://cran.stat.auckland.ac.nz/")
+require(fitdistrplus)
+```
+
+```{r}
+descdist(abalone$Rings+1.5,boot=500)
+
+```
+
+```{r}
+# Try lognormal
+fitln <- fitdist(abalone$Rings+1.5,"lnorm",method="mle")
+plot(fitln)
+```
+
+```{r}
+set.seed(7)
+x.ln <- rlnorm(n=nData,meanlog=2.3992433,sdlog=0.2725468)
+qqplot(x.ln,abalone$Rings+1.5)
+abline(0,1)
+```
 
 
+```{r}
 
+```
 
 
 
