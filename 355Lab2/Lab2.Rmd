@@ -85,21 +85,35 @@ set.seed(3)
 numBoots <- 200
 bootReps <- numeric(numBoots)
 for (i in 1:numBoots) {
-  thisBootInd <- filter(thisData, !is.na(thisData$Rings))$Rings %>% sample(1, replace = TRUE)
+  thisBootInd <- sample(4177, replace = TRUE)
   thisBoot <- thisData[thisBootInd,]
-  
+
   for (t in levels(thisData$Type)) {
-    thisMissing <- thisData$Type==t & is.na(thisData$Rings)
+    thisMissing <- thisBoot$Type==t & is.na(thisBoot$Rings)
     numDraws <- thisMissing %>% sum()
-    hotDeck <- thisData$Rings[thisData$Type==t & !is.na(thisData$Rings)] %>% sample(numDraws, replace = TRUE) #With replacement
+    hotDeck <- thisBoot$Rings[thisBoot$Type==t & !is.na(thisBoot$Rings)] %>% sample(numDraws, replace = TRUE) #With replacement
     thisBoot$Rings[thisMissing]<-hotDeck
   }
   bootReps[i] <- mean(thisBoot$Rings+1.5)
 }
+
+actualEstimate <- mean(impData+1.5)
+Iemp2 <- c(2*actualEstimate,2*actualEstimate)-quantile(bootReps,c(0.975,0.025))
+Iemp2
+
 ```
 
+The Mean from our BootStrapping is `r Iemp2`.
 
+```{r}
+theta_boot <- (1/numBoots)*sum(bootReps)
+V_boot <- (1/(numBoots-1))*sum((bootReps-theta_boot)^2)
+Inorm <- c(theta_boot-qnorm(0.975)*sqrt(V_boot),theta_boot+
+qnorm(0.975)*sqrt(V_boot))
+Inorm
+```
 
+Alternatively, The Mean from our BootStrapping is `r Inorm`.
 
 
 

@@ -426,6 +426,45 @@ for (t in levels(thisData$Type)) {
 MeanHotDeck = impData %&gt;% as.numeric() %&gt;% +1.5 %&gt;% t.test() </code></pre>
 <p>The <code>MeanHotDeck</code> is 11.3115857, 11.5055079, which is
 slightly off the true value. the error is -0.1224143, 0.0715079</p>
+<p>BOOTSTRAP:</p>
+<pre class="r"><code># Bootstrapping
+set.seed(3)
+numBoots &lt;- 200
+bootReps &lt;- numeric(numBoots)
+for (i in 1:numBoots) {
+  thisBootInd &lt;- sample(4177, replace = TRUE)
+  thisBoot &lt;- thisData[thisBootInd,]
+
+  for (t in levels(thisData$Type)) {
+    thisMissing &lt;- thisBoot$Type==t &amp; is.na(thisBoot$Rings)
+    numDraws &lt;- thisMissing %&gt;% sum()
+    hotDeck &lt;- thisBoot$Rings[thisBoot$Type==t &amp; !is.na(thisBoot$Rings)] %&gt;% sample(numDraws, replace = TRUE) #With replacement
+    thisBoot$Rings[thisMissing]&lt;-hotDeck
+  }
+  bootReps[i] &lt;- mean(thisBoot$Rings+1.5)
+}
+
+actualEstimate &lt;- mean(impData+1.5)
+Iemp2 &lt;- c(2*actualEstimate,2*actualEstimate)-quantile(bootReps,c(0.975,0.025))
+Iemp2</code></pre>
+<pre><code>##    97.5%     2.5% 
+## 11.28947 11.49047</code></pre>
+<p>The Mean from our BootStrapping is 11.2894721, 11.4904716.</p>
+<pre class="r"><code>theta_boot &lt;- (1/numBoots)*sum(bootReps)
+theta_boot</code></pre>
+<pre><code>## [1] 11.43038</code></pre>
+<pre class="r"><code>## [1] 11.43038
+V_boot &lt;- (1/(numBoots-1))*sum((bootReps-theta_boot)^2)
+V_boot</code></pre>
+<pre><code>## [1] 0.00277278</code></pre>
+<pre class="r"><code>## [1] 0.00277278
+Inorm &lt;- c(theta_boot-qnorm(0.975)*sqrt(V_boot),theta_boot+
+qnorm(0.975)*sqrt(V_boot))
+Inorm</code></pre>
+<pre><code>## [1] 11.32717 11.53358</code></pre>
+<pre class="r"><code>## [1] 11.32717 11.53358</code></pre>
+<p>aLternatively, The Mean from our BootStrapping is 11.3271709,
+11.5335833.</p>
 
 
 
