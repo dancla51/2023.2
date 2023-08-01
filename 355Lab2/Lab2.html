@@ -494,22 +494,22 @@ gamma</code></pre>
 <pre><code>## [1] 0.06672003</code></pre>
 <pre class="r"><code>#Degrees of freedom and conf interval
 df &lt;- (nImps-1)*(1 + 1/(nImps+1)*WEst/BEst)**2
-wdth &lt;- 1 # FIX
+wdth &lt;- sqrt(TEst)*qt(.95, df = df)
 c(ptEst-wdth,ptEst+wdth)</code></pre>
-<pre><code>## [1] 10.4245 12.4245</code></pre>
+<pre><code>## [1] 11.33944 11.50955</code></pre>
 <div id="distribution-fitting" class="section level2">
 <h2>Distribution Fitting</h2>
 <pre class="r"><code>install.packages(&quot;fitdistrplus&quot;,
 repo = &quot;https://cran.stat.auckland.ac.nz/&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Daniel/Documents/R/win-library/4.1&#39;
+<pre><code>## Installing package into &#39;C:/Users/dcla189/AppData/Local/R/win-library/4.2&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
-<pre><code>## 
-##   There is a binary version available but the source version is later:
-##              binary source needs_compilation
-## fitdistrplus  1.1-8 1.1-11             FALSE</code></pre>
-<pre><code>## installing the source package &#39;fitdistrplus&#39;</code></pre>
+<pre><code>## package &#39;fitdistrplus&#39; successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+##  C:\Users\dcla189\AppData\Local\Temp\RtmpuMQQCD\downloaded_packages</code></pre>
 <pre class="r"><code>require(fitdistrplus)</code></pre>
 <pre><code>## Loading required package: fitdistrplus</code></pre>
+<pre><code>## Warning: package &#39;fitdistrplus&#39; was built under R version 4.2.3</code></pre>
 <pre><code>## Loading required package: MASS</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;MASS&#39;</code></pre>
