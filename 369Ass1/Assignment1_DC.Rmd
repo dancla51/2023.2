@@ -1,12 +1,13 @@
 ---
 title: "Assignment1_DC"
 author: "Daniel Clark"
-date: "2023-08-02"
+date: "2023-08-01"
 output: html_document
 ---
 
 ```{r setup, message = F, warning = F}
 library(tidyverse)
+library(ggplot2)
 ```
 
 ## Task 1 - Revision
@@ -25,7 +26,7 @@ d) The P-value is the probability that, if the null hypothesis is TRUE, sampling
 
 The correct answer is answer d). This is the correct answer as it accurately describes the definition of a P-value in statistics. The other three answers (a, b and c) are incorrect, because they do not correctly describe the definition of a P-value. c) is clearly wrong because it is the opposite of the correct answer, while a) and b) do not make sense because we do not have a probability of evidence against our null hypothesis, we simply have more or less evidence against it.
 
-
+**BTW, I created this question before you did this in the lecture, I didn't just copy it!**
 
 
 ## Task 2 - Algorithmic Fairness Audit
@@ -61,12 +62,12 @@ all_phases$passed_phase_3[is.na(all_phases$passed_phase_3)] <- 0
 # I chose to leave these indicators as binary, to make calculations easier later on
 
 # View
-head(all_phases, 10)
+knitr::kable(head(all_phases, 10))
 ```
 
-Subtask 2 - Create appropriate numeric summaries, basic statistical tests (think t-test or ANOVA/F-test) and at least ONE appropriate chart to explore whether their are any concerns about this new AI recruitment pipeline
+Subtask 2 - Summary, Statistical Test, and Chart
 
-Appropropriate Numeric Summary:
+Appropriate Numeric Summary:
 
 ```{r}
 # Test the proportion of applicants that passed phase 1, 2, and 3 for each team
@@ -102,17 +103,41 @@ I believe that Black Saber hiring team should advertise the Data team more, to e
 Basic statistical tests (think t-test or ANOVA/F-test)
 
 ```{r}
-
-CvCl_fit = lm(passed_phase_1 ~ cv+cover_letter, data=all_phases)
-summary(CvCl_fit)
+# Test leadership skills based on GPA and gender
+skills_fit = lm(leadership_presence ~ gpa+gender, data=all_phases)
+anova(skills_fit)
 
 ```
 
+From this ANOVA test, we can see the effects of both GPA and gender on the rating given to that applicant's *'leadership presence'*. Based on the results, we can see that the effects of GPA are statistically insignificant, as the P-value for this test is easily greater than 0.05. However, concerningly, the effects of gender are statistically *significant*, as the P-value is well below 0.05. This means that the AI seems to be rating applicant's leadership_presence based on their gender.
+
+Here I take summary results to see more information:
+
+```{r}
+summary(skills_fit)
+```
+
+We can see from these summary results that there is no significant difference between the AI's gradings between 'man' and 'prefer not to say', but that there IS a significant difference between 'man' and 'woman'. The P-value of 0.001 makes it a very significant difference. Now I will plot these results to visualise it graphically:
+
+```{r, warning=F}
+ggplot(all_phases, aes(x=gender, y=leadership_presence), col=factor(passed_phase_2)) + geom_boxplot() + geom_jitter(aes(col=factor(passed_phase_2)))
+```
+
+This Box and Whisker plot clearly shows the disparity in scores between men and women (As there are only 3 observations in the prefer not to say category, we cannot make conclusions on how the AI treats this gender). The women that applied appear to have higher frequencies throughout the lower and middle ranges of the scoring, meanwhile there are far more men represented at the highest levels (>8).
+
+I have also coloured the points by whether or not the applicant passed this phase (phase 2) of the application process. From this we can see that it tends to be applicants with a leadership score of >5 that progress to the next phase. Because the applicants with a score >5 are mostly men, this greatly advantages men in the application process.
+
+```{r}
+pr = group_by(all_phases, gender) %>% summarise(sum(passed_phase_1), sum(passed_phase_2))
+knitr::kable(pr)
+```
+
+This is further proven by calculating how many men and women passed through stage two of the process. There were more than twice as many men as women that passed this stage, despite the fact that there were more women than men that made it through phase 1! This seems to prove that the AI is biased against women in it's leadership presence score, and possibly other ways, which result in it accepting twice as many men as women.
 
 
+**Subtask 3 - Alt Text for my chart**
 
-
-
+"Box-and-whisker plot of Leadership Scores given by recruitment AI, coloured by applicant pass-rate, of Black Saber graduate applicants, showing potential gender bias in AI system."
 
 
 
