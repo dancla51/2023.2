@@ -18,9 +18,9 @@ What is the correct interpretation of a P-value, as given in the results of a st
 a) The P-value is the probability that we have evidence to support our null hypothesis
 b) The P-value is the probability that we have evidence against our null hypothesis
 c) The P-value is the probability that, if the null hypothesis is FALSE, sampling variation would
-produce a sample that is at least as unusual as our sample.
+   produce a sample that is at least as unusual as our sample.
 d) The P-value is the probability that, if the null hypothesis is TRUE, sampling variation would
-produce a sample that is at least as unusual as our sample.
+   produce a sample that is at least as unusual as our sample.
 
 
 The correct answer is answer d). This is the correct answer as it accurately describes the definition of a P-value in statistics. The other three answers (a, b and c) are incorrect, because they do not correctly describe the definition of a P-value. c) is clearly wrong because it is the opposite of the correct answer, while a) and b) do not make sense because we do not have a probability of evidence against our null hypothesis, we simply have more or less evidence against it.
@@ -84,11 +84,29 @@ I also created a ratio column to express this difference more explicitly. From t
 
 Now I will investigate the reason for this discrepancy:
 ```{r}
+# Find how many applicants for each team
+num_data_ap = sum(all_phases$team_applied_for=="Data")
+num_software_ap = sum(all_phases$team_applied_for=="Software")
 
 ```
 
+The number of data applicants is `r num_data_ap`.
+The number of software applicants is `r num_software_ap`
+
+It seems that the reason data applicants get accepted through to future phases at a higher rate is because there are fewer applicants for the data team, compare to the software team. Assuming there are a similar number of roles available in each team, this would force the algorithm to be *more harsh* to software team applicants than data team applicants. 
+
+I believe that Black Saber hiring team should advertise the Data team more, to encourage more applicants for the data team, so that all applicants can be treated equally through the hiring process.
 
 
+
+Basic statistical tests (think t-test or ANOVA/F-test)
+
+```{r}
+
+CvCl_fit = lm(passed_phase_1 ~ cv+cover_letter, data=all_phases)
+summary(CvCl_fit)
+
+```
 
 
 
