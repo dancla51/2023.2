@@ -166,7 +166,7 @@ gamma
 ```{r}
 #Degrees of freedom and conf interval
 df <- (nImps-1)*(1 + 1/(nImps+1)*WEst/BEst)**2
-wdth <- 1 # FIX
+wdth <- sqrt(TEst)*qt(.95, df = df)
 c(ptEst-wdth,ptEst+wdth)
 
 ```
