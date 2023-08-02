@@ -1,0 +1,100 @@
+---
+title: "Assignment1_DC"
+author: "Daniel Clark"
+date: "2023-08-02"
+output: html_document
+---
+
+```{r setup, message = F, warning = F}
+library(tidyverse)
+```
+
+## Task 1 - Revision
+
+This is revision for ENGSCI314:
+
+What is the correct interpretation of a P-value, as given in the results of a statistical test?
+
+a) The P-value is the probability that we have evidence to support our null hypothesis
+b) The P-value is the probability that we have evidence against our null hypothesis
+c) The P-value is the probability that, if the null hypothesis is FALSE, sampling variation would
+produce a sample that is at least as unusual as our sample.
+d) The P-value is the probability that, if the null hypothesis is TRUE, sampling variation would
+produce a sample that is at least as unusual as our sample.
+
+
+The correct answer is answer d). This is the correct answer as it accurately describes the definition of a P-value in statistics. The other three answers (a, b and c) are incorrect, because they do not correctly describe the definition of a P-value. c) is clearly wrong because it is the opposite of the correct answer, while a) and b) do not make sense because we do not have a probability of evidence against our null hypothesis, we simply have more or less evidence against it.
+
+
+
+
+## Task 2 - Algorithmic Fairness Audit
+
+Subtask 1 - Load in and join together the three data sets (tidyly)
+
+```{r, message=F}
+# Load in data
+phase1 = read_csv("2022-phase1-new-grad-applicants.csv", show_col_types = FALSE)
+phase2 = read_csv("2022-phase2-new-grad-applicants.csv", show_col_types = FALSE)
+phase3 = read_csv("2022-phase3-new-grad-applicants.csv", show_col_types = FALSE)
+phase_final = read_csv("2022-final-hires-newgrad.csv")
+
+# Convert phase3 df to tidy data
+phase3 = as.data.frame(t(phase3)[-1,])
+phase3$applicant_id = as.numeric(rownames(phase3))
+phase3 = rename(phase3, interviewer_1 = V1)
+phase3 = rename(phase3, interviewer_2 = V2)
+
+# Create columns for if they passed the previous phase, assign 1s for yes's
+phase2$passed_phase_1 = 1
+phase3$passed_phase_2 = 1
+phase_final$passed_phase_3 = 1
+
+# Join all together
+all_phases = phase1 %>% left_join(phase2) %>% left_join(phase3) %>% left_join(phase_final)
+
+# Replace NAs in the passed phase columns with 0's (leave others as is)
+all_phases$passed_phase_1[is.na(all_phases$passed_phase_1)] <- 0
+all_phases$passed_phase_2[is.na(all_phases$passed_phase_2)] <- 0
+all_phases$passed_phase_3[is.na(all_phases$passed_phase_3)] <- 0 
+
+# I chose to leave these indicators as binary, to make calculations easier later on
+
+# View
+head(all_phases, 10)
+```
+
+Subtask 2 - Create appropriate numeric summaries, basic statistical tests (think t-test or ANOVA/F-test) and at least ONE appropriate chart to explore whether their are any concerns about this new AI recruitment pipeline
+
+Appropropriate Numeric Summary:
+
+```{r}
+# Test the proportion of applicants that passed phase 1, 2, and 3 for each team
+team_proportions = as.data.frame(t(group_by(all_phases, team_applied_for) %>% summarise(mean(passed_phase_1), mean(passed_phase_2), mean(passed_phase_3)))[-1,])
+# Rename columns
+team_proportions = rename(team_proportions, data_team = V1)
+team_proportions = rename(team_proportions, software_team = V2)
+
+team_proportions$ratio_datatosoftware = as.numeric(team_proportions$data_team) / as.numeric(team_proportions$software_team)
+```
+
+As we can see from this summary, at each stage of the process, the applicants for the data team have slightly higher pass rates than the applicants for the software team. This could be because there are more applicants for the software team, despite there being the same amount of roles available, or it could be an inherent bias in the system to applicants with more of a data-background than a software-background.
+
+I also created a ratio column to express this difference more explicitly. From this column we can see that this *potential bias* gets worse the further along the application process the applicants get.
+
+Now I will investigate the reason for this discrepancy:
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
