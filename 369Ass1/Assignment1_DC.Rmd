@@ -26,7 +26,7 @@ d) The P-value is the probability that, if the null hypothesis is TRUE, sampling
 
 The correct answer is answer d). This is the correct answer as it accurately describes the definition of a P-value in statistics. The other three answers (a, b and c) are incorrect, because they do not correctly describe the definition of a P-value. c) is clearly wrong because it is the opposite of the correct answer, while a) and b) do not make sense because we do not have a probability of evidence against our null hypothesis, we simply have more or less evidence against it.
 
-**BTW, I created this question before you did this in the lecture, I didn't just copy it!**
+**BTW, I created this question before you did this in the lecture, I promise!**
 
 
 ## Task 2 - Algorithmic Fairness Audit
@@ -154,7 +154,7 @@ I believe to further drill down into the root of the cause, testing should be co
 
 
 
-## Reprex Evaluation
+## Task 3 - Reprex Critique
 
 "Package philosophy = The reprex code:
 
@@ -162,12 +162,12 @@ I believe to further drill down into the root of the cause, testing should be co
 
 -Should be easy for others to digest, so they don’t necessarily have to run it. You are encouraged to include selected bits of output. :scream:
 
--Should be easy for others to copy + paste + run, if and only if they so choose. Don’t let inclusion of output break executability."
+-Should be easy for others to copy + paste + run, if and only if they so choose. Don’t let inclusion of output break executability." [1] *(Package Philosophy section of https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)*
 
 
-Bug Report example A is a very poor bug report, based on REPREX values. This is because it is not able to be easily replicated by someone who wishes to examine the bug.This fails the reprex philosophy that code *"Should be easy for others to copy + paste + run"*. Someone wishing to run the code will not have my_url saved on their computer so this will cause errors. Also they may not have the 'rvest' library loaded which will cause errors.
+Bug Report example A is a very poor bug report, based on REPREX values. This is because it is not able to be easily replicated by someone who wishes to examine the bug.This fails the reprex philosophy that code *"Should be easy for others to copy + paste + run"*[1]. Someone wishing to run the code will not have my_url saved on their computer so this will cause errors. Also they may not have the 'rvest' library loaded which will cause errors.
 
-Bug Report, by contrast, is much better because it is replicatable and is *"easy for others to copy + paste + run"*. However, it does not meet the reprex expectation that it *"Should be easy for others to digest"*. This is because the output from the link is cluttered, and it is difficult to immediately tell what the issue is, let alone how to fix it.
+Bug Report, by contrast, is much better because it is replicatable and is *"easy for others to copy + paste + run"*[1]. However, it does not meet the reprex expectation that it *"Should be easy for others to digest"*[1]. This is because the output from the link is cluttered, and it is difficult to immediately tell what the issue is, let alone how to fix it.
 
 Finally, bug report C is also close but fails to be a perfect reprex in a different place. It meets requirement 2, as it is easy for others to digest, with only limited output, that highlights the difference between html_text an html_text2. It also meets requirement 3 as it is very easy to copy, paste and then run. (Which I have shown by doing it below.) However it does not meet requirement 1, as the output shown in the bug report is different than what is actually produced when the code is run, so clearly the reporter has not really run the code before posting this.
 ```{r}
@@ -184,6 +184,23 @@ html_text2(read_html(some_html)) # not correct
 ```
 
 
-*quotes from https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html*
+## Task 4 - Reflection
+
+Graduate Capability #5 at the University of Auckland is described as *"Graduates of the University are expected to be able to learn and work autonomously and ethically. They are expected to be lifelong learners, to show resilience, proactivity and an ability to make principled decisions in academic and professional spheres."* [2] *(Section 4 of https://www.auckland.ac.nz/en/students/forms-policies-and-guidelines/student-policies-and-guidelines/graduate-profile.html)*. This was something we went into in-depth during Task 2 of lab 2 about ethical scraping.
+
+Web scraping is one of the most 'grey' moral areas when programming, so learning how to do this ethically and legally is very important. It was interesting to learn about the robots.txt, and how we can search the company's Terms and Conditions for terms like 'scraping' and 'crawl' to find the relevant sections on whether they allow people to scrape their website. It's also important to respect a site's default crawl delay time, and not overload the website.
+
+In this assignment, I am proud of myself for taking on Liza's feedback about using knitr::kable() and using it in 3 places in this assignment. Although personally I am not sure it looks any better than the default output (in this case), it is a useful skill to learn for displaying larger, more confusing tables.
+
+Something I would do differently for next assignment would be to spend more time working on it. For this assignment, I had limited time to work on it due to having my wisdom teeth taken out, so I didn't have time to attempt the bonus question. Next time I would like to attempt any/all bonus questions.
+
+
+
+## References:
+
+[1]  *Jennifer Bryan, Reprex Do's and Dont's, 03/08/2023,  https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html*
+
+[2]  *UoA, Graduate Profiles, 03/08/2023, https://www.auckland.ac.nz/en/students/forms-policies-and-guidelines/student-policies-and-guidelines/graduate-profile.html*
+
 
 End Submission./
