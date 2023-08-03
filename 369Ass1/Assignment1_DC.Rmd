@@ -62,7 +62,7 @@ all_phases$passed_phase_3[is.na(all_phases$passed_phase_3)] <- 0
 # I chose to leave these indicators as binary, to make calculations easier later on
 
 # View
-knitr::kable(head(all_phases, 10))
+knitr::kable(head(all_phases, 10), align="c")
 ```
 
 Subtask 2 - Summary, Statistical Test, and Chart
@@ -77,6 +77,8 @@ team_proportions = rename(team_proportions, data_team = V1)
 team_proportions = rename(team_proportions, software_team = V2)
 
 team_proportions$ratio_datatosoftware = as.numeric(team_proportions$data_team) / as.numeric(team_proportions$software_team)
+
+knitr::kable(team_proportions, align="c")
 ```
 
 As we can see from this summary, at each stage of the process, the applicants for the data team have slightly higher pass rates than the applicants for the software team. This could be because there are more applicants for the software team, despite there being the same amount of roles available, or it could be an inherent bias in the system to applicants with more of a data-background than a software-background.
@@ -94,9 +96,7 @@ num_software_ap = sum(all_phases$team_applied_for=="Software")
 The number of data applicants is `r num_data_ap`.
 The number of software applicants is `r num_software_ap`
 
-It seems that the reason data applicants get accepted through to future phases at a higher rate is because there are fewer applicants for the data team, compare to the software team. Assuming there are a similar number of roles available in each team, this would force the algorithm to be *more harsh* to software team applicants than data team applicants. 
-
-I believe that Black Saber hiring team should advertise the Data team more, to encourage more applicants for the data team, so that all applicants can be treated equally through the hiring process.
+It seems that the reason data applicants get accepted through to future phases at a higher rate is because there are fewer applicants for the data team, compare to the software team. Assuming there are a similar number of roles available in each team, this would force the algorithm to be *more harsh* to software team applicants than data team applicants.
 
 
 
@@ -129,7 +129,7 @@ I have also coloured the points by whether or not the applicant passed this phas
 
 ```{r}
 pr = group_by(all_phases, gender) %>% summarise(sum(passed_phase_1), sum(passed_phase_2))
-knitr::kable(pr)
+knitr::kable(pr, align="c")
 ```
 
 This is further proven by calculating how many men and women passed through stage two of the process. There were more than twice as many men as women that passed this stage, despite the fact that there were more women than men that made it through phase 1! This seems to prove that the AI is biased against women in it's leadership presence score, and possibly other ways, which result in it accepting twice as many men as women.
@@ -137,7 +137,53 @@ This is further proven by calculating how many men and women passed through stag
 
 **Subtask 3 - Alt Text for my chart**
 
-"Box-and-whisker plot of Leadership Scores given by recruitment AI, coloured by applicant pass-rate, of Black Saber graduate applicants, showing potential gender bias in AI system."
+"Box-and-whisker plot of Leadership Scores given by recruitment AI, coloured by applicant pass-rate, of each gender of Black Saber graduate applicants, showing potential gender bias in AI system."
+
+
+mean(passed_phase_2)	0.03906250	0.03361345	1.162109
+mean(passed_phase_3)	0.01953125	0.01400560	1.394532
+**Short Conclusion for Black Saber:**
+
+Based on the above data analysis, I believe that the Black Saber hiring AI has two problems. 
+
+Firstly, as there are more software applicants than data applicants, the system appears to favour selection of data applicants. Data applicants are 10% more likely to get through phase 1, 16% more likely to get through stage 2, and 39% more likely to be hired. I believe that Black Saber hiring team should advertise the Data team more, to encourage more applicants for the data team, so that all applicants can be treated equally through the hiring process.
+
+Secondly, the algorithm is very biased against women during phase 2. This is shown by 15/145 (10.3%) of men making it through phase 2, while only 7/152 (4.6%) of women progress through this stage. One reason for this is shown in the chart above, which demonstrated how the algorithm grades women significantly lower than men on the 'leadership presence' characteristic. The algorithm tends to grade women 0.88 units lower on average, which is a large value when taken on a scale of 1-10.
+
+I believe to further drill down into the root of the cause, testing should be completed to determine what are the causes of this discrepancy. The same should be done for all of the other AI-graded scores, as well.
 
 
 
+## Reprex Evaluation
+
+"Package philosophy = The reprex code:
+
+-Must run and, therefore, should be run by the person posting. No faking it.
+
+-Should be easy for others to digest, so they don’t necessarily have to run it. You are encouraged to include selected bits of output. :scream:
+
+-Should be easy for others to copy + paste + run, if and only if they so choose. Don’t let inclusion of output break executability."
+
+
+Bug Report example A is a very poor bug report, based on REPREX values. This is because it is not able to be easily replicated by someone who wishes to examine the bug.This fails the reprex philosophy that code *"Should be easy for others to copy + paste + run"*. Someone wishing to run the code will not have my_url saved on their computer so this will cause errors. Also they may not have the 'rvest' library loaded which will cause errors.
+
+Bug Report, by contrast, is much better because it is replicatable and is *"easy for others to copy + paste + run"*. However, it does not meet the reprex expectation that it *"Should be easy for others to digest"*. This is because the output from the link is cluttered, and it is difficult to immediately tell what the issue is, let alone how to fix it.
+
+Finally, bug report C is also close but fails to be a perfect reprex in a different place. It meets requirement 2, as it is easy for others to digest, with only limited output, that highlights the difference between html_text an html_text2. It also meets requirement 3 as it is very easy to copy, paste and then run. (Which I have shown by doing it below.) However it does not meet requirement 1, as the output shown in the bug report is different than what is actually produced when the code is run, so clearly the reporter has not really run the code before posting this.
+```{r}
+library(rvest)
+some_html <- '<p dir="ltr" style="text-align:left;"></p><span style="font-size:0.9375rem;">T
+he sentence starts this way,</span><span style="font-size:0.9375rem;"> </span><span
+style="font-size:0.9375rem;">then</span><span style="font-size:0.9375rem;"> </span><
+span style="font-size:0.9375rem;">spaces</span><span style="font-size:0.9375rem;">
+</span><span style="font-size:0.9375rem;">disappear</span>'
+html_text(read_html(some_html)) # is correct
+#> [1] "The sentence starts this way, then spaces disappear"
+html_text2(read_html(some_html)) # not correct
+#> [1] "The sentence starts this way,thenspacesdisappear"
+```
+
+
+*quotes from https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html*
+
+End Submission./
