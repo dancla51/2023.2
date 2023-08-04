@@ -140,9 +140,7 @@ This is further proven by calculating how many men and women passed through stag
 "Box-and-whisker plot of Leadership Scores given by recruitment AI, coloured by applicant pass-rate, of each gender of Black Saber graduate applicants, showing potential gender bias in AI system."
 
 
-mean(passed_phase_2)	0.03906250	0.03361345	1.162109
-mean(passed_phase_3)	0.01953125	0.01400560	1.394532
-**Short Conclusion for Black Saber:**
+**Subtask 4 - Short Conclusion for Black Saber:**
 
 Based on the above data analysis, I believe that the Black Saber hiring AI has two problems. 
 
@@ -152,6 +150,13 @@ Secondly, the algorithm is very biased against women during phase 2. This is sho
 
 I believe to further drill down into the root of the cause, testing should be completed to determine what are the causes of this discrepancy. The same should be done for all of the other AI-graded scores, as well.
 
+
+**Bonus Task  - Uglyification of graph**
+
+```{r, warning=F}
+ggplot(all_phases, aes(x=gender, y=leadership_presence, col=factor(passed_phase_2))) + geom_boxplot() + geom_jitter(aes(col=factor(passed_phase_2))) + theme_void(base_size = 0) + theme(plot.background = element_rect(fill = "purple")) +coord_polar()
+```
+^ Basically a pie chart!
 
 
 ## Task 3 - Reprex Critique
@@ -165,9 +170,9 @@ I believe to further drill down into the root of the cause, testing should be co
 -Should be easy for others to copy + paste + run, if and only if they so choose. Don’t let inclusion of output break executability." [1] *(Package Philosophy section of https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)*
 
 
-Bug Report example A is a very poor bug report, based on REPREX values. This is because it is not able to be easily replicated by someone who wishes to examine the bug.This fails the reprex philosophy that code *"Should be easy for others to copy + paste + run"*[1]. Someone wishing to run the code will not have my_url saved on their computer so this will cause errors. Also they may not have the 'rvest' library loaded which will cause errors.
+Bug Report example A is a very poor bug report, based on REPREX values. This is because it is not able to be easily replicated by someone who wishes to examine the bug.This fails the reprex philosophy statement 3 that code *"Should be easy for others to copy + paste + run"*[1]. Someone wishing to run the code will not have `my_url` saved on their computer so this will cause errors. Also they may not have the 'rvest' library loaded which will cause errors. Compared to this, both examples 2 and 3 do succeed at passing this requirement.
 
-Bug Report, by contrast, is much better because it is replicatable and is *"easy for others to copy + paste + run"*[1]. However, it does not meet the reprex expectation that it *"Should be easy for others to digest"*[1]. This is because the output from the link is cluttered, and it is difficult to immediately tell what the issue is, let alone how to fix it.
+Bug Report, by contrast, is much better because it is replicatable and is *"easy for others to copy + paste + run"*[1]. However, it does not meet the reprex philosophy statement 3 that it *"Should be easy for others to digest"*[1]. This is because the output from the link is cluttered, and it is difficult to immediately tell what the issue is, let alone how to fix it.
 
 Finally, bug report C is also close but fails to be a perfect reprex in a different place. It meets requirement 2, as it is easy for others to digest, with only limited output, that highlights the difference between html_text an html_text2. It also meets requirement 3 as it is very easy to copy, paste and then run. (Which I have shown by doing it below.) However it does not meet requirement 1, as the output shown in the bug report is different than what is actually produced when the code is run, so clearly the reporter has not really run the code before posting this.
 ```{r}
@@ -192,7 +197,7 @@ Web scraping is one of the most 'grey' moral areas when programming, so learning
 
 In this assignment, I am proud of myself for taking on Liza's feedback about using knitr::kable() and using it in 3 places in this assignment. Although personally I am not sure it looks any better than the default output (in this case), it is a useful skill to learn for displaying larger, more confusing tables.
 
-Something I would do differently for next assignment would be to spend more time working on it. For this assignment, I had limited time to work on it due to having my wisdom teeth taken out, so I didn't have time to attempt the bonus question. Next time I would like to attempt any/all bonus questions.
+Something I would do differently for next assignment would be to investigate more attributes of the data. I could have done some initial exploration of the data before jumping into analyses, however this was not asked for in the assignment so for ths assignment I did not.
 
 
 
