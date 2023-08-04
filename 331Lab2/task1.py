@@ -5,6 +5,9 @@ from brent import brent
 from functions import task1functions, task1functiontitles, task3functions, task3functiontitles
 from testoptimiser import testoptimiser
 
+
+
+
 # initialisation
 tol = 10e-4
 max_iter = 50

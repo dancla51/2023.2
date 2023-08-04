@@ -30,7 +30,7 @@ def golden(f, ab, max_iter, tol, showlog):
         ## Calculate a second point x'' and do the various updates
         ## You should add logging to help you debug and check the code; 
         ## and for diagnosing the algorithm's behaviour
-        pass
+
         
     return [a,b], xlist, flist, max_iter, ExitFlag.MaxIterations
 
