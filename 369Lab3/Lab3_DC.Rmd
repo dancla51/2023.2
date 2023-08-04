@@ -1,0 +1,125 @@
+---
+title: 'Lab 3'
+subtitle: "STATS 369"
+author: "Daniel Clark"
+output:
+  html_document:
+    highlight: pygments
+    theme: readable
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+*It is good practice to have all your general set up at the start of your document. Imagine this is the beginning of a new Rmd. This is where I would set any general chunk options, as well as where I would load my libraries. If I realise I need additional libraries later, I would come back here and add them.*
+
+*Notes from me are in italics.*
+
+```{r setup, message = FALSE}
+# Set code to show
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load libraries
+library(tidyverse)
+library(ISLR2)
+library(GGally)
+
+```
+
+## Task 1
+
+*Use headings to organise your submission and make it easy for your marker to find your answers*
+
+```{r}
+# Read in advertising data set
+adverts = read_csv("Advertising.csv", show_col_types = F)
+
+# Fit a model
+model = lm(sales~TV+radio+newspaper, data=adverts)
+tib = as_tibble(summary(model)$coeff) %>% rename("t-statistic"="t value", "p-value"="Pr(>|t|)", "Coefficient"="Estimate")
+
+tib$"t-statistic" = round(tib$"t-statistic", 2)
+tib$"Std. Error" = round(tib$"Std. Error", 4)
+tib$"Coefficient" = round(tib$"Coefficient", 3)
+
+tib$"p-value" = ifelse(tib$"p-value"<0.0001, "<0.0001", round(tib$"p-value", 4))
+
+ads = as.data.frame(tib)
+rownames(ads) <- c("Intercept","TV","radio","newspaper")
+
+knitr::kable(ads, align="c")
+```
+**Describe the null hypotheses:**
+
+The null hypothesis for the intercept, is that the y-intercept=0. Interpreted in the context of the problem, this would mean that for 0 advertising in every area, would result in 0 sales. Clearly based on the p-value there is strong evidence against this null hypothesis.
+
+The null hypothesis for the other three rows, i.e. for the TV, newspaper and radio, is that the coefficient for that explanatory variable is 0, i.e. that they have NO effect on the sales. The P-value for the TV and radio advertising is very small, providing much evidence against this assumption. For newspaper advertising however, the P-value is large, meaning that there is very little evidence against this null hypothesis.
+
+To conclude, based on our P-values, we can see that the newspaper advertising is uneffective, but the TV and radio advertising is effective.
+
+
+## Task 2
+
+a) We would expect the residual sum of squares to be the same if the true relationship is linear, and we have PERFECT data. with perfect data we would expect the cubic model to perfectly predict that linear relationship, giving an identical prediction and thus an identical sum of squares. In reality, the data will not be perfect and there will be some noise that makes the relationship in our data not perfectly linear. In this case, on our training data, we would expect the cubic regression to have a lower residual sum of squares, because it has the ability to overfit to the data more. This means the cubic will have lower RSS (on trained data).
+
+b) Instead for testing data, we would expect the cubic regression model to do worse. This is because the ability to become OVERFIT to the training data will cause it to more poorly represent the true linear relationship, and when it is tested on a dataset other than the one it was trained on, this will cause it do worse, and will have a higher Residual Sum of Squares (RSS).
+
+c) We would expect one to be lower than the other, specifically for the cubic regression to habe a lower RSS. Once again this model will overfit more to the training data, resulting in lower RSS.
+
+d) For the testing data, we do not have enough information to say which one will perform better. This is because if the true relationship is closer to linear, it is likely that the linear regression will perform better, however if the true relationship is closer to cubic, then it's likely that the cubic regression will perform better. Therefore we cannot say for sure which will be better.
+
+
+## Task 3
+
+```{r}
+data(Auto)
+glimpse(Auto)
+```
+
+```{r}
+Auto_clean =  Auto
+Auto_clean$origin = case_when(Auto_clean$origin == 1 ~ "American", Auto_clean$origin == 2 ~ "European", Auto_clean$origin == 3 ~ "Japanese")
+glimpse(Auto_clean)
+```
+
+```{r}
+ggpairs(Auto_clean, columns = 1:(ncol(Auto_clean)-1), progress=FALSE)
+```
+
+Visualisation Improvement: To improve the output of the ggpairs plot, I should print the graph either larger, or with less attributes included. I have already removed the "name" attribute as it has far too many levels to be helpful to produce, but even without it, the graph is still overcrowded. The warning message seems to be indicating this could be done using the binwidth argument.
+
+
+
+```{r}
+correlations = cor(select_if(Auto_clean, is.numeric))
+correlations %>% round(2) %>% knitr::kable(align="c")
+
+```
+
+
+multiple linear regression:
+```{r}
+mpg_fit = lm(mpg ~ cylinders+displacement+horsepower+weight+acceleration+year+origin, data=Auto_clean)
+summary(mpg_fit)
+```
+
+a) There is definitely a relationship between the predictors and the response. We now this because the P-value given for this fit is much much less than 0.05 , so there is a strong relationship.
+
+b) The predictors that have statistically significant relationships with the response are: Engine Displacement, Vehicle Weight, Model Year, and the Region of Origin. The ones that are not statistically significant are the number of cylinders, horsepower and acceleration of the car.
+
+c) The coefficient for the year variable represents that it has a positive correlation with Miles per gallon. This means that for a higher (aka more recent) year of production, the miles per gallon of the vehicle tends to be higher. This makes sense as we expect fuel efficiency to improve over time. For every 1 year later the car is produced we expect for the miles per gallon of the car to be, on average, 0.78 MPG higher.
+
+d) No, the intercept is not meaningful to interpret. This is because the intercept represents a car which has a value of 0 for each variable, i.e. 0 acceleration, 0 horsepower, 0 weight. Obviously this is not a realistic situation for us to consider, so the intercept does not have a physical interpretation for this problem.
+
+
+
+
+Check Assumptions:
+```{r}
+plot(mpg_fit)
+```
+
+From the results of this plot, we can see that the residuals plot gives us a fairly curved plot. This indicates that the residuals are not equal the whole way along, so assuming residuals of iid may not be accurate. From the QQ plot, we see that the relationship maps fairly well to the linear relationship for low-mid values, but not so well for high values. From the leverage graph, we can see that there are a few points with higher leverage, such as observation #14. This observation has a high leverage of nearly 0.2, however this is not high enough to consider it to be 'highly influential' and it is not close to the cook's distance=0.5 line, so should not be removed from the dataset.
+
+
+
