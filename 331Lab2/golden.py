@@ -29,15 +29,10 @@ def golden(f, ab, max_iter, tol, showlog):
     flist = [falpha, fbeta]
 
     for k in range(max_iter):
-        ## Your code goes here
-        ## Calculate a second point x'' and do the various updates
-        ## You should add logging to help you debug and check the code; 
-        ## and for diagnosing the algorithm's behaviour
-
-
-
+        # Log
         logiteration(k, a, alpha, beta, b, falpha, fbeta, showlog)
 
+        # Test which side we are removing from our region, and update
         if falpha > fbeta:
             a = alpha
             alpha = beta
@@ -57,10 +52,13 @@ def golden(f, ab, max_iter, tol, showlog):
             flist.append(falpha)
             #a = a
 
-        if abs(a - b) < tol:
+        # Test for convergence, break if so.
+        if b - a < tol:
             max_iter = k+1
             exit_flag = ExitFlag.Converged
             break
+    print(xlist)
+    print(flist)
 
     return [a, b], xlist, flist, max_iter, exit_flag
 
