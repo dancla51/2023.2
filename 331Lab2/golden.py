@@ -20,37 +20,10 @@ def golden(f, ab, max_iter, tol, showlog):
     exit_flag = ExitFlag.MaxIterations
 
     # I set both alpha and beta for the initial iteration
-    alpha = a + (1 - tau) * (b - a)
-    beta = a + tau * (b - a)
-    falpha = f(alpha)
-    fbeta = f(beta)
-
-    xlist = [alpha, beta]
-    flist = [falpha, fbeta]
 
     for k in range(max_iter):
         # Log
         logiteration(k, a, alpha, beta, b, falpha, fbeta, showlog)
-
-        # Test which side we are removing from our region, and update
-        if falpha > fbeta:
-            a = alpha
-            alpha = beta
-            falpha = fbeta
-            beta = a + tau * (b - a)
-            fbeta = f(beta)
-            xlist.append(beta)
-            flist.append(fbeta)
-            #b = b
-        else:
-            b = beta
-            beta = alpha
-            fbeta = falpha
-            alpha = a + (1 - tau) * (b - a)
-            falpha = f(alpha)
-            xlist.append(alpha)
-            flist.append(falpha)
-            #a = a
 
         # Test for convergence, break if so.
         if b - a < tol:
