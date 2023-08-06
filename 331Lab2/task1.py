@@ -18,4 +18,4 @@ plotright = 3.0
 showlog = True
 
 testoptimiser(golden,"Golden Section", task1functions, task1functiontitles, a, b, max_iter, tol, showlog, plotleft, plotright)
-testoptimiser(brent,"Brents Method",  task1functions, task1functiontitles, a, b, max_iter, tol, showlog, plotleft, plotright)
+#testoptimiser(brent,"Brents Method",  task1functions, task1functiontitles, a, b, max_iter, tol, showlog, plotleft, plotright)
