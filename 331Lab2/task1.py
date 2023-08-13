@@ -13,7 +13,7 @@ from testoptimiser import testoptimiser
 tol = 10e-4
 max_iter = 50
 a = 0.0   # a & b define uncertainty interval
-b = 1.0
+b = 3.0
 plotleft = 0.0  # plotleft & plotright define the plot range
 plotright = 3.0
 showlog = True

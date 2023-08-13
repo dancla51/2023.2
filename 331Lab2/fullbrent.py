@@ -54,7 +54,11 @@ def fullbrent(f,ab,max_iter,tol, showlog):
         if not xdd:
             steptype = "GS" # Golden Section step for log
             # YOUR CODE to calculate xdd for a Golden Section step
-            xdd = (a+b)/2 # REMOVE THIS LINE; It is here to let the starter code run
+            if xd <= (a + b) / 2:
+                xdd = a + tau * (b - a)
+            else:
+                xdd = a + (1 - tau) * (b - a)
+
 
         # xdd is now our new (Quadratic or Golden Section) point in [a,b]. Calc f(xdd), and do housekeeping.
         fdd = f(xdd)
@@ -67,6 +71,24 @@ def fullbrent(f,ab,max_iter,tol, showlog):
         # Note: We must now test for xd < xdd (not x<a+b)/2) because we may have both xd<(a+b)/2 and xdd<(a+b)/2 if xdd comes from quadratic
         # We want xd to always be the better of xd and xdd (which will automatically be the best of x1, x2, x3)
         # YOUR CODE to update a, xd, b. This code should NOT refer to x1, x2, x3, x4
+        if xd <= xdd:
+            if fdd <= fd:
+                # Beta --> Alpha
+                a = xd
+                xd = xdd
+                fd = fdd
+            else:
+                # Alpha --> Beta
+                b = xdd
+        else:
+            if fdd <= fd:
+                # Alpha --> Beta
+                b = xd
+                xd = xdd
+                fd = fdd
+            else:
+                # Beta -> Alpha
+                a = xdd
 
         # Show the updated a, xd, b values in the log
         logstep(f, k, a, xd, oldxd, oldxdd, b, showlog)
@@ -74,6 +96,13 @@ def fullbrent(f,ab,max_iter,tol, showlog):
         # Update x1..x3 by either (1) adding x4 if we don't already have 3 values,
         # or (2) by replacing the worst of x1..x3 with x4. (You can assume x4 is better than the worst of x1...x3)
         # YOUR CODE goes here
+        if len(x1x2x3)<3:
+            x1x2x3.append(xdd)
+            fx1x2x3.append(fdd)
+        else:
+            i = np.argmax(fx1x2x3)
+            x1x2x3[i] = xdd
+            fx1x2x3[i] = fdd
 
         # Test for convergence
         if b-a<tol:
