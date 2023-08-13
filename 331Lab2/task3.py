@@ -2,6 +2,7 @@
 
 from golden import golden
 from brent import brent
+from fullbrent import fullbrent
 from functions import task1functions, task1functiontitles, task3functions, task3functiontitles
 from testoptimiser import testoptimiser
 
@@ -17,4 +18,6 @@ showlog = True
 testoptimiser(golden, "Golden Section", task3functions, task3functiontitles, a, b, max_iter, tol, showlog, plotleft,
               plotright)
 testoptimiser(brent, "Brents Method", task3functions, task3functiontitles, a, b, max_iter, tol, showlog, plotleft,
+              plotright)
+testoptimiser(fullbrent, "FULL BRENT", task3functions, task3functiontitles, a, b, max_iter, tol, showlog, plotleft,
               plotright)
