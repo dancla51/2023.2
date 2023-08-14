@@ -360,17 +360,16 @@ display: none;
 
 
 <pre class="r"><code>#Import libraries and load data
-library(leaps)</code></pre>
-<pre><code>## Warning: package &#39;leaps&#39; was built under R version 4.2.3</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+library(leaps)
+library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.8
+## v tidyr   1.2.0     v stringr 1.4.0
+## v readr   2.1.2     v forcats 0.5.1
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 <p>Linear algebra is fundamental for data science. Standard CPUs aren’t
 very good at it: they can spend nearly all the time getting data on and
 off the CPU and very little time doing productive calculations.
@@ -404,7 +403,8 @@ with</li>
 sgemm_df = read_csv(&quot;sgemm_product.csv&quot;, show_col_types = FALSE)
 # Sample
 set.seed(502)
-sgemm1&lt;-sgemm_df[sample(241600, 500),]</code></pre>
+sgemm1&lt;-sgemm_df[sample(241600, 500),]
+sgemm2&lt;-sgemm1</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Using the <code>leaps</code> package, as in class, run backwards
 stepwise selection to predict timings from the <strong>logarithm of
@@ -418,7 +418,17 @@ regsubsets. That is, <code>regsubsets</code> requires a premade design
 matrix with all the interactions. Below in the code chunk below, see two
 approaches of making a design matrix with all 2-way interactions.</p>
 <pre class="r"><code># Create column for log of run1
-sgemm1$logrun1 = log(sgemm1$&quot;Run1 (ms)&quot;)</code></pre>
+sgemm1$logrun1 = log(sgemm1$&quot;Run1 (ms)&quot;)
+sgemm1 = sgemm1 %&gt;% select(!(&quot;Run1 (ms)&quot;:&quot;Run4 (ms)&quot;)) #Remove non-logged run columns
+
+#Do same for run2 for future
+sgemm2$logrun2 = log(sgemm2$&quot;Run2 (ms)&quot;)
+sgemm2 = sgemm2 %&gt;% select(!(&quot;Run1 (ms)&quot;:&quot;Run4 (ms)&quot;)) #Remove non-logged run columns
+
+#Do similar for all observations
+sgemm_copy = sgemm_df
+sgemm_copy$logrun2 = log(sgemm_copy$&quot;Run2 (ms)&quot;)
+sgemm_copy = sgemm_copy %&gt;% select(!(&quot;Run1 (ms)&quot;:&quot;Run4 (ms)&quot;)) #Remove non-logged run columns</code></pre>
 <pre class="r"><code>## The easy way: get lm to do it
 ## assuming sgemm1 is your subset of the data frame with the predictors and logged Run 1 times
 
@@ -429,18 +439,103 @@ X&lt;-model.matrix(model)[,-1]  ## drop the intercept column because regsubsets(
 ## faster, and still works when there are more variables than observations
 
 mf&lt;-model.frame(logrun1~.^2, data=sgemm1)
-X&lt;-model.matrix(logrun1~.^2, mf)[,-1]</code></pre>
+X&lt;-model.matrix(logrun1~.^2, mf)[,-1]
+
+rout = regsubsets(X, y=sgemm1$logrun1, nvmax=20, method=&quot;back&quot;)
+rss = summary(rout)$rss
+# Plot results
+x = 1:20
+plot(x, rss)</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Using cross-validation, select a tuning parameter <span class="math inline">\(\lambda\)</span> so that minimising <span class="math inline">\(n\log\mathrm{RSS}+\lambda p\)</span> gives good
-mean squared prediction error, and select a predictive model.</p></li>
-<li><p>Estimate the actual mean squared prediction error of your model
+<li>Using cross-validation, select a tuning parameter <span class="math inline">\(\lambda\)</span> so that minimising <span class="math inline">\(n\log\mathrm{RSS}+\lambda p\)</span> gives good
+mean squared prediction error, and select a predictive model.</li>
+</ol>
+<pre class="r"><code># Crossvalidation code
+allyhat&lt;-function(xtrain, ytrain, xtest,lambdas,nvmax=50){
+  n&lt;-nrow(xtrain)
+  yhat&lt;-matrix(nrow=nrow(xtest),ncol=length(lambdas))
+  search&lt;-regsubsets(xtrain,ytrain, nvmax=nvmax, method=&quot;back&quot;)
+  summ&lt;-summary(search)
+  for(i in 1:length(lambdas)){
+    penMSE&lt;- n*log(summ$rss)+lambdas[i]*(1:nvmax)
+    best&lt;-which.min(penMSE)  #lowest penMSE
+    betahat&lt;-coef(search, best) #coefficients
+    xinmodel&lt;-cbind(1,xtest)[,summ$which[best,]] #predictors in that model
+    yhat[,i]&lt;-xinmodel%*%betahat
+  }
+  yhat
+}
+
+# Set x and y &#39;s
+y = sgemm1$logrun1
+
+# Call using Liza&#39;s code
+n&lt;-nrow(X)
+folds&lt;-sample(rep(1:10,length.out=n))
+lambdas&lt;-c(2,4,6,8,10,12)
+fitted&lt;-matrix(nrow=n,ncol=length(lambdas))
+for(k in 1:10){
+  train&lt;- (1:n)[folds!=k]
+  test&lt;-(1:n)[folds==k]
+  fitted[test,]&lt;-allyhat(X[train,],y[train],X[test,],lambdas)  
+}
+MSPE = colMeans((y-fitted)^2)
+print(MSPE)</code></pre>
+<pre><code>## [1] 0.4046139 0.3929372 0.3815749 0.3774444 0.3816310 0.3886470</code></pre>
+<p>We can see from the MSPE produced by this function that the most
+appropriate value of lambda to use is <span class="math inline">\(\lambda=6\)</span> , as this gives the
+<strong>minimum mean squared prediction error</strong> on our model.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Estimate the actual mean squared prediction error of your model
 using the second replicate of the experiment (<code>log(Run2)</code>) in
-your sample data set.</p></li>
-<li><p>Estimate the actual mean squared prediction error of your model
+your sample data set.</li>
+</ol>
+<pre class="r"><code># From slides, edited
+# use optimal lambda=6
+opt_lambda &lt;- 6
+
+# New X and y
+mf&lt;-model.frame(logrun2~.^2, data=sgemm2)   # Check piazza if this is correct X to use!!!!!!!
+X&lt;-model.matrix(logrun2~.^2, mf)[,-1]
+y = sgemm2$logrun2
+  
+sub &lt;- regsubsets(X, y, method = &#39;back&#39;, nvmax=50)
+summ &lt;- summary(sub)
+aic &lt;- 100*log(summ$rss) + opt_lambda*(1:50)
+best_model &lt;- which.min(aic)
+betahat = coef(sub, best_model)</code></pre>
+<pre class="r"><code># Calculate MSPE
+xinmodel&lt;-cbind(1,X)[,summ$which[best_model,]]
+yhat&lt;-xinmodel%*%betahat
+
+MSPE_2 = mean((yhat-y)**2)
+print(MSPE_2)</code></pre>
+<pre><code>## [1] 0.4789889</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Estimate the actual mean squared prediction error of your model
 using the second replicate of the experiment (<code>log(Run2)</code>) on
 all 261400 observations. How does this value compare to the estimate you
-found in question 4?</p></li>
+found in question 4?</li>
 </ol>
+<pre class="r"><code># New X and y
+mf&lt;-model.frame(logrun2~.^2, data=sgemm_copy)   # Check piazza if this is correct X to use!!!!!!!
+X&lt;-model.matrix(logrun2~.^2, mf)[,-1]
+y = sgemm_copy$logrun2
+  
+sub &lt;- regsubsets(X, y, method = &#39;back&#39;, nvmax=50)
+summ &lt;- summary(sub)
+aic &lt;- 100*log(summ$rss) + opt_lambda*(1:50)
+best_model &lt;- which.min(aic)
+betahat = coef(sub, best_model)</code></pre>
+<pre class="r"><code># Calculate MSPE
+xinmodel&lt;-cbind(1,X)[,summ$which[best_model,]]
+yhat&lt;-xinmodel%*%betahat
+
+MSPE_2 = mean((yhat-y)**2)
+print(MSPE_2)</code></pre>
+<pre><code>## [1] 0.4468062</code></pre>
+<p>This is <strong><em>FINISH THIS BIT</em></strong></p>
 </div>
 <div id="computational-hints" class="section level2">
 <h2>Computational hints</h2>

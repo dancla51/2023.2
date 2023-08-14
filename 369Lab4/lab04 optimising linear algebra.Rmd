@@ -35,6 +35,7 @@ sgemm_df = read_csv("sgemm_product.csv", show_col_types = FALSE)
 # Sample
 set.seed(502)
 sgemm1<-sgemm_df[sample(241600, 500),]
+sgemm2<-sgemm1
 ```
 
 2. Using the `leaps` package, as in class, run backwards stepwise selection to predict timings from the **logarithm of time** for first run on models with all 14 predictors and all two-way interactions. Look at models with up to 20 variables. Plot the apparent error against the number of predictors. 
@@ -43,12 +44,20 @@ Note that you will need a bit of work to get all 2-way interactions in `regsubse
 ```{r}
 # Create column for log of run1
 sgemm1$logrun1 = log(sgemm1$"Run1 (ms)")
-sgemm1 = sgemm1 %>% select(!("Run1 (ms)":"Run4 (ms)"))
+sgemm1 = sgemm1 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
 
+#Do same for run2 for future
+sgemm2$logrun2 = log(sgemm2$"Run2 (ms)")
+sgemm2 = sgemm2 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+
+#Do similar for all observations
+sgemm_copy = sgemm_df
+sgemm_copy$logrun2 = log(sgemm_copy$"Run2 (ms)")
+sgemm_copy = sgemm_copy %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
 ```
 
 
-```{r eval=FALSE}
+```{r cache=TRUE}
 ## The easy way: get lm to do it
 ## assuming sgemm1 is your subset of the data frame with the predictors and logged Run 1 times
 
@@ -63,9 +72,11 @@ X<-model.matrix(logrun1~.^2, mf)[,-1]
 
 rout = regsubsets(X, y=sgemm1$logrun1, nvmax=20, method="back")
 rss = summary(rout)$rss
+
 # Plot results
-x = 1:20
-plot(x, rss)
+predictors = 1:20
+apparent_error <- rss/(100-predictors)
+plot(predictors, apparent_error)
 ```
 
 
@@ -101,14 +112,70 @@ for(k in 1:10){
   test<-(1:n)[folds==k]
   fitted[test,]<-allyhat(X[train,],y[train],X[test,],lambdas)  
 }
-colMeans((y-fitted)^2)
-
+MSPE = colMeans((y-fitted)^2)
+print(MSPE)
 ```
+We can see from the MSPE produced by this function that the most appropriate value of lambda to use is $\lambda=6$ , as this gives the **minimum mean squared prediction error** on our model.
+
 
 4. Estimate the actual mean squared prediction error of your model using the second replicate of the experiment (`log(Run2)`) in your sample data set.
 
+```{r}
+# From slides, edited
+# use optimal lambda=6
+opt_lambda <- 6
+
+# New X and y
+mf<-model.frame(logrun2~.^2, data=sgemm2)   # Check piazza if this is correct X to use!!!!!!!
+X<-model.matrix(logrun2~.^2, mf)[,-1]
+y = sgemm2$logrun2
+  
+sub <- regsubsets(X, y, method = 'back', nvmax=50)
+summ <- summary(sub)
+aic <- 100*log(summ$rss) + opt_lambda*(1:50)
+best_model <- which.min(aic)
+betahat = coef(sub, best_model)
+```
+
+```{r}
+# Calculate MSPE
+xinmodel<-cbind(1,X)[,summ$which[best_model,]]
+yhat<-xinmodel%*%betahat
+
+MSPE_2 = mean((yhat-y)**2)
+print(MSPE_2)
+
+```
+
+
+
+
 5. Estimate the actual mean squared prediction error of your model using the second replicate of the experiment (`log(Run2)`) on all 261400 observations. How does this value compare to the estimate you found in question 4?
 
-## Computational hints
 
-In `rmarkdown`, you can start a code chunk with `{r cache=TRUE}` instead of just `{r}`. It will then not be re-run unless something changes. This can save a lot of time when working with large datasets.
+```{r}
+
+# New X and y
+mf<-model.frame(logrun2~.^2, data=sgemm_copy)   # Check piazza if this is correct X to use!!!!!!!
+X<-model.matrix(logrun2~.^2, mf)[,-1]
+y = sgemm_copy$logrun2
+  
+sub <- regsubsets(X, y, method = 'back', nvmax=50)
+summ <- summary(sub)
+aic <- 100*log(summ$rss) + opt_lambda*(1:50)
+best_model <- which.min(aic)
+betahat = coef(sub, best_model)
+```
+
+```{r}
+# Calculate MSPE
+xinmodel<-cbind(1,X)[,summ$which[best_model,]]
+yhat<-xinmodel%*%betahat
+
+MSPE_2 = mean((yhat-y)**2)
+print(MSPE_2)
+
+```
+This is ***FINISH THIS BIT***
+
+
