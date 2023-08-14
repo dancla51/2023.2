@@ -52,12 +52,13 @@ def fullbrent(f,ab,max_iter,tol, showlog):
         # Use x4 as our new point for xdd if quadratic succeeded. If our quadratic failed, compute xdd using a Golden Section style step
         xdd=x4
         if not xdd:
+            xd = x1x2x3[np.argmin(fx1x2x3)]
             steptype = "GS" # Golden Section step for log
             # YOUR CODE to calculate xdd for a Golden Section step
             if xd <= (a + b) / 2:
-                xdd = a + tau * (b - a)
+                xdd = xd + rho*(b-xd)
             else:
-                xdd = a + (1 - tau) * (b - a)
+                xdd = xd - rho*(xd-a)
 
 
         # xdd is now our new (Quadratic or Golden Section) point in [a,b]. Calc f(xdd), and do housekeeping.
