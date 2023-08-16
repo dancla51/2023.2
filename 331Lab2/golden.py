@@ -64,11 +64,11 @@ def golden(f, ab, max_iter, tol, showlog):
 
         # Test for convergence, break if so.
         if b - a < tol:
-            max_iter = k + 1
+
             exit_flag = ExitFlag.Converged
             break
 
-    return [a,b], xlist, flist, max_iter, exit_flag
+    return [a,b], xlist, flist, k, exit_flag
 
 def logiteration(k,a,alpha,beta,b, falpha, fbeta, showlog):
     if showlog:
