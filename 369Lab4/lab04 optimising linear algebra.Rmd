@@ -121,33 +121,26 @@ We can see from the MSPE produced by this function that the most appropriate val
 4. Estimate the actual mean squared prediction error of your model using the second replicate of the experiment (`log(Run2)`) in your sample data set.
 
 ```{r}
-# From slides, edited
 # use optimal lambda=6
 opt_lambda <- 6
 
-# New X and y
-mf<-model.frame(logrun2~.^2, data=sgemm2)   # Check piazza if this is correct X to use!!!!!!!
-X<-model.matrix(logrun2~.^2, mf)[,-1]
-y = sgemm2$logrun2
-  
-sub <- regsubsets(X, y, method = 'back', nvmax=50)
-summ <- summary(sub)
-aic <- 100*log(summ$rss) + opt_lambda*(1:50)
-best_model <- which.min(aic)
-betahat = coef(sub, best_model)
+search = regsubsets(X, y=sgemm2$logrun2, nvmax=20, method="back") # use regsubsets to create your 20 models using your initial X from question 2
+
+aic = n*log(summary(search)$rss)+opt_lambda*(1:20) # hint, what's your best lambda?
+best<-which.min(aic)  #lowest AIC using our adjusted/tuned AIC from 3 
+betahat<-coef(search, best) # grab the coefficients from our lowest AIC model
+xinmodel<-cbind(1,X)[,summary(search)$which[best,]] # find the variables that actually made it to our final model and put them in our new design matrix :)
 ```
 
 ```{r}
 # Calculate MSPE
-xinmodel<-cbind(1,X)[,summ$which[best_model,]]
 yhat<-xinmodel%*%betahat
 
 MSPE_2 = mean((yhat-y)**2)
-print(MSPE_2)
 
 ```
 
-
+The mean square prediction error is `r MSPE_2`
 
 
 5. Estimate the actual mean squared prediction error of your model using the second replicate of the experiment (`log(Run2)`) on all 261400 observations. How does this value compare to the estimate you found in question 4?
@@ -172,10 +165,12 @@ betahat = coef(sub, best_model)
 xinmodel<-cbind(1,X)[,summ$which[best_model,]]
 yhat<-xinmodel%*%betahat
 
-MSPE_2 = mean((yhat-y)**2)
-print(MSPE_2)
+MSPE_full = mean((yhat-y)**2)
+print(MSPE_full)
 
 ```
-This is ***FINISH THIS BIT***
+The mean square prediction error for the whole dataset is `r MSPE_full`. 
+
+This value is larger than the MSPE found for the small sample taken from the overall dataset. This makes sense, as we expect the model being applied to a larger dataset with more variation than the training sample that it was trained on, to have worse predictive performance on this larger dataset. This is why the Mean Square Prediction Error is about 40% higher in this case.
 
 
