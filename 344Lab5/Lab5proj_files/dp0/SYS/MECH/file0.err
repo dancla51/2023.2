@@ -1,0 +1,25 @@
+/COM,ANSYS RELEASE 2022 R1           BUILD 22.1      UP20211129       12:23:41
+
+ *** WARNING ***                         CP =       0.547   TIME= 12:23:42
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       0.703   TIME= 12:23:42
+ SOLID185 wedges are recommended only in regions of relatively low       
+ stress gradients.                                                       
+
+ *** WARNING ***                         CP =       0.875   TIME= 12:23:42
+ Material number 2 (used by element 58637) should normally have at least 
+ one MP or one TB type command associated with it.  Output of energy by  
+ material may not be available.                                          
+
+ *** WARNING ***                         CP =       3.891   TIME= 12:23:44
+ The PCG solver detects that the stiffness matrix has one or more        
+ negative pivots.  The solution has not converged.  Please check for     
+ rigid body motions in your model.                                       
+                                                                         
+
+ *** ERROR ***                           CP =       6.391   TIME= 12:23:47
+ There is at least 1 small equation solver pivot term (e.g., at the UX   
+ degree of freedom of node 26047).  Please check for an insufficiently   
+ constrained model.                                                      

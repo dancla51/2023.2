@@ -1,0 +1,12 @@
+# encoding: utf-8
+# 2022 R1
+SetScriptVersion(Version="22.1.217")
+Extensions.UnloadExtension(Id="5e7e01a6-8601-11e8-9f8c-28f10e13ffe6")
+Save(Overwrite=True)
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = template1.CreateSystem()
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/dcla189/OneDrive - The University of Auckland/2023 Sem2/2023.2/344Lab5/plate-hole-geom.agdb")
+Save(Overwrite=True)

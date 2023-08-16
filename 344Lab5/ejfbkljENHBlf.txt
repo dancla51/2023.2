@@ -1,0 +1,13 @@
+first solve:
+equiv.stress = 3.9389 MPa
+max.deformation = 0.0082569 mm
+
+2nd solve w smaller mesh around hole:
+equiv.stress = 3.7849 MPa       (slightly less for larger sphere) (3.75 for linear)
+max.deformation = 0.0082606 mm  (same for larger sphere)          (slightly less for linear)
+
+
+
+warnign for wrong BC's:
+Not enough constraints appear to be applied to prevent rigid body motion.  
+This may lead to solution warnings or errors.  Check results carefully.
