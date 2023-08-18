@@ -1,0 +1,154 @@
+---
+title: "Lab5_DC"
+author: "Daniel C"
+date: "2023-08-17"
+output: html_document
+---
+
+
+
+
+```{r, message=F, warning=F}
+# Load libraries
+library(glmnet)
+library(MASS)
+library(tidyverse)
+```
+
+## Task 1
+
+Step1.1:
+
+```{r}
+# Set up parameters
+set.seed(502) 
+n <- 90  
+p <- 90  
+lambdas <- 2^ seq(6, -4, length = 100)  # lambda values.
+# set up correlation matrix between Xs.
+corr <- 0.75
+cor.mat <- matrix(corr, nrow = p, ncol = p)
+diag(cor.mat) <- 1
+cor.mat[lower.tri(cor.mat)] <- t(cor.mat)[lower.tri(cor.mat)]
+# dat_A
+X1 <- mvrnorm(n, mu=rep(1, p), Sigma = cor.mat)
+colnames(X1) <- paste0('X', str_pad(1:p, nchar(p), 'left', '0'))
+n_betas <- 5
+betas <- as.vector(scale(sample(1:n_betas))) * 10
+related.ind <- sample(1:p, n_betas)
+y1 <- as.numeric(betas %*% t(X1[,related.ind]) + rnorm(n))
+dat_A <- cbind(data.frame(Y = y1), X1)
+# dat_B
+X2 <- mvrnorm(n, mu=rep(1, p), Sigma = cor.mat)
+colnames(X2) <- paste0('X', str_pad(1:p, nchar(p), 'left', '0'))
+all_betas <- sample(as.vector(scale(1:p))) * 0.1
+y2 <- as.numeric(all_betas %*% t(X2) + rnorm(n))
+dat_B <- cbind(data.frame(Y = y2), X2)
+```
+
+Step1.2:
+
+X1 and Y1 have been setup where Y1 is only dependent on 5 of the attributes in the X matrix, specifically the `r related.ind` 'th attributes. the attributes which it is dependent on have been randomly sample, and then the coefficients (betas) have been scaled up by a factor of 10, meaning $\hat\beta$ is SPARSE but has not undergone SHRINKAGE.
+
+X2 and Y2 however, have been setup so that Y2 is dependent on all values in the X matrix, which means it is very UNSPARSE. The values have now been scaled down by 0.1 instead of scaled up, so SHRINKAGE has occurred.
+
+
+Step1.3:
+
+```{r}
+set.seed(502) 
+# Split dataset A
+tr_A = sort(sample(1:nrow(dat_A), 0.8*length(dat_A)))
+train_A = dat_A[tr_A,]
+test_A = dat_A[-tr_A,]
+# Split dataset B
+tr_B = sort(sample(1:nrow(dat_B), 0.8*length(dat_B)))
+train_B = dat_A[tr_B,]
+test_B = dat_A[-tr_B,]
+```
+
+## Code From Liza:
+
+```{r}   
+# Liza's function
+myfit <- function(train_df, test_df, a=0){
+  # Note: lasso a = 1; ridge: a = 0
+
+  # separate Xs and Y
+  train_X <- as.matrix(train_df[,-1])
+  train_y <- train_df$Y
+  test_X <- as.matrix(test_df[,-1])
+  test_y <- test_df$Y
+
+  # cross validate with glmnet(..., alpha = a)
+  cv.fit <- cv.glmnet(train_X, train_y, alpha = a,
+                      lambda = lambdas)
+  #plot(cv.fit) #SUPPRESS
+
+  # optimal model
+  opt.l <- cv.fit$lambda.min
+  opt.fit <- cv.fit$glmnet.fit
+  betas <- as.matrix(coef(opt.fit, s = cv.fit$lambda.min))
+  n_non0_betas <- sum(betas != 0)
+
+  # predict on test_df and calculate our stats
+  pred_y <- predict(opt.fit, s = opt.l, newx = test_X)
+  mspe <- mean((test_y - pred_y)^2)
+
+  return(list(alpha = a,
+              mspe = mspe,
+              opt.lambda = opt.l,
+              n_non0_betas = n_non0_betas
+              ))
+}
+```
+
+## Task 2 - Lasso Regression:
+
+```{r}
+# Do Lasso for A and B datasets
+#Lasso for Dataset A:
+myfit(train_A, test_A, a=1)
+#Lasso for Dataset B:
+myfit(train_B, test_B, a=1)
+```
+
+## Task 3 - Ridge Regression:
+
+```{r}
+# Do Ridge for A and B datasets
+print("Ridge for Dataset A:")
+myfit(train_A, test_A, a=0)
+print("Ridge for Dataset B:")
+myfit(train_B, test_B, a=0)
+
+```
+
+## Task 4 - Compare and Comment on the Results:
+
+
+The Lasso regression model applies both shrinkage and selection/scarcity to the models for A and B. This shrinkage causes the models to push many of the coefficients to zero, until the non-zero betas returned are only 9 for dataset A and 18 for dataset B. It also makes sense that A has less beta values than B, because A is the dataset with the true relationship involving only 5 X-variables, while B is the dataset with a true relationship that depends upon all X-values. The lasso method results in fairly low Mean Square Prediction Error values, only 1.56 for dataset A and 1.77 for dataset B. Once again, we expect it to do better on dataset A because the true relationship within A involves less X-variables. For model A, the optimal lambda is correspondingly higher, which forces it to remove more variables.
+
+Lasso works better on model A than model B
+
+The Ridge regression model does not apply any scarcity to the models for both datasets A and B. It does however apply a lot of shrinkage. This means that each of the optimal models will still have 91 non-zero betas (1 intercept and 1 from each of the X-values). The optimal lambdas that have been found is once again larger for dataset A, which results in the model reducing (aka Shrinking) the beta coefficients more. This results in it underfitting to this dataset, so the MSPE for dataset A is less than the MSPE for dataset B for this method. It works slightly better for dataset B as the results with many low non-zero values of beta is closer to the underlying behaviour of this dataset.
+
+Ridge works better on model B than model A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
