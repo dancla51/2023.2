@@ -1,0 +1,161 @@
+---
+title: "Ass2_DC"
+author: "Daniel Clark"
+date: "2023-08-17"
+output: html_document
+---
+
+```{r message=F}
+library(tidyverse)
+library(purrr)
+library(ggplot2)
+library(leaps)
+library(glmnet)
+
+```
+
+
+
+## Task 1.1 - Load data into one file
+
+```{r, eval=F}
+# Function to load in CSV file 
+load_single_file = function(filename){
+  path = paste0("a2_data/",filename)
+  df = read_csv(path, show_col_types=FALSE)
+  return(df)
+}
+
+# List of CSV files
+filelist = list.files(path = "a2_data", pattern = "*.csv")
+# Map
+df_list = filelist %>% map(load_single_file)
+
+# Merge into one DF
+spotify_df = df_list[[1]]
+for (i in 2:length(df_list)) {
+  spotify_df = bind_rows(spotify_df, df_list[[i]])
+}
+
+# Save
+saveRDS(spotify_df, file="spotify_df")
+```
+
+
+```{r}
+spotify_df = readRDS("spotify_df")
+# Display
+head(spotify_df, 15)
+```
+
+**a) How many rows and columns?**
+```{r}
+size_sum(spotify_df)
+```
+114,000 rows and 20 columns!
+
+
+**b) What does each row represent?**
+
+Each row represents one song
+
+
+**c) How many genres in the dataset?**
+```{r}
+length(unique(spotify_df$track_genre))
+```
+There are 114 unique genres!
+
+## Task 1.2
+
+Subtask 1 - Data Visualisation
+
+```{r}
+spotify_nonz = filter(spotify_df, popularity>0)
+spotify_nonz$duration_min = spotify_nonz$duration_ms / 60 / 1000
+# Create Visualisation
+b=filter(spotify_nonz, duration_min<=8)
+ggplot(b, aes(x=duration_min, y=popularity)) + geom_point(alpha=0.1) + geom_smooth()
+
+```
+
+This visualisation is very interesting because it shows how popular songs tend to be on spotify based on how long they are. The geom_smooth has fit a line to this relationship which shows us that songs tend to be the most popular if they are around 3.5 minutes long.
+
+
+Subtask 2 - Data cleaning
+(`spotify_nonz` has already been modified to remove the 0 popularity scores and has converted song duration to minutes)
+```{r}
+set.seed(502)
+
+rows_removed = count(spotify_df) - count(spotify_nonz)
+```
+
+The number of `rows_removed` when removing observations with a popularity score of 0 was `r rows_removed`
+
+```{r}
+# More Cleaning
+spotify_clean = spotify_nonz %>% select(popularity:duration_min) %>% select(-c(duration_ms, track_genre, key))
+
+```
+
+Here I have removed all the rows without any meaningful numeric interpretation. For example, track_ID is not going to be a helpful measure for predicting its popularity, and neither is anything else with a huge number of factors, including Artist, Album, Genre, Key etc. I have also removed the duration in milliseconds column, as the duration in minutes attribute already contains this relevant information.
+
+Create linear Model : (lm works because there are far more observations than variables)
+
+```{r}
+model = lm(popularity~., data=spotify_clean)
+# Create X and Y
+X = model.matrix(model)[,-1]
+y = spotify_clean$popularity
+```
+
+
+Subtask 3 - Justify Model Selection
+
+I have chosen to select a linear regression model because the `popularity` is a numeric response variable, and we can use linear regression based on the remaining 13 numeric/logical attributes to build a convincing model using linear regression. We can assume independence because each song is unique, and if we wanted to (if Liza had asked us to) we could check other assumptions of this model including checking for equality of variance and cook's distance plot for significant observations.
+
+I have chosen to base this model only on the numeric variables in the spotify data, as the non-numeric variables had too many levels to give us any meaningful insight, and would only have needlessly complicated the data.
+
+```{r}
+# Here I have chosen to use the LASSO method of crossvalidation to pick an appropriate hyperparameter lambda
+# [1] Based off of code by Liza Bolton, 2023
+
+# cross validate with glmnet to tune for lambda
+cv.fit <- cv.glmnet(X, y, alpha = 0, lambda = c(0,2,6,100,1000,100000))
+
+# optimal model
+opt.l <- cv.fit$lambda.min
+opt.fit <- cv.fit$glmnet.fit   
+betas <- as.matrix(coef(opt.fit, s = cv.fit$lambda.min))
+n_non0_betas <- sum(betas != 0)
+
+# predict on test_df and calculate our stats
+pred_y <- predict(opt.fit, s = opt.l, newx = X)
+mspe <- mean((y - pred_y)^2)
+
+both_ys = as.data.frame(y)
+both_ys$pred = pred_y
+
+# Print visualisation of model performance
+ggplot(data=both_ys, aes(x=y,y=pred)) + 
+  geom_point(alpha=0.05, size=3) + 
+  geom_smooth() +
+  geom_abline(size=3, slope=1, intercept=0) +
+  ylim(0,100) +
+  xlim(0,100)
+  
+```
+
+
+
+Subtask 4 - Clearly report your final model
+
+
+My final model is $Popularity = \beta_0 + \sum_{i=1}^n \beta_{i}X_{i} + \epsilon ^{iid} N(0,\sigma^{2})$ where n is the number of explanatory variables = 13, and $\beta_{i}$ is the ith estimate as shown in the summary table above
+
+
+
+
+
+
+
