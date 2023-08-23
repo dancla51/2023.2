@@ -192,16 +192,17 @@ Bootstrapping
 # Adapted from code in the extra bits by Liza Bolton
 predict_spotify = function(data, i){
   model = lm(popularity~., data=spotify_clean[i,])
-  predict.lm(model, song_values, interval = "none") + sample(resid(model),1)
+  predict.lm(model, song_values, interval = "none") + sample(resid(model),1) # add sampled residual
 }
 
 bootstraps = boot(spotify_clean, predict_spotify, R = 1000)
-ci <- bootstraps$t0 + c(-1.96, 1.96) * sd(bootstraps$t)
-round(ci, 1)
 
+pred_int = round(t(quantile(bootstraps$t, c(0.025, 0.975))),2)
+
+knitr::kable(pred_int)
 ```
 
-The prediction interval found for the popularity of the song "Hand Clap" by Fitz and the tantrums is the range (18.1-91.3). This is an extremely wide prediction interval showing the imprecision of the model. The true value of popularity for this song is 65, which is within this prediction interval.
+The prediction interval found for the popularity of the song "Hand Clap" by Fitz and the tantrums is the range (3.12 - 75.39). This is an extremely wide prediction interval showing the imprecision of the model. The true value of popularity for this song is 65, which is within this prediction interval.
 
 
 ## Task 2 - Reflection
