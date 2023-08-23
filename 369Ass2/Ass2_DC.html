@@ -357,23 +357,12 @@ display: none;
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;purrr&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;stringr&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;forcats&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## Warning: package &#39;lubridate&#39; was built under R version 4.2.3</code></pre>
-<pre class="r"><code>library(purrr)
+<pre class="r"><code>library(tidyverse)
+library(purrr)
 library(ggplot2)
-library(leaps)</code></pre>
-<pre><code>## Warning: package &#39;leaps&#39; was built under R version 4.2.3</code></pre>
-<pre class="r"><code>library(glmnet)</code></pre>
-<pre><code>## Warning: package &#39;glmnet&#39; was built under R version 4.2.3</code></pre>
+library(leaps)
+#library(glmnet)
+library(boot)</code></pre>
 <div id="task-1.1---load-data-into-one-file" class="section level2">
 <h2>Task 1.1 - Load data into one file</h2>
 <pre class="r"><code># Function to load in CSV file 
@@ -486,7 +475,6 @@ mf&lt;-model.frame(popularity~.^2, data=spotify_clean)
 X&lt;-model.matrix(popularity~.^2, mf)[,-1]
 y = spotify_clean$popularity
 
-# Call using Liza&#39;s code
 n&lt;-nrow(X)
 folds&lt;-sample(rep(1:10,length.out=n))
 lambdas&lt;-c(0,2,4,6,8,10,12)
@@ -521,6 +509,10 @@ us.</p>
 do not penalise at all having extra attributes in our model, so fitting
 the final model will give us a model with all parameters that I have
 left in being active.</p>
+<p>I have also chosen not to fit any interaction terms in my model, as
+this will also greatly increase the time that the model takes to run, as
+it would effectively square the number of factors involved in the
+model.</p>
 <pre class="r"><code># As our optimal lambda value is 0, there is no need to use regsubsets to find different parameter sets.
 model = lm(popularity~., data=spotify_clean)
 
@@ -539,6 +531,135 @@ summary(model)$coefficients[,1]</code></pre>
 number of explanatory variables = 13, <span class="math inline">\(\beta_{i}\)</span> is the ith estimate as shown in
 the summary table above, and <span class="math inline">\(X_{i}\)</span>
 is the value of the corresponding attribute.</p>
+</div>
+<div id="task-1.3" class="section level2">
+<h2>Task 1.3</h2>
+<p>Choose song from spotify dataset and craft a 95% prediction interval
+for uncertainty:</p>
+<pre class="r"><code>set.seed(502)
+song_num = sample(1:length(spotify_clean$popularity), 1)
+song_values = (spotify_clean[song_num,])
+knitr::kable(spotify_nonz[song_num,])</code></pre>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="3%" />
+<col width="5%" />
+<col width="2%" />
+<col width="1%" />
+<col width="3%" />
+<col width="1%" />
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="5%" />
+<col width="4%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">track_id</th>
+<th align="left">artists</th>
+<th align="left">album_name</th>
+<th align="left">track_name</th>
+<th align="right">popularity</th>
+<th align="right">duration_ms</th>
+<th align="left">explicit</th>
+<th align="right">danceability</th>
+<th align="right">energy</th>
+<th align="right">key</th>
+<th align="right">loudness</th>
+<th align="right">mode</th>
+<th align="right">speechiness</th>
+<th align="right">acousticness</th>
+<th align="right">instrumentalness</th>
+<th align="right">liveness</th>
+<th align="right">valence</th>
+<th align="right">tempo</th>
+<th align="right">time_signature</th>
+<th align="left">track_genre</th>
+<th align="right">duration_min</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">7j56HrjR9cGzvekvZY3Faz</td>
+<td align="left">Fitz and The Tantrums</td>
+<td align="left">Fitz and The Tantrums</td>
+<td align="left">HandClap</td>
+<td align="right">65</td>
+<td align="right">193253</td>
+<td align="left">FALSE</td>
+<td align="right">0.636</td>
+<td align="right">0.836</td>
+<td align="right">8</td>
+<td align="right">-3.004</td>
+<td align="right">1</td>
+<td align="right">0.0427</td>
+<td align="right">0.00609</td>
+<td align="right">0.000157</td>
+<td align="right">0.0828</td>
+<td align="right">0.715</td>
+<td align="right">139.956</td>
+<td align="right">4</td>
+<td align="left">indie-pop</td>
+<td align="right">3.220883</td>
+</tr>
+</tbody>
+</table>
+<p>I have set my seed and then selected a song at random. I don’t know
+the song, but it turns out I do know this artist! This makes me think it
+might be a fairly popular song. Now to construct a confidence
+interval.</p>
+<p>Bootstrapping</p>
+<pre class="r"><code># Adapted from code in the extra bits by Liza Bolton
+predict_spotify = function(data, i){
+  model = lm(popularity~., data=spotify_clean[i,])
+  predict.lm(model, song_values, interval = &quot;none&quot;) + sample(resid(model),1)
+}
+
+bootstraps = boot(spotify_clean, predict_spotify, R = 1000)
+ci &lt;- bootstraps$t0 + c(-1.96, 1.96) * sd(bootstraps$t)
+round(ci, 1)</code></pre>
+<pre><code>## [1]  0.6 75.2</code></pre>
+<p>The prediction interval found for the popularity of the song “Hand
+Clap” by Fitz and the tantrums is the range (18.1-91.3). This is an
+extremely wide prediction interval showing the imprecision of the model.
+The true value of popularity for this song is 65, which is within this
+prediction interval.</p>
+</div>
+<div id="task-2---reflection" class="section level2">
+<h2>Task 2 - Reflection</h2>
+<ol style="list-style-type: decimal">
+<li><p>What is something you’re proud of in the assignment? I am proud
+of the visualisation that I’ve created in Task 1.2 subtask 2. I think
+this visualisation is clear, easy to understand, and provides us with
+helpful information about the relationship between the duration of a
+song and the popularity of it. the geom_smooth clearly shows that the
+most popular song-length is 3-4 minutes, which is information that is
+backed up by the length of songs we tend to hear most commonly on the
+radio, and in every day life.</p></li>
+<li><p>What are you going to do prepare for the STATS369 midterm AND
+which topics do you find the most challenging — why? I am going to use
+past tests to test my knowledge and practice for the upcoming midterm
+tests. The thing I expect to find the most challenging will be writing
+R-code in an exam setting because this is not something that I have done
+before, and I hope to be able to remember enough about the relevant
+functions.</p></li>
+</ol>
+</div>
+<div id="references" class="section level2">
+<h2>References:</h2>
+<p><a href="https://canvas.auckland.ac.nz/courses/89825/files/11451795?module_item_id=1927869&amp;fd_cookie_set=1" class="uri">https://canvas.auckland.ac.nz/courses/89825/files/11451795?module_item_id=1927869&amp;fd_cookie_set=1</a>,
+Liza Bolton, accessed 23/08/2023</p>
 </div>
 
 

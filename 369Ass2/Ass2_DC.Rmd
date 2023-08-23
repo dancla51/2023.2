@@ -10,8 +10,8 @@ library(tidyverse)
 library(purrr)
 library(ggplot2)
 library(leaps)
-library(glmnet)
-
+#library(glmnet)
+library(boot)
 ```
 
 
@@ -103,7 +103,7 @@ Here I have removed all the rows without any meaningful numeric interpretation. 
 
 Create linear Model
 
-```{r}
+```{r, cache=T}
 # Code from Lab 4
 # Crossvalidation code
 allyhat<-function(xtrain, ytrain, xtest,lambdas,nvmax=50){
@@ -126,7 +126,6 @@ mf<-model.frame(popularity~.^2, data=spotify_clean)
 X<-model.matrix(popularity~.^2, mf)[,-1]
 y = spotify_clean$popularity
 
-# Call using Liza's code
 n<-nrow(X)
 folds<-sample(rep(1:10,length.out=n))
 lambdas<-c(0,2,4,6,8,10,12)
@@ -152,6 +151,8 @@ I have chosen to base this model only on the numeric variables in the spotify da
 
 The optimal lambda found by cross-validation is 0. This means that we do not penalise at all having extra attributes in our model, so fitting the final model will give us a model with all parameters that I have left in being active.
 
+I have also chosen not to fit any interaction terms in my model, as this will also greatly increase the time that the model takes to run, as it would effectively square the number of factors involved in the model.
+
 ```{r}
 # As our optimal lambda value is 0, there is no need to use regsubsets to find different parameter sets.
 model = lm(popularity~., data=spotify_clean)
@@ -169,7 +170,53 @@ Subtask 4 - Clearly report your final model
 My final model is $Popularity = \beta_0 + \sum_{i=1}^n \beta_{i}X_{i} + \epsilon$, where $\epsilon ^{iid} N(0,\sigma^{2})$, n is the number of explanatory variables = 13, $\beta_{i}$ is the ith estimate as shown in the summary table above, and $X_{i}$ is the value of the corresponding attribute.
 
 
+## Task 1.3
 
+Choose song from spotify dataset and craft a 95% prediction interval for uncertainty:
+
+```{r}
+set.seed(502)
+song_num = sample(1:length(spotify_clean$popularity), 1)
+song_values = (spotify_clean[song_num,])
+knitr::kable(spotify_nonz[song_num,])
+
+
+```
+I have set my seed and then selected a song at random. I don't know the song, but it turns out I do know this artist! This makes me think it might be a fairly popular song. Now to construct a confidence interval.
+
+
+Bootstrapping
+
+```{r, cache=T}
+
+# Adapted from code in the extra bits by Liza Bolton
+predict_spotify = function(data, i){
+  model = lm(popularity~., data=spotify_clean[i,])
+  predict.lm(model, song_values, interval = "none") + sample(resid(model),1)
+}
+
+bootstraps = boot(spotify_clean, predict_spotify, R = 1000)
+ci <- bootstraps$t0 + c(-1.96, 1.96) * sd(bootstraps$t)
+round(ci, 1)
+
+```
+
+The prediction interval found for the popularity of the song "Hand Clap" by Fitz and the tantrums is the range (18.1-91.3). This is an extremely wide prediction interval showing the imprecision of the model. The true value of popularity for this song is 65, which is within this prediction interval.
+
+
+## Task 2 - Reflection
+
+1. What is something you’re proud of in the assignment?
+  I am proud of the visualisation that I've created in Task 1.2 subtask 2. I think this visualisation is clear, easy to understand, and provides us with helpful information about the relationship between the duration of a song and the popularity of it. the geom_smooth clearly shows that the most popular song-length is 3-4 minutes, which is information that is backed up by the length of songs we tend to hear most commonly on the radio, and in every day life.
+
+
+2. What are you going to do prepare for the STATS369 midterm AND which topics do you find the most challenging — why? 
+  I am going to use past tests to test my knowledge and practice for the upcoming midterm tests. The thing I expect to find the most challenging will be writing R-code in an exam setting because this is not something that I have done before, and I hope to be able to remember enough about the relevant functions.
+
+
+## References:
+
+https://canvas.auckland.ac.nz/courses/89825/files/11451795?module_item_id=1927869&fd_cookie_set=1, Liza Bolton, accessed 23/08/2023
 
 
 
