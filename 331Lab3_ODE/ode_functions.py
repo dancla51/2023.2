@@ -61,7 +61,15 @@ def derivative_bungy(t, y, gravity, length, mass, drag, spring, gamma):
     Returns:
         f (ndarray): derivatives of vertical position and vertical velocity.
     """
-    pass
+    f = np.array([0,0])
+    f[0]=y[1]
+    if y[0]<length:
+        f[1] = gravity - np.sign(y[1]) * drag * y[1]**2 / mass
+    else:
+        f[1] = gravity - np.sign(y[1]) * drag * y[1]**2 / mass - spring/mass*(y[0]-length) - gamma*y[1]/mass
+
+    return f
+
 
 
 def derivative_lorenz(t, y, sigma, rho, beta):
