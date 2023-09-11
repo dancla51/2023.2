@@ -1,0 +1,177 @@
+\setlength{\firstcol}{0.75cm}
+\setlength{\secondcol}{0.75cm}
+\setlength{\thirdcol}{1.6cm}
+\setlength{\fourthcol}{1.5cm}
+\setlength{\fifthcol}{1.7cm}
+\setlength{\lastcol}{9cm}
+
+\makeatletter
+\def\@cline#1-#2\@nil{%
+  \omit
+  \@multicnt#1%
+  \advance\@multispan\m@ne
+  \ifnum\@multicnt=\@ne\@firstofone{&\omit}\fi
+  \@multicnt#2%
+  \advance\@multicnt-#1%
+  \advance\@multispan\@ne
+  \leaders\hrule\@height\arrayrulewidth\hfill
+  \cr
+  \noalign{\nobreak\vskip-\arrayrulewidth}}
+\makeatother
+
+\begin{tabular}{|p{\thirdcol}|p{\fourthcol}p{\fifthcol}|p{\lastcol}|}
+\hline
+  \multirow{8}{*}{\parbox{\thirdcol}{\centering }} &
+  \multicolumn{2}{c|}{\parbox{\fourthcol}{\gapit{\centering\textbf{Participants}}}} &
+  \parbox{\lastcol}{
+ }
+ \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{Start Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+ \parbox{\fifthcol}{\gapit{\centering\textbf{State Change}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+    \State 
+  \end{algorithmic}
+  } \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{End Event }}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+      \State 
+      \State \Comment{TRANSITION ??? is determined by logic}
+  \end{algorithmic}
+    }\\ \cline{1-4} 
+   \multirow{10}{*}{\parbox{\thirdcol}{\centering }} &
+  \multicolumn{2}{c|}{\parbox{\fourthcol}{\gapit{\centering\textbf{Participants}}}} &
+  \parbox{\lastcol}{
+  
+  } \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{Start Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type }}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Change}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+  \State 
+  \end{algorithmic}} \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{4}{*}{\parbox{\fourthcol}{\centering\textbf{End Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+      \State 
+      \State 
+      \State 
+  \end{algorithmic}
+  } \\ \hline 
+\end{tabular}
+
+\begin{tabular}{|p{\thirdcol}|p{\fourthcol}p{\fifthcol}|p{\lastcol}|}
+  \hline
+  \multirow{7}{*}{\parbox{\thirdcol}{\centering }} &
+  \multicolumn{2}{c|}{\parbox{\fourthcol}{\gapit{\centering\textbf{Participants}}}} &
+  \parbox{\lastcol}{
+  } \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{2}{*}{\parbox{\fourthcol}{\centering\textbf{Start Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+  \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+  \State 
+  \end{algorithmic}} \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{2}{*}{\parbox{\fourthcol}{\centering\textbf{End Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+      \State \Comment{TRANSITION ??? or ??? determined by logic}
+  \end{algorithmic}
+  } \\ \cline{1-4} 
+  \multirow{10}{*}{\parbox{\thirdcol}{\centering }} &
+  \multicolumn{2}{c|}{\parbox{\fourthcol}{\gapit{\centering\textbf{Participants}}}} &
+  \parbox{\lastcol}{
+  }
+\\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{Start Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+  Controlled \\ \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+  \State 
+  \State 
+  \end{algorithmic}} \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{4}{*}{\parbox{\fourthcol}{\centering\textbf{End Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+  \State 
+  \State
+  \State 
+  \end{algorithmic}
+  } \\ \cline{1-4} 
+  \multirow{7}{*}{\parbox{\thirdcol}{\centering }} &
+  \multicolumn{2}{c|}{\parbox{\fourthcol}{\gapit{\centering\textbf{Participants}}}} &
+  \parbox{\lastcol}{
+  
+ }
+\\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{Start Event}}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+   \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+ \parbox{\fifthcol}{\gapit{\centering\textbf{State Change}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+    \State 
+  \end{algorithmic}
+  } \\* \cline{2-4} 
+   &
+  \multicolumn{1}{c|}{\multirow{3}{*}{\parbox{\fourthcol}{\centering\textbf{End Event }}}} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{Type}}} &
+  Controlled \\* \cline{3-4} 
+   &
+  \multicolumn{1}{c|}{} &
+  \parbox{\fifthcol}{\gapit{\centering\textbf{State Changes}}} &
+  \hspace*{\algoff}\parbox{\lastcol}{
+  \begin{algorithmic}[1]
+      \State
+      \State \Comment{}
+  \end{algorithmic}
+  }  \\ \hline
+\end{tabular}

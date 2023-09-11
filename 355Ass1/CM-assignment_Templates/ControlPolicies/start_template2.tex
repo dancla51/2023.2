@@ -1,0 +1,38 @@
+\textbf{On Start Choose Direction} \\[6pt]
+\logictable{Person P}{
+\begin{algorithmic}[1]
+\If{P.CurrentSection = P.Section}
+  \State Choose Direction.End with P
+  \State TRANSITION P.T6 Choose Direction.End to Person Seated with P
+\Else
+\If{P.FirstChoice}
+  \State 
+\ElsIf{(P.CurrentSection = ``A'') AND (P.Direction = ``down'')}
+  \StatexIndent[2] \Comment{Crossing ``A'' to ``X'', find best direction from distance}
+  \If{(P.Section - ``A'') $<$ (``X'' - P.Section)}
+    \State P.Direction = ``up''
+  \Else
+    \State P.Direction = ``down''
+  \EndIf
+\ElsIf{(P.CurrentSection = ``X'') AND (P.Direction = ``up'')}
+  \StatexIndent[2] \Comment{Crossing ``X'' to ``A'', find best direction from distance}
+  \If{(P.Section - ``A'') $>$ (``X'' - P.Section)}
+    \State P.Direction = ``down''
+  \Else
+    \State P.Direction = ``up''
+  \EndIf
+\Else
+  \If{}
+    \State 
+  \Else \Comment{}
+    \State 
+  \EndIf
+\EndIf
+\If{}
+\State
+\Else
+\State
+\EndIf
+\EndIf
+\end{algorithmic}
+}

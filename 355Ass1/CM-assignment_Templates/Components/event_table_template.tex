@@ -1,0 +1,100 @@
+\setlength{\firstcol}{0.75cm}
+\setlength{\secondcol}{0.75cm}
+\setlength{\thirdcol}{1.6cm}
+\setlength{\fourthcol}{2.5cm}
+\setlength{\fifthcol}{9cm}
+
+\begin{tabular}{|p{\thirdcol}|p{\fourthcol}|p{\fifthcol}|}
+\hline
+  \multirow{9}{*}{\parbox{\thirdcol}{\centering Simulation Start}} &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Participant}} &
+  None \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Type}} &
+  \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{State Changes}} &
+  \hspace*{\algoff}\parbox{\fifthcol}{
+  \begin{algorithmic}[1]
+      \State
+      \State
+      \State
+      \State
+      \State
+  \end{algorithmic}
+  }  
+  \\ \hline
+\multirow{8}{*}{\parbox{\thirdcol}{\centering Person Arrives}} &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Participant }} &
+  Person (P), Turnstile (T) \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Type }} &
+  \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{State Changes }} &
+\hspace*{\algoff}\parbox{\fifthcol}{  
+  \begin{algorithmic}[1]
+    \State 
+    \State 
+    \State
+    \State
+  \end{algorithmic}
+} \\ \hline
+\end{tabular}
+
+\begin{tabular}{|p{\thirdcol}|p{\fourthcol}|p{\fifthcol}|}
+\hline
+\multirow{3}{*}{\parbox{\thirdcol}{\centering }} &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Participant }} &
+  \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Type }} &
+  \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{State Changes}} &
+\hspace*{\algoff}\parbox{\fifthcol}{  
+  \begin{algorithmic}[1]
+    \State 
+  \end{algorithmic}
+}    
+  \\ \hline
+\multirow{7}{*}{\parbox{\thirdcol}{\centering }} &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Participant }} &
+   \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Type }} &
+  \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{State Changes }} &
+\hspace*{\algoff}\parbox{\fifthcol}{  
+  \begin{algorithmic}[1]
+    \State T.ID = max(U.ID for U in Turnstiles) + 1
+    \Statex \Comment{Get next ID}
+    \State 
+    \State 
+  \end{algorithmic}
+}
+  \\ \hline
+\multirow{5}{*}{\parbox{\thirdcol}{
+\centering 
+Simulation Finish}} &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Participant }} &
+  None \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{3pt}\centering\textbf{Type }} &
+  Scheduled \\ \cline{2-3} 
+   &
+  \parbox{\fourthcol}{\vspace*{10pt}\centering\textbf{State Changes}} &  
+  \vspace*{-16pt}
+  \begin{algorithmic}[1]
+      \For{T $\in$ Turnstiles}
+      \State Calculate statistics for T
+      \EndFor
+  \end{algorithmic}
+  \vspace*{3pt}
+  \\ \hline 
+\end{tabular}
+
+ 
+ 
+ 
