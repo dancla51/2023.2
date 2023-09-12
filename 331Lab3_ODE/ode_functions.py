@@ -22,7 +22,33 @@ def explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args):
         t (ndarray): independent variable values at which dependent variable(s) calculated.
         y (ndarray): dependent variable(s) solved at t values.
     """
-    pass
+    tabsize = len(alpha)
+
+    t = np.arange(t0, t1+h, h)
+    yheight = len(y0)
+    ywidth = len(t)
+    y = np.zeros([yheight, ywidth])   # yk = y[:,k]
+    y[:,0] = y0
+
+    # k is iteration
+    for k in range(len(t)-1):
+        # Calculate functions evaluations
+        for i in range(tabsize):
+            fs = np.zeros([yheight, tabsize])
+            # Calc sum of gammaij * fj
+            fjs=np.zeros(yheight)
+            for j in range(i-1):
+                fjs += gamma[i,j] * fs[:,j]
+
+            fs[:,i] = func(t[k] + h*beta[i], y[:,k] + h*fjs, *args)
+
+        #print(fs)
+        y_next = y[:,k]
+        for i in range(tabsize):
+            y_next += h*alpha[i] * fs[:,i]
+        y[:,k+1] = y_next
+
+    return (t, y)
 
 
 def dp_solver_adaptive_step(func, y0, t0, t1, atol, *args):
@@ -87,3 +113,26 @@ def derivative_lorenz(t, y, sigma, rho, beta):
         f (ndarray): derivatives of x, y and z in Lorenz system.
     """
     pass
+
+
+# Test Solver with Improved Euler Method
+if __name__ == "__main__":
+    func = derivative_bungy
+    t0 = 0
+    y0 = np.array([0, 0])
+    t1 = 50
+    h = 0.01
+    alpha = np.array([0.5, 0.5])
+    beta = np.array([0, 1])
+    gamma = np.array([[0, 0], [1, 0]])
+    args = [9.8, 16, 67, 0.75, 50, 8]    #Short50
+    # gravity, length, mass, drag, spring, gamma
+
+    t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args)
+
+    # Plot
+    fig, ax = plt.subplots()
+    ax.plot(t,y[0,:], "-r")
+    ax.invert_yaxis()
+    plt.show()
+
