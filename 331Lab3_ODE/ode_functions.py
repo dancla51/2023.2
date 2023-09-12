@@ -33,20 +33,20 @@ def explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args):
     # k is iteration
     for k in range(len(t)-1):
         # Calculate functions evaluations
+        fs = np.zeros([yheight, tabsize])
         for i in range(tabsize):
-            fs = np.zeros([yheight, tabsize])
+
             # Calc sum of gammaij * fj
             fjs=np.zeros(yheight)
-            for j in range(i-1):
+            for j in range(i):
                 fjs += gamma[i,j] * fs[:,j]
-
             fs[:,i] = func(t[k] + h*beta[i], y[:,k] + h*fjs, *args)
 
-        #print(fs)
-        y_next = y[:,k]
+        y_next = np.copy(y[:,k])
         for i in range(tabsize):
             y_next += h*alpha[i] * fs[:,i]
-        y[:,k+1] = y_next
+
+        y[:,k+1] = np.array(y_next)
 
     return (t, y)
 
@@ -87,10 +87,10 @@ def derivative_bungy(t, y, gravity, length, mass, drag, spring, gamma):
     Returns:
         f (ndarray): derivatives of vertical position and vertical velocity.
     """
-    f = np.array([0,0])
+    f = np.zeros(2)
     f[0]=y[1]
     if y[0]<length:
-        f[1] = gravity - np.sign(y[1]) * drag * y[1]**2 / mass
+        f[1] = gravity - np.sign(y[1]) * drag * y[1] ** 2 / mass
     else:
         f[1] = gravity - np.sign(y[1]) * drag * y[1]**2 / mass - spring/mass*(y[0]-length) - gamma*y[1]/mass
 
@@ -119,16 +119,19 @@ def derivative_lorenz(t, y, sigma, rho, beta):
 if __name__ == "__main__":
     func = derivative_bungy
     t0 = 0
-    y0 = np.array([0, 0])
-    t1 = 50
-    h = 0.01
+    y0 = np.array([0, 1])
+    t1 = 1
+    h = 1
     alpha = np.array([0.5, 0.5])
     beta = np.array([0, 1])
     gamma = np.array([[0, 0], [1, 0]])
-    args = [9.8, 16, 67, 0.75, 50, 8]    #Short50
+    #args = [9.8, 16, 67, 0.75, 50, 8]    #Short50
+    args = [10, 20, 50, 1, 50, 8]    #Short50
     # gravity, length, mass, drag, spring, gamma
 
     t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args)
+
+    print(t, "\n", y)
 
     # Plot
     fig, ax = plt.subplots()

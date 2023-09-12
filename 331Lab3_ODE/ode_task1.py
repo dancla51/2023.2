@@ -29,8 +29,6 @@ ax.plot(t,y[0,:], "-b")
 ax.invert_yaxis()
 plt.show()
 
-# Test by hand gives ...
-
 
 # Part 4
 
