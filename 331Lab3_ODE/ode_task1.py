@@ -3,6 +3,7 @@ from ode_functions import *
 
 
 plotPt3=False
+plotPt5=True
 
 
 # set parameters needed to solve ODE
@@ -37,10 +38,10 @@ if plotPt3:
 
 # Part 4
 
-max_disp = np.zeros([2, 5])
+max_disp = np.zeros([2, 6])
 # Each rope
 for i, length in enumerate(range(16, 26, 5)):     # 16 = Short, 21 = Reg
-    for j, spring in enumerate(range(50, 100, 10)):
+    for j, spring in enumerate(range(50, 110, 10)):
         args = [gravity, length, mass, drag, spring, gamma]
         t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, rk_alpha, rk_beta, rk_gamma, *args)
         max_disp[i,j] = max(y[0])
@@ -49,7 +50,18 @@ print(max_disp)
 
 
 # Part 5
-
+if plotPt5:
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    plt.bar(np.arange(48, 108, 10), max_disp[0], width=4, label="Short Bungy Cord")
+    plt.bar(np.arange(52, 112, 10), max_disp[1], width=4, label="Regular Bungy Cord")
+    plt.plot([45, 105], [44.8, 44.8], '-.k', label="Full Dunk")
+    plt.plot([45, 105], [43, 43], ':k', label="Partial Dunk")
+    plt.legend()
+    plt.ylim(0, 63)
+    plt.xlabel("Stiffness of Bungy Cord [N/m]")
+    plt.ylabel("Maximum Bungy Jump Depth [m]")
+    plt.title("Maximum Bungy Jump Depth by Cord length and stiffness")
+    plt.show()
 
 
 
