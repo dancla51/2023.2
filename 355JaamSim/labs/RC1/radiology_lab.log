@@ -1,0 +1,24 @@
+Runtime error in replication 1 of scenario 1 at time 228.366999 s:
+The type of the given entity: 'PatientEntity', does not match the type required: 'CTMachineEntity'
+The error occured in file: 'ControlUnit.java', method: 'transitionTo', line: '300'
+Stack trace:
+hccm.activities.ProcessActivity.start(ProcessActivity.java:374)
+hccm.controlunits.ControlUnit.transitionTo(ControlUnit.java:300)
+labs.RadiologyControlUnit.OnStartWaitForScan(RadiologyControlUnit.java:41)
+java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
+java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+java.base/java.lang.reflect.Method.invoke(Method.java:564)
+hccm.controlunits.Trigger.executeLogic(Trigger.java:84)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.activities.WaitActivity$WaitStart.happens(WaitActivity.java:157)
+hccm.activities.WaitActivity.start(WaitActivity.java:296)
+hccm.Constants.nextComponent(Constants.java:28)
+hccm.activities.ProcessActivity$ProcessFinish.happens(ProcessActivity.java:255)
+hccm.activities.ProcessActivity.finish(ProcessActivity.java:427)
+hccm.activities.ProcessActivity.removeDisplayEntity(ProcessActivity.java:417)
+com.jaamsim.ProcessFlow.EntityDelay$RemoveDisplayEntityTarget.process(EntityDelay.java:207)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
