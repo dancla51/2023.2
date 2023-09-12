@@ -3,7 +3,8 @@ from ode_functions import *
 
 
 plotPt3=False
-plotPt5=True
+plotPt5=False
+plotPt6=True
 
 
 # set parameters needed to solve ODE
@@ -64,6 +65,34 @@ if plotPt5:
     plt.show()
 
 
+# Task 6
 
 
+# The Bungy cords that will fully dunk the engineering student are the Reg50 and Reg60
+# cords. I will choose to use the Reg60 cord as it dunks the engineering student for
+# the least amount of time, so is the safer option of the two.
+length = 21
+spring = 60
+args = [gravity, length, mass, drag, spring, gamma]
+t_reg60, y_reg60 = explicit_solver_fixed_step(func, y0, t0, t1, h, rk_alpha, rk_beta, rk_gamma, *args)
+
+if plotPt6:
+    # Displacement and Velocity vs time
+    fig, ax1 = plt.subplots()
+    ax1.set_xlabel('time [s]')
+    ax1.set_ylabel('Displacement [m]', color="blue")
+    ax1.plot(t_reg60, y_reg60[0], color="blue")
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Velocity [m/s]', color="green")
+    ax2.plot(t_reg60, y_reg60[1], color="green")
+    ax1.invert_yaxis()
+    ax2.invert_yaxis()
+    ax1.set_title("Displacement and Velocity vs Time of Reg60 Bungy")
+    plt.show()
+    # Phase Plot
+    plt.plot(y_reg60[0], y_reg60[1])
+    plt.xlabel("Displacement [m]")
+    plt.ylabel("Velocity [m/s]")
+    plt.title("Phase Plot of Reg60 Bungy")
+    plt.show()
 
