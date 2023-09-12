@@ -3,7 +3,7 @@ from ode_functions import *
 
 
 plotPt3=False
-plotPt5=False
+plotPt5=True
 plotPt6=True
 
 
@@ -64,13 +64,15 @@ if plotPt5:
     plt.title("Maximum Bungy Jump Depth by Cord length and stiffness")
     plt.show()
 
+# The Bungy cords that will fully dunk the engineering student are the Reg50 and Reg60
+# cords. I will choose to use the Reg60 cord as it dunks the engineering student for
+# the least amount of time, so is the safer option of the two.
+
 
 # Task 6
 
 
-# The Bungy cords that will fully dunk the engineering student are the Reg50 and Reg60
-# cords. I will choose to use the Reg60 cord as it dunks the engineering student for
-# the least amount of time, so is the safer option of the two.
+# Using Reg60
 length = 21
 spring = 60
 args = [gravity, length, mass, drag, spring, gamma]
@@ -94,5 +96,30 @@ if plotPt6:
     plt.xlabel("Displacement [m]")
     plt.ylabel("Velocity [m/s]")
     plt.title("Phase Plot of Reg60 Bungy")
+    plt.grid()
     plt.show()
+
+for i in range(len(t_reg60)):
+    if y_reg60[0,i]>43: # When first impacts water
+        print("The jumper first hits the water after", t_reg60[i],"seconds with a velocity of", y_reg60[1,i], "m/s")
+        break
+
+# The jumper first hits the water after 3.35 seconds
+# with a velocity of  9.98 m/s
+
+
+# 85kg situation
+mass = 85
+args = [gravity, length, mass, drag, spring, gamma]
+t_85, y_85 = explicit_solver_fixed_step(func, y0, t0, t1, h, rk_alpha, rk_beta, rk_gamma, *args)
+for i in range(len(t_85)):
+    if y_85[0,i]>43: # When first impacts water
+        print("The 85kg jumper first hits the water after", t_85[i],"seconds with a velocity of", y_85[1,i], "m/s")
+        break
+
+# If the scales are misread as 67kg when the real weight is 85kg, then there could
+# be very serious consequences for the jumper. I have calculated that the 85kg jumper
+# would hit the water with a speed of over 15.1m/s, which is significantly more than
+# the 9.9m/s of an actual 67kg jumper.
+# The jumper also reaches the water faster, in 3.15 seconds as opposed to 3.35 seconds.
 
