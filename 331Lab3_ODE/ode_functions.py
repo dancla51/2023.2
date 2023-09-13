@@ -69,8 +69,70 @@ def dp_solver_adaptive_step(func, y0, t0, t1, atol, *args):
         t (ndarray): independent variable values at which dependent variable(s) calculated.
         y (ndarray): dependent variable(s).
     """
-    pass
+    # Dormand prince values
+    alpha = np.array([35/384, 0, 500/1113, 125/192, -2187/6784, 11/84, 0])
+    alphastar = np.array([5179/57600, 0, 7571/16695, 393/640, -92097/339200, 187/2100, 1/40])
+    beta = np.array([0, 1/5, 3/10, 4/5, 8/9, 1, 1])
+    gamma = np.array([ [0,0,0,0,0,0,0], [1/5,0,0,0,0,0,0], [3/40,9/40,0,0,0,0,0],
+                       [44/45,-56/15,32/9,0,0,0,0],
+                       [19372/6561,-25360/2187,64448/6561,-212/729,0,0,0],
+                       [9017/3168,-355/33,46732/5247,49/176,-5103/18656,0,0],
+                       [35/384,0,500/1113,125/192,-2187/6784,11/84,0] ])
 
+    # Setup initial values
+    yheight = len(y0)
+    k=0
+    t_cur = t0
+    y_cur = y0
+    t = np.array(t_cur)
+    y = np.zeros([yheight, 1])
+    y[:, k] = y_cur
+
+    # Initial stepsize
+    h=1
+    sf = 0.9
+
+    while t_cur < t1:
+                        # use    y = np.append(y, y_new, axis=1)
+        # until successful iteration
+        success=False
+        while success == False:
+            # Function calls
+            fs = np.zeros([yheight, 7])
+            for i in range(7):
+                fs
+                # Calc sum of gammaij * fj
+                fjs = np.zeros(yheight)
+                for j in range(i):
+                    fjs += gamma[i, j] * fs[:, j]
+
+                fs[:, i] = func(t_cur + h * beta[i], y_cur + h * fjs, *args)
+
+            # Error comparison
+            y_p1 = np.copy(y_cur)
+            y_p2 = np.copy(y_cur)
+            for i in range(7):
+                y_p1 += h * alpha[i] * fs[:, i]
+                y_p2 += h * alphastar[i] * fs[:, i]
+
+            err = np.mean(abs(y_p1-y_p2))       # Using mean absolute error
+            if err <= atol:
+                success = True
+                t_cur += h
+                y_cur = y_p2
+                t=np.append(t, t_cur)
+                y = np.append(y, y_cur.reshape((yheight,1)), axis=1)
+                h = sf * h * (atol/err)**0.2
+                #print("successful timestep, h_new is:",h)
+
+            else:
+                success = False
+                h = sf * h * (atol / err) ** (1/6)
+                #print("unsuccessful timestep, h_new is:", h)
+
+    k += 1   # Increment k
+
+    return t, y
 
 def derivative_bungy(t, y, gravity, length, mass, drag, spring, gamma):
     """

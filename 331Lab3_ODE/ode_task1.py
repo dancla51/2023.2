@@ -30,7 +30,6 @@ t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, rk_alpha, rk_beta, rk_gam
 
 # Plot Results
 if plotPt3:
-    plt.show()
     fig, ax = plt.subplots()
     ax.plot(t,y[0,:], "-b")
     ax.invert_yaxis()
