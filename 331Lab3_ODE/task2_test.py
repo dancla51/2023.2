@@ -25,7 +25,7 @@ t2, y2 = dp_solver_adaptive_step(func, y0, t0, t1, 10**-5, *args)
 # Plot Results
 fig, ax = plt.subplots()
 ax.plot(t,y[0,:], "-b", linewidth=3)
-ax.plot(t2,y2[0,:], ":r", linewidth=6)
+ax.plot(t2,y2[0,:], ".r")
 ax.invert_yaxis()
 plt.show()
 

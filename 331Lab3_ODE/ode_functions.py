@@ -23,9 +23,7 @@ def explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args):
         y (ndarray): dependent variable(s) solved at t values.
     """
     tabsize = len(alpha)
-    print("hi")
     t = np.arange(t0, t1+h, h)
-    print("hiiii")
 
     yheight = len(y0)
     ywidth = len(t)
@@ -81,15 +79,14 @@ def dp_solver_adaptive_step(func, y0, t0, t1, atol, *args):
 
     # Setup initial values
     yheight = len(y0)
-    k=0
     t_cur = t0
     y_cur = y0
     t = np.array(t_cur)
     y = np.zeros([yheight, 1])
-    y[:, k] = y_cur
+    y[:, 0] = y_cur
 
     # Initial stepsize
-    h=1
+    h = 10**-3
     sf = 0.9
 
     while t_cur < t1:
@@ -97,7 +94,7 @@ def dp_solver_adaptive_step(func, y0, t0, t1, atol, *args):
         # until successful iteration
         success=False
         while success == False:
-            # Function calls
+            # Do function calls
             fs = np.zeros([yheight, 7])
             for i in range(7):
                 fs
@@ -124,13 +121,10 @@ def dp_solver_adaptive_step(func, y0, t0, t1, atol, *args):
                 y = np.append(y, y_cur.reshape((yheight,1)), axis=1)
                 h = sf * h * (atol/err)**0.2
                 #print("successful timestep, h_new is:",h)
-
             else:
                 success = False
                 h = sf * h * (atol / err) ** (1/6)
                 #print("unsuccessful timestep, h_new is:", h)
-
-    k += 1   # Increment k
 
     return t, y
 
