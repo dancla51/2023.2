@@ -23,8 +23,10 @@ def explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args):
         y (ndarray): dependent variable(s) solved at t values.
     """
     tabsize = len(alpha)
-
+    print("hi")
     t = np.arange(t0, t1+h, h)
+    print("hiiii")
+
     yheight = len(y0)
     ywidth = len(t)
     y = np.zeros([yheight, ywidth])   # yk = y[:,k]
@@ -112,30 +114,40 @@ def derivative_lorenz(t, y, sigma, rho, beta):
     Returns:
         f (ndarray): derivatives of x, y and z in Lorenz system.
     """
-    pass
+    dydt = np.array([0., 0., 0.])
+    dydt[0] = sigma * (y[1] - y[0])
+    dydt[1] = y[0] * (rho - y[2]) - y[1]
+    dydt[2] = y[0] * y[1] - beta * y[2]
+
+    return dydt
 
 
-# Test Solver with Improved Euler Method
+# Test Solver with Improved Euler Method and RK4
 if __name__ == "__main__":
     func = derivative_bungy
     t0 = 0
-    y0 = np.array([0, 1])
-    t1 = 1
-    h = 1
+    y0 = np.array([0, 2])
+    t1 = 50
+    h = 0.35
     alpha = np.array([0.5, 0.5])
     beta = np.array([0, 1])
     gamma = np.array([[0, 0], [1, 0]])
-    #args = [9.8, 16, 67, 0.75, 50, 8]    #Short50
-    args = [10, 20, 50, 1, 50, 8]    #Short50
+    #args = [9.8, 16, 67, 0.75, 50, 8]    # Short50
+    args = [10, 20, 50, 1, 50, 8]    # test
     # gravity, length, mass, drag, spring, gamma
 
-    t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args)
-
-    print(t, "\n", y)
+    t_ie, y_ie = explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args)
+    # RK4
+    alpha = np.array([1/6, 1/3, 1/3, 1/6])
+    beta = np.array([0, 0.5, 0.5, 1])
+    gamma = np.array([[0, 0, 0, 0], [0.5, 0, 0, 0], [0, 0.5, 0, 0], [0, 0, 1, 0]])
+    t_rk4, y_rk4 = explicit_solver_fixed_step(func, y0, t0, t1, h, alpha, beta, gamma, *args)
 
     # Plot
     fig, ax = plt.subplots()
-    ax.plot(t,y[0,:], "-r")
+    ax.plot(t_ie,y_ie[0,:], "-r", label="improved euler")
+    ax.plot(t_rk4,y_rk4[0,:], ":b", label="rk4")
     ax.invert_yaxis()
+    plt.legend()
     plt.show()
 
