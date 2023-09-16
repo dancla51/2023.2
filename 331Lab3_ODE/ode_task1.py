@@ -23,7 +23,6 @@ rk_alpha = np.array([1./6., 1./3., 1./3., 1./6.])
 rk_beta = np.array([0., 1./2., 1./2., 1.])
 rk_gamma = np.array([[0., 0., 0., 0.], [1./2., 0., 0., 0.], [0., 1./2., 0., 0.], [0., 0., 1., 0.]])
 
-# TODO - your code here
 # Part 3
 args = [gravity, 16, mass, drag, 50, gamma]
 t, y = explicit_solver_fixed_step(func, y0, t0, t1, h, rk_alpha, rk_beta, rk_gamma, *args)
