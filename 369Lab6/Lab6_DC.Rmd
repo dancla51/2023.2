@@ -12,7 +12,7 @@ output:
 ---
 
 
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, warning=FALSE}
 # Load libraries
 library(tidyverse)
 library(rpart)
