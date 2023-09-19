@@ -1,0 +1,16 @@
+Simulation	SoftwareName	JaamSim	-
+Simulation	SoftwareVersion	2022-07	-
+Simulation	ConfigurationFile	C:\Users\dcla189\OneDrive - The University of Auckland\2023 Sem2\2023.2\355JaamSim\labs\RC2\RC2.cfg	-
+Simulation	ScenarioNumber	1.0	-
+Simulation	ScenarioIndex	{ 1 }	-
+Simulation	ReplicationNumber	1.0	-
+Simulation	RunNumber	1.0	-
+Simulation	RunIndex	{ 1 }	-
+Simulation	PresentTimeAndDate	Sep 19, 2023 14:57	-
+Simulation	InitializationDuration	0.0	h
+Simulation	RunDuration	168.0	h
+Simulation	PresentSimulationTime	0.0	h
+
+##### SCENARIO 1 - REPLICATION 1 #####
+
+this.SimTime/1[h]	this.obj	[Simulation].ReplicationNumber	this.obj.TotalTime / 1[h]

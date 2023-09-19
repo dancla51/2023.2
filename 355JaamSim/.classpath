@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="labs"/>
+	<classpathentry excluding="examples/" kind="src" path="sim/hccm/custom"/>
+	<classpathentry kind="src" path="sim/hccm/custom/examples"/>
+	<classpathentry kind="src" path="sim/hccm/jaamsim/src/main/java"/>
+	<classpathentry kind="src" path="sim/hccm/jaamsim/src/test/java"/>
+	<classpathentry kind="src" path="sim/hccm/R2_custom"/>
+	<classpathentry kind="src" path="sim/sim_custom"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="sim/hccm/jaamsim/jar/jogl-all.jar"/>
+	<classpathentry kind="output" path="sim/bin"/>
+</classpath>
