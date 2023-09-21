@@ -1,0 +1,107 @@
+---
+title: "Ass3_DC"
+author: "Daniel Clark"
+date: "2023-09-21"
+output: html_document
+---
+
+```{r setup, message=False, warning=False}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rpart)
+```
+
+## Task 1
+
+*A*
+
+```{r}
+set.seed(502)
+```
+
+*B*
+
+```{r}
+# Load data
+load("spam.rda")
+spam.df = data.frame(df$is_spam, wordmatrix)
+
+```
+
+*C*
+
+```{r}
+num.obs = count(spam.df)[1,1]
+# Random Sample
+sample = sample(num.obs, 0.8*num.obs)
+train.df = spam.df[sample,]
+test.df = spam.df[-sample,]
+
+```
+
+
+## Task 2
+
+*A*
+
+```{r}
+# Generate tree
+tree = rpart(df.is_spam~., data=train.df, method="class")
+
+#Prune the tree
+tree$cptable
+```
+
+From this, we can see that the minimum cross-validation error comes from nsplit=14. For this tree, we add the xerror and xstd to get 0.422299 . All trees with nsplit>=9 satisfy this requirement, so we will choose the minimum of these, nsplit=9 with cp=0.023179 as our tuning parameter.
+
+```{r}
+cp=0.023179
+#Prune the tree
+tree_p = rpart(df.is_spam~., data=train.df, method="class", cp=0.023179)
+plot(tree_p)
+```
+
+This classification tree is very strongly leaning one direction, because the response variable is very unbalanced. As approximately 80% of email are ham, and only 20% are spam, most of the operations will be doing a similar thing to classify the spam email, and leaving a much larger number in the left leaning branch, which will split again while the right branch will not.
+
+*C*
+
+```{r}
+# Predict and confusion table
+pred = predict(tree, test.df, type="class")
+conf = with(test.df, table(actual=df.is_spam, predicted=pred))
+conf
+```
+
+```{r}
+# Misclassification rate
+miscl = (conf[2,1]+conf[1,2]) / sum(conf)
+miscl
+```
+The misclassification rate is 4.3%
+
+
+## Task 3
+
+*A*,*B*,*C*
+
+```{r}
+# Random Sample
+tr.obs = count(train.df)[,]
+sample2 = sample(tr.obs, tr.obs)
+train2.df = train.df[sample2,]
+treex = rpart(df.is_spam~., data=train2.df, method="class", cp=0.0001)
+predx = predict(treex, test.df, type="class")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
