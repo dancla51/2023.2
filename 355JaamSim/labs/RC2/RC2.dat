@@ -1,152 +1,52 @@
 Scenario	Replication	[TimeInSystem].SampleAverage / 1[h]
-1	1	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	2	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	3	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	4	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	5	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	6	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	7	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	8	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	9	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	10	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	11	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	12	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	13	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	14	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	15	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	16	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	17	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	18	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	19	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	20	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	21	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	22	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	23	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	24	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	25	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	26	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	27	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	28	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	29	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	30	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	31	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	32	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	33	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	34	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	35	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	36	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	37	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	38	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	39	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	40	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	41	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	42	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	43	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	44	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	45	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	46	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	47	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	48	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	49	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1	50	StartCTArrival:
-Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
-
-1		0.0
+1	1	0.5375230211573733
+1	2	0.6947423844296399
+1	3	0.5055031277061328
+1	4	0.49017663243632853
+1	5	0.6042421798164865
+1	6	0.5149315756946459
+1	7	0.4820967655922706
+1	8	0.5336664813000078
+1	9	0.4994142672173422
+1	10	0.5162643140266839
+1	11	0.6327729757885695
+1	12	0.4943793636650114
+1	13	0.5079003189244544
+1	14	0.49768094405478847
+1	15	0.5045545839541488
+1	16	0.5280519152006519
+1	17	0.5167756573011125
+1	18	0.5688530880299812
+1	19	0.5379926410029687
+1	20	0.5587128923187346
+1	21	0.5023358743555134
+1	22	0.5180124425381054
+1	23	0.4804396669179792
+1	24	0.5542944827145372
+1	25	0.5032591355368098
+1	26	0.5170347438034508
+1	27	0.5012897440414829
+1	28	0.5445473441408849
+1	29	0.5277406234908973
+1	30	0.49067752425556344
+1	31	0.48991226043929653
+1	32	0.4424451330479272
+1	33	0.5358306590124606
+1	34	0.5374846969870022
+1	35	0.4722167717165293
+1	36	0.523022119039801
+1	37	0.46887709636708147
+1	38	0.47765230205095766
+1	39	0.5030803452579067
+1	40	0.5794296301245773
+1	41	0.4991475194176578
+1	42	0.4698334449741143
+1	43	0.5199337035419672
+1	44	0.4523790328250601
+1	45	0.4960542147199434
+1	46	0.4852909978743607
+1	47	0.5787129393721109
+1	48	0.46040557613498223
+1	49	0.5239459628241078
+1	50	0.5383611751860582
+1		0.5183976458465291

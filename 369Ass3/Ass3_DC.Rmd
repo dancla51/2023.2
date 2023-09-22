@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(rpart)
+library(caret)
 ```
 
 ## Task 1
@@ -51,7 +52,7 @@ tree = rpart(df.is_spam~., data=train.df, method="class")
 #Prune the tree
 tree$cptable
 ```
-
+REDO THIS
 From this, we can see that the minimum cross-validation error comes from nsplit=14. For this tree, we add the xerror and xstd to get 0.422299 . All trees with nsplit>=9 satisfy this requirement, so we will choose the minimum of these, nsplit=9 with cp=0.023179 as our tuning parameter.
 
 ```{r}
@@ -69,6 +70,7 @@ This classification tree is very strongly leaning one direction, because the res
 # Predict and confusion table
 pred = predict(tree, test.df, type="class")
 conf = with(test.df, table(actual=df.is_spam, predicted=pred))
+conf = confusionMatrix(data=as.factor(test.df$df.is_spam), reference = as.factor(pred))
 conf
 ```
 
@@ -82,17 +84,32 @@ The misclassification rate is 4.3%
 
 ## Task 3
 
-*A*,*B*,*C*
+*A*,*B*,*C*,*D*
+
+```{r, cache=TRUE}
+prob.df = data.frame(test.df$df.is_spam)
+tr.obs = count(train.df)[,]
+# Random Sample
+for (i in 1:50) {
+  sample2 = sample(tr.obs, tr.obs, replace=TRUE)
+  train2.df = train.df[sample2,]
+  treex = rpart(df.is_spam~., data=train2.df, method="class", cp=0.0001)
+  predx = predict(treex, test.df)
+  prob_spam = predx[,2]
+  # Assign to DF
+  prob.df[ , ncol(prob.df) + 1] = prob_spam                
+  colnames(prob.df)[ncol(prob.df)] = paste0("pred", i)
+}
+prob.df$average = rowMeans(prob.df[2:50])
+prob.df$pred = ifelse(prob.df$average > 0.5, TRUE, FALSE)
+
+saveRDS(prob.df, file="SaveProbData")
+```
 
 ```{r}
-# Random Sample
-tr.obs = count(train.df)[,]
-sample2 = sample(tr.obs, tr.obs)
-train2.df = train.df[sample2,]
-treex = rpart(df.is_spam~., data=train2.df, method="class", cp=0.0001)
-predx = predict(treex, test.df, type="class")
-
-
+prob.df = readRDS("SaveProbData")
+conf_table = confusionMatrix(data=as.factor(prob.df$pred), reference = as.factor(prob.df$test.df.df.is_spam))
+print(conf_table)
 ```
 
 

@@ -1,0 +1,800 @@
+Runtime error in replication 1 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 2 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 3 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 4 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 5 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 6 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 7 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 8 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 9 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 10 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 11 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 12 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 13 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 14 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 15 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 16 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 17 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 18 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 19 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 20 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 21 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 22 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 23 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 24 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 25 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 26 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 27 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 28 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 29 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 30 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 31 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 32 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 33 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 34 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 35 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 36 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 37 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 38 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 39 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 40 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 41 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 42 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 43 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 44 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 45 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 46 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 47 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 48 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 49 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+
+Runtime error in replication 50 of scenario 1 at time 0.000000 s:
+StartCTArrival:
+Could not find the method 'OnCTArrival', on control unit 'RC2ControlUnit1'
+
+Stack trace:
+hccm.controlunits.Trigger.executeLogic(Trigger.java:75)
+hccm.controlunits.ControlUnit.triggerLogic(ControlUnit.java:196)
+hccm.events.ArriveEvent.happens(ArriveEvent.java:121)
+hccm.events.ArriveEvent.sendToNextComponent(ArriveEvent.java:92)
+com.jaamsim.ProcessFlow.EntityGenerator.processStep(EntityGenerator.java:208)
+com.jaamsim.ProcessFlow.Device.endStep(Device.java:234)
+com.jaamsim.ProcessFlow.Device$EndStepTarget.process(Device.java:214)
+com.jaamsim.events.EventManager.executeTarget(EventManager.java:171)
+com.jaamsim.events.EventManager.execute(EventManager.java:256)
+com.jaamsim.events.Process.run(Process.java:101)
+

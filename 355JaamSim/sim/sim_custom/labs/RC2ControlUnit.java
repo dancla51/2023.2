@@ -75,11 +75,11 @@ public class RC2ControlUnit extends ControlUnit {
 		else if (waitPats.size() > 0){
 			Collections.sort(waitPats, priorityComp);
 			
-			int highestPriority = (int) waitPats.get(0).getOutputHandle("priority").getValueAsDouble(simTime, -1);   //B
+			int highestPriority = (int) getNumAttribute(waitPats.get(0), "priority", simTime, -1);   //B
 			
 			ArrayList<ActiveEntity> priorityPatients = new ArrayList<ActiveEntity>();
 			for (ActiveEntity wP : waitPats) {
-				int patPri = (int) wP.getOutputHandle("priority").getValueAsDouble(simTime, -1);
+				int patPri = (int) getNumAttribute(wP, "priority", simTime, -1); 
 				if (patPri == highestPriority) {
 					priorityPatients.add(wP);
 				}
