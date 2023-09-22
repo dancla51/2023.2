@@ -112,6 +112,13 @@ conf_table = confusionMatrix(data=as.factor(prob.df$pred), reference = as.factor
 print(conf_table)
 ```
 
+## Task 4
+
+*A*
+
+```{r}
+
+```
 
 
 
