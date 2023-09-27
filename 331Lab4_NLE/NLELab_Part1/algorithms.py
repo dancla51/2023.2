@@ -24,14 +24,11 @@ from core import *
 def bisection(f, xl, xr, max_iter, tol):
     x = xl
     fxl = f(xl)
-
+    x = [x, xr]
+    fxr = f(xr)
     # check the left side of interval for convergence
     if abs(fxl) <= tol:
-        return x, 0, ExitFlag.Converged
-
-    x = [x, xr]
-
-    fxr = f(xr)
+        return [xl], 0, ExitFlag.Converged
 
     # check the right side of interval for convergence / check that the l/r function values have different signs.
     if abs(fxr) <= tol:
@@ -41,6 +38,7 @@ def bisection(f, xl, xr, max_iter, tol):
 
     i = 1
     x_carry = x[0]
+    f_carry = f(x[0])
     while True:
         i += 1
 
@@ -49,10 +47,9 @@ def bisection(f, xl, xr, max_iter, tol):
         newx = (x[-1]+x_carry) / 2
 
         fx = f(newx)
-        if fx*f(x_carry) < 0:
-            x_carry = x_carry
-        else:
+        if fx*f_carry > 0:
             x_carry = x[-1]
+            f_carry = f(x_carry)
 
         x.append(newx)
 
@@ -60,9 +57,6 @@ def bisection(f, xl, xr, max_iter, tol):
             return x, i - 1, ExitFlag.Converged
         elif i - 1 == max_iter:
             return x, i - 1, ExitFlag.MaxIterations
-
-        # update interval
-        # Your code goes here #
 
 
 def secant(f, x0, x1, max_iter, tol):
@@ -77,17 +71,23 @@ def secant(f, x0, x1, max_iter, tol):
     # k        : number of iterations (number of times a new point is attempted to be estimated)
     # e        : ExitFlag (enumeration)
 
+    # Set up values
     x = [x0, x1]
     k = 1
+    f_carry = f(x1)
+    f_double_carry = f(x0)
 
     while True:
         # New x value
-        xnew = x[k] - (x[k]-x[k-1]) * f(x[k]) / (f(x[k]) - f(x[k-1]))
+        xnew = x[k] - (x[k]-x[k-1]) * f_carry / (f_carry - f_double_carry)
         x.append(xnew)
-        # Test
+        # Carry over function evals for efficiency
+        f_double_carry = f_carry
+        f_carry = f(xnew)
+        # Tests and returns if successful
         if x[-1] < x0 or x[-1] > x1:
             return x, k, ExitFlag.NoRoot
-        elif abs(f(x[-1])) < tol:
+        elif abs(f_carry) < tol:
             return x, k, ExitFlag.Converged
         elif k - 1 == max_iter:
             return x, k, ExitFlag.MaxIterations
@@ -110,19 +110,24 @@ def regula_falsi(f, xl, xr, max_iter, tol):
     # e        : ExitFlag (enumeration)
     x = [xl, xr]
     k = 1
+    fxl = f(xl)
+    fxr = f(xr)
 
     while True:
         # New x value and update bracket
-        xnew = (xl * f(xr) - xr * f(xl)) / (f(xr) - f(xl))
-        if f(xnew)*f(xr) > 0:
+        xnew = (xl * fxr - xr * fxl) / (fxr - fxl)
+        fxnew = f(xnew)
+        if fxnew*fxr > 0:
             xr = xnew
+            fxr = fxnew
         else:
             xl = xnew
+            fxl = fxnew
         x.append(xnew)
         # Test
         if x[-1] < xl or x[-1] > xr:
             return x, k, ExitFlag.NoRoot
-        elif abs(f(x[-1])) < tol:
+        elif abs(fxnew) < tol:
             return x, k, ExitFlag.Converged
         elif k - 1 == max_iter:
             return x, k, ExitFlag.MaxIterations
@@ -144,31 +149,74 @@ def newton(f, g, x0, max_iter, tol):
     # e        : ExitFlag (enumeration)
     x = [x0]
     k = 0
+    f_carry = f(x0)
     while True:
-        xnew = x[k] - f(x[k]) / g(x[k])
+        xnew = x[k] - f_carry / g(x[k])
         x.append(xnew)
-
-        if abs(f(x[-1])) < tol:
-            return x, k, ExitFlag.Converged
+        f_carry = f(xnew)
+        if abs(f_carry) < tol:
+            return x, k+1, ExitFlag.Converged
         elif k == max_iter:
-            return x, k, ExitFlag.MaxIterations
+            return x, k+1, ExitFlag.MaxIterations
 
         k += 1
 
 
 
-
-# Nonlinear equation root finding by the combined bisection/Newton's method
-# Inputs
-# f        : nonlinear function
-# g        : nonlinear function derivative (gradient)
-# xl, xr   : initial root bracket
-# max_iter : maximum number of iterations performed
-# tol      : numerical tolerance used to check for root
-# Outputs
-# x        : one-dimensional array containing estimates of root
-# i        : number of iterations (number of times a new point is attempted to be estimated)
-# e        : ExitFlag (enumeration)
-
 def combined(f, g, xl, xr, max_iter, tol):
-    return
+    # Nonlinear equation root finding by the combined bisection/Newton's method
+    # Inputs
+    # f        : nonlinear function
+    # g        : nonlinear function derivative (gradient)
+    # xl, xr   : initial root bracket
+    # max_iter : maximum number of iterations performed
+    # tol      : numerical tolerance used to check for root
+    # Outputs
+    # x        : one-dimensional array containing estimates of root
+    # i        : number of iterations (number of times a new point is attempted to be estimated)
+    # e        : ExitFlag (enumeration)
+
+    fxr = f(xr)
+    fxl = f(xl)
+    # Initial step midpoint
+    x = [(xl+xr)/2]
+    k = 0
+
+    f_carry = f(x[0])
+    while True:
+        # Try to do NEWTON step
+        xnew = x[k] - f_carry / g(x[k])
+
+        if xnew > xl and xnew < xr:
+            f_carry = f(xnew)
+            # Update bracket
+            if f_carry*fxr>0:
+                xr = xnew
+                fxr = f_carry
+            else:
+                xl = xnew
+                fxl = f_carry
+        else:
+            # If it fails, do bisection step
+            xnew = (xl + xr) / 2
+
+            f_carry = f(xnew)
+            if f_carry * fxr > 0:
+                xr = xnew
+                fxr = f_carry
+            else:
+                xl = xnew
+                fxl = f_carry
+
+        x.append(xnew)
+
+
+        if abs(f_carry) <= tol:
+            return x, k+1, ExitFlag.Converged
+        elif k == max_iter:
+            return x, k+1, ExitFlag.MaxIterations
+
+        k += 1
+
+
+

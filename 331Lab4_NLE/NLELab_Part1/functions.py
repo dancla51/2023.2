@@ -44,3 +44,9 @@ def f4(x):
 
 def g4(x):
     return 2 * x * np.cos(x * x) - np.sin(x)
+
+def fc(x):
+    return np.sin(x)
+
+def gc(x):
+    return np.cos(x)
