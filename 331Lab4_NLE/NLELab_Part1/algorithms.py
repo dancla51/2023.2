@@ -40,23 +40,25 @@ def bisection(f, xl, xr, max_iter, tol):
     x_carry = x[0]
     f_carry = f(x[0])
     while True:
-        i += 1
-
-        # compute new estimate appending to x, and evaluate the function value fx
-        # Your code goes here #
-        newx = (x[-1]+x_carry) / 2
-
-        fx = f(newx)
-        if fx*f_carry > 0:
-            x_carry = x[-1]
-            f_carry = f(x_carry)
-
-        x.append(newx)
-
-        if abs(fx) <= tol:
+        # Evaluate new x value
+        xnew = (xl + xr) / 2
+        f_carry = f(xnew)
+        # Test sign
+        if f_carry * fxr > 0:
+            xr = xnew
+            fxr = f_carry
+        else:
+            xl = xnew
+            fxl = f_carry
+        # Add new x value
+        x.append(xnew)
+        # Test and return
+        if abs(f_carry) <= tol:
             return x, i - 1, ExitFlag.Converged
         elif i - 1 == max_iter:
             return x, i - 1, ExitFlag.MaxIterations
+        # Increment
+        i += 1
 
 
 def secant(f, x0, x1, max_iter, tol):
@@ -76,6 +78,9 @@ def secant(f, x0, x1, max_iter, tol):
     k = 1
     f_carry = f(x1)
     f_double_carry = f(x0)
+    # Check root in bracket
+    if f_carry * f_double_carry > 0:
+        return x, 0, ExitFlag.NoRoot
 
     while True:
         # New x value
