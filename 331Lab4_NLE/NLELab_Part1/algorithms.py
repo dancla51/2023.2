@@ -87,7 +87,7 @@ def secant(f, x0, x1, max_iter, tol):
         # Test
         if x[-1] < x0 or x[-1] > x1:
             return x, k, ExitFlag.NoRoot
-        elif abs(x[-1]-x[-2]) < tol:
+        elif abs(f(x[-1])) < tol:
             return x, k, ExitFlag.Converged
         elif k - 1 == max_iter:
             return x, k, ExitFlag.MaxIterations
@@ -108,8 +108,26 @@ def regula_falsi(f, xl, xr, max_iter, tol):
     # x        : one-dimensional array containing estimates of root
     # i        : number of iterations (number of times a new point is attempted to be estimated)
     # e        : ExitFlag (enumeration)
+    x = [xl, xr]
+    k = 1
 
-    return
+    while True:
+        # New x value and update bracket
+        xnew = (xl * f(xr) - xr * f(xl)) / (f(xr) - f(xl))
+        if f(xnew)*f(xr) > 0:
+            xr = xnew
+        else:
+            xl = xnew
+        x.append(xnew)
+        # Test
+        if x[-1] < xl or x[-1] > xr:
+            return x, k, ExitFlag.NoRoot
+        elif abs(f(x[-1])) < tol:
+            return x, k, ExitFlag.Converged
+        elif k - 1 == max_iter:
+            return x, k, ExitFlag.MaxIterations
+        # Iterate
+        k += 1
 
 
 # Nonlinear equation root finding by Newton's method
