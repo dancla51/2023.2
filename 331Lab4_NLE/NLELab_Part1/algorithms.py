@@ -78,29 +78,37 @@ def secant(f, x0, x1, max_iter, tol):
     # e        : ExitFlag (enumeration)
 
     x = [x0, x1]
-    k = 0
+    k = 1
+
+    while True:
+        # New x value
+        xnew = x[k] - (x[k]-x[k-1]) * f(x[k]) / (f(x[k]) - f(x[k-1]))
+        x.append(xnew)
+        # Test
+        if x[-1] < x0 or x[-1] > x1:
+            return x, k, ExitFlag.NoRoot
+        elif abs(x[-1]-x[-2]) < tol:
+            return x, k, ExitFlag.Converged
+        elif k - 1 == max_iter:
+            return x, k, ExitFlag.MaxIterations
+        # Iterate
+        k += 1
 
 
 
-
-
-
-
-
-
-
-# Nonlinear equation root finding by the Regula falsi method.
-# Inputs
-# f        : nonlinear function
-# xl, xr   : initial root bracket
-# max_iter : maximum number of iterations performed
-# tol      : numerical tolerance used to check for root
-# Outputs
-# x        : one-dimensional array containing estimates of root
-# i        : number of iterations (number of times a new point is attempted to be estimated)
-# e        : ExitFlag (enumeration)
 
 def regula_falsi(f, xl, xr, max_iter, tol):
+    # Nonlinear equation root finding by the Regula falsi method.
+    # Inputs
+    # f        : nonlinear function
+    # xl, xr   : initial root bracket
+    # max_iter : maximum number of iterations performed
+    # tol      : numerical tolerance used to check for root
+    # Outputs
+    # x        : one-dimensional array containing estimates of root
+    # i        : number of iterations (number of times a new point is attempted to be estimated)
+    # e        : ExitFlag (enumeration)
+
     return
 
 
