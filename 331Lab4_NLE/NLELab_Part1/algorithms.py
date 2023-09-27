@@ -130,20 +130,32 @@ def regula_falsi(f, xl, xr, max_iter, tol):
         k += 1
 
 
-# Nonlinear equation root finding by Newton's method
-# Inputs
-# f        : nonlinear function
-# g        : nonlinear function derivative (gradient)
-# x0       : initial root estimate
-# max_iter : maximum number of iterations performed
-# tol      : numerical tolerance used to check for root
-# Outputs
-# x        : one-dimensional array containing estimates of root
-# i        : number of iterations (number of times a new point is attempted to be estimated)
-# e        : ExitFlag (enumeration)
-
 def newton(f, g, x0, max_iter, tol):
-    return
+    # Nonlinear equation root finding by Newton's method
+    # Inputs
+    # f        : nonlinear function
+    # g        : nonlinear function derivative (gradient)
+    # x0       : initial root estimate
+    # max_iter : maximum number of iterations performed
+    # tol      : numerical tolerance used to check for root
+    # Outputs
+    # x        : one-dimensional array containing estimates of root
+    # i        : number of iterations (number of times a new point is attempted to be estimated)
+    # e        : ExitFlag (enumeration)
+    x = [x0]
+    k = 0
+    while True:
+        xnew = x[k] - f(x[k]) / g(x[k])
+        x.append(xnew)
+
+        if abs(f(x[-1])) < tol:
+            return x, k, ExitFlag.Converged
+        elif k == max_iter:
+            return x, k, ExitFlag.MaxIterations
+
+        k += 1
+
+
 
 
 # Nonlinear equation root finding by the combined bisection/Newton's method
