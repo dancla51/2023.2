@@ -1,0 +1,104 @@
+
+Daniel Clark - Stats369 Lab8
+
+```{r, warning=F, message=F}
+library(tidyverse)
+library(xgboost)
+library(DiagrammeR)
+library(caret)
+```
+
+
+Given Code
+```{r}
+set.seed(1)
+data(agaricus.train, package='xgboost')
+data(agaricus.test, package='xgboost')
+bst <- xgboost(data = agaricus.train$data, 
+               label = agaricus.train$label,
+               max_depth = 2, eta = 1, 
+               nthread = 2, nrounds = 2,
+               objective = "binary:logistic")
+```
+
+## Task 1 - what do max_depth, eta, and nrounds do?
+
+max_depth = 2 sets the maximum depth of the classification trees
+eta = the step size (aka weighting) of the "boost" for each iteration
+nrounds = the maximum number of iterations/boosts
+
+
+## Task 2 - Boost the tree
+
+*A*
+
+```{r}
+xgb.plot.tree(model=bst)
+```
+
+*B*
+
+```{r}
+# Predict
+pred = predict(bst, newdata=agaricus.test$data, method="class")
+pred_bool = as.factor(ifelse(pred>0.5, 1, 0))
+true_bool = as.factor(agaricus.test$label)
+# Confusion Matrix
+conf_mat <- confusionMatrix(data=pred_bool, reference = true_bool)
+conf_mat
+```
+
+this confusion matrix shows that our xgboost is actually creating a fairly accurate predictive model. The misclassification rate is only 2.2%, despite being a fairly small tree. 
+
+
+## Task 3 - Tune Parameters
+
+*A*
+
+```{r}
+# New tree
+xgb.cv(data = agaricus.train$data, 
+               label = agaricus.train$label,
+               max_depth = 2, eta = 1, 
+               nthread = 2, nrounds = 15,
+               objective = "binary:logistic",
+               metrics="error", nfold=10)
+
+```
+
+Seems to plateau around 6 trees, so use nrounds=6
+
+
+
+```{r}
+bst2 <- xgboost(data = agaricus.train$data, 
+               label = agaricus.train$label,
+               max_depth = 2, eta = 1, 
+               nthread = 2, nrounds = 6,
+               objective = "binary:logistic")
+# Plot
+xgb.plot.tree(model=bst2)
+```
+
+This model has a similar level of complexity in it's final tree, as it still has the same depth and number of leaf nodes as the original tree. However, it has taken longer to create because more trees were created for the formation of this tree.
+
+
+```{r}
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
