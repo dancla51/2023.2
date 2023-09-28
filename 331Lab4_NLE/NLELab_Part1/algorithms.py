@@ -54,9 +54,9 @@ def bisection(f, xl, xr, max_iter, tol):
         x.append(xnew)
         # Test and return
         if abs(f_carry) <= tol:
-            return x, i - 1, ExitFlag.Converged
+            return x, i, ExitFlag.Converged
         elif i - 1 == max_iter:
-            return x, i - 1, ExitFlag.MaxIterations
+            return x, i, ExitFlag.MaxIterations
         # Increment
         i += 1
 

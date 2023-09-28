@@ -41,7 +41,7 @@ if disp_func:
     ax[1].grid(True)
     ax[2].grid(True)
     fig.tight_layout()
-    fig.canvas.set_window_title('Plots of functions') 
+    fig.canvas.manager.set_window_title('Plots of functions')
     plt.show()
 
 # bisection method
@@ -135,7 +135,7 @@ ax[0].grid(True)
 ax[1].grid(True)
 ax[2].grid(True)
 fig.tight_layout()
-fig.canvas.set_window_title('Root estimates') 
+fig.canvas.manager.set_window_title('Root estimates')
 plt.show()
 
 ## end figure for method root estimate comparison
@@ -192,7 +192,7 @@ for i in range(3):
     ax[i,0].set_ylabel('$|f_'+str(i+2)+'(x^k)|$')
     ax[i,1].set_ylabel('$|x^k - \chi|$')
 fig.tight_layout()
-fig.canvas.set_window_title('Convergence comparison') 
+fig.canvas.manager.set_window_title('Convergence comparison')
 plt.show()
 
 ## end figure for method performance comparison
