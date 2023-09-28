@@ -156,7 +156,10 @@ def newton(f, g, x0, max_iter, tol):
     k = 0
     f_carry = f(x0)
     while True:
-        xnew = x[k] - f_carry / g(x[k])
+        G = g(x[k])
+        if abs(G) < 10**-8:
+            return x, k+1, ExitFlag.DivideByZero
+        xnew = x[k] - f_carry / G
         x.append(xnew)
         f_carry = f(xnew)
         if abs(f_carry) < tol:
