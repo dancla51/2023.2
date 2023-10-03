@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import com.jaamsim.units.DimensionlessUnit;
 
 import hccm.controlunits.ControlUnit;
-import hccm.controlunits.ControlUnit.ActivityStartCompare;
 import hccm.entities.ActiveEntity;
 
 public class dcla189_ControlUnit extends ControlUnit {
@@ -17,7 +16,6 @@ public class dcla189_ControlUnit extends ControlUnit {
 		
 		// Get all idle turnstiles
 		ArrayList<ActiveEntity> idleTurns = this.getEntitiesInActivity("Turnstile", "WaitForPerson", simTime);
-		ActivityStartCompare actStartComp = this.new ActivityStartCompare();
 		
 		ActiveEntity person = ents.get(0);
 		double turnstileID = getNumAttribute(person, "Turnstile", simTime, -1);
