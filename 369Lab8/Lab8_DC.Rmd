@@ -83,19 +83,47 @@ xgb.plot.tree(model=bst2)
 This model has a similar level of complexity in it's final tree, as it still has the same depth and number of leaf nodes as the original tree. However, it has taken longer to create because more trees were created for the formation of this tree.
 
 
+*B*
+
+Here I have chosen the value of eta to be half of what it was during the original model, so that it is a significant enough change to our loss evaluations
+
 ```{r}
-
-
+# New tree
+bst3 <- xgboost(data = agaricus.train$data, 
+               label = agaricus.train$label,
+               max_depth = 2, eta = 0.5, 
+               nthread = 2, nrounds = 6,
+               objective = "binary:logistic")
+# Plot
+xgb.plot.tree(model=bst3)
 
 ```
 
 
+## Task 4
+
+```{r}
+# Import data
+mush = read.csv("mushroom.test")
+# Print
+mush
+
+```
+
+From the data shown above for the mushrooms A, B, and C, we can manually use this information to test the predictions that would be made by the tree (using the first model). The first model will give us predictions for all three mushrooms which suggest they are likely to be edible.
 
 
 
 
+## Task 5
 
+The mushrooms are A: Amanita phalloides, B: Amanita virosa, C: Volvariella volvacea. Look up their common names. Compare with your prediction from 5. above and comment on the usefulness of the model.
 
+The mushroom A is commonly known as "death cap" mushrooms. This name clearly indicates that these mushrooms are NOT edible. Because our model has predicted that this mushroom is edible, we can clearly see that the model is quite poor at predicting the dibility of this mushroom. 
+
+The mushroom B is commonly known as  the "destroying angel", and is also highly poisonous. The fact that our model also predicts this mushroom as 'safe to eat' is highly concerning and adds reinforcement to the fact that this model cannot be trusted.
+
+The mushroom B is commonly known as  the "straw mushroom" and is an edible mushroom found throughout regions of east and southeast Asia. Our model has correctly identified this mushroom as being edible, however this correct prediction is not important enough to make us trust this model. Overall the misclassification of poisonous mushrooms as edible is FAR worse of a result than the misclassification of edible mushrooms as poisonous. The model clearly has capability of this type of misclassification which makes it a VERY poor model which could cause people to become poisoned.
 
 
 
