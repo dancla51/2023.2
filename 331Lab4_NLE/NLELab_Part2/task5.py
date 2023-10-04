@@ -14,7 +14,7 @@ x0_p = []                 # declare initial root estimate dictionary
 x0_p.append([-1.0,3.0])   # initial root estimate - point 1
 x0_p.append([2.0,3.0])    # initial root estimate - point 2
 x0_p.append([2.0,0.0])    # initial root estimate - point 3
-func = f6
+func = f7
 
 num_points=len(x0_p)
 
@@ -93,3 +93,5 @@ c1 = fig.canvas.mpl_connect('motion_notify_event', on_move)
 
 
 plt.show()
+
+print(xn_p)
