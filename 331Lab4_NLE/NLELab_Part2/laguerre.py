@@ -12,7 +12,7 @@ from horner import horner
 # success  : True / False, return True if the root is found and false otherwise
 def laguerre(c, max_iter, tol):
     x = complex(random.random(), random.random()) # Initial random iterate
-
+    alpha = 0
     # Polynomial degree (highest power)
     n = len(c) - 1;
 
@@ -38,13 +38,20 @@ def laguerre(c, max_iter, tol):
             break
     
         ## Your code goes here
-
+        G = dp/p
+        H = np.square(G) - ddp/p
         # find alpha
+        denom=np.zeros(2,dtype=np.complex_)
+        denom[0] = G + np.sqrt((n-1)*(n*H - np.square(G)))
+        denom[1] = G - np.sqrt((n-1)*(n*H - np.square(G)))
+        which = np.argmax([abs(denom[0]), abs(denom[1])])
+        if abs(denom[which]) < tol:
+            x = complex(random.random(), random.random())
+        else:
+            # update / step
+            alpha = n / denom[which]
+            x = x - alpha
 
-        # divide-by-zero is possible, if it encounters this then choose a random (complex) point from which to start the next iteration
-        
-        # compute the new root estimate
-    
         print(output+f' {abs(alpha):9.3f}')
 
     return x, success

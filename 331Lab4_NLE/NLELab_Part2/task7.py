@@ -54,7 +54,7 @@ def printRoots(x):
         print(start+f'{x[i].real: 9.3e} {ch:s} {abs(x[i].imag):9.3e}i')
 
 # Initialisation
-c=[1,1,1,1,1,1,1] # set the coefficients of polynomial in order of decreasing power
+c=[1,2,0,-4,2,0,4] # set the coefficients of polynomial in order of decreasing power
 tol = 10e-10         # stopping tolerance
 max_iter = 100       # maximum number of iterations to find each root
 success = True       # status flag
