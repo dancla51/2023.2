@@ -16,7 +16,7 @@ def gx(x):
 roots = {}
 
 n = 200                     # resolution (2*n+1 by 2*n+1 grid of sample points)
-beta = 0                    # damping factor
+beta = 9                  # damping factor
 extent=[-1,1,-1,1]  # format: [real_min,real_max,imag_min,imag_max]
 
 complete = numpy.zeros((2*n+1,2*n+1))
@@ -53,13 +53,17 @@ for a in range(2*n+1):
 # Create plots
 fig, ax = plt.subplots(2, 2, figsize=(16, 7))
 ax[0,0].imshow(complete, interpolation='bilinear',extent=extent)
+ax[0,0].title.set_text("Root found based on starting guess, with damping (beta=9)")
 ax[0,1].imshow(iterations, interpolation='bilinear',extent=extent)
+ax[0,1].title.set_text("Iterations to find root, with damping (beta=9)")
 
+complete2 = numpy.zeros((2*n+1,2*n+1))
+iterations2 = numpy.zeros((2*n+1,2*n+1))
 # Loop through starting points and find converged solutions
 for a in range(2 * n + 1):
     aa = a * stepx + extent[0]
     for b in range(2 * n + 1):
-        if complete[2 * n - b, a] != 0:
+        if complete2[2 * n - b, a] != 0:
             continue
         bb = b * stepy + extent[2]
 
@@ -72,17 +76,20 @@ for a in range(2 * n + 1):
             for i in range(len(x)):
                 p = round((x[i].real - extent[0]) / stepx)
                 q = round((x[i].imag - extent[2]) / stepy)
-                if p >= 0 and q >= 0 and p <= 2 * n and q <= 2 * n and complete[2 * n - q, p] == 0:
-                    complete[2 * n - q, p] = roots[x_round]
-                    iterations[2 * n - q, p] = iter - i
+                if p >= 0 and q >= 0 and p <= 2 * n and q <= 2 * n and complete2[2 * n - q, p] == 0:
+                    complete2[2 * n - q, p] = roots[x_round]
+                    iterations2[2 * n - q, p] = iter - i
                 else:
                     break
 
-                # Create plots
 
-ax[1, 0].imshow(complete, interpolation='bilinear', extent=extent)
-ax[1, 1].imshow(iterations, interpolation='bilinear', extent=extent)
+# Create plots
+ax[1,0].imshow(complete2, interpolation='bilinear', extent=extent)
+ax[1,0].title.set_text("Root found based on starting guess, without damping")
+ax[1,1].imshow(iterations2, interpolation='bilinear', extent=extent)
+ax[1,1].title.set_text("Iterations to find root, without damping")
 
+#plt.savefig("Task3")
 plt.show()
 
 

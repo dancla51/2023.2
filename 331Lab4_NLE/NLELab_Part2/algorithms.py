@@ -40,9 +40,6 @@ def newton(f, g, x0, max_iter, tol):
         if abs(G) < 10**-8:
             return x, k+1, ExitFlag.DivideByZero
         xnew = x[k] - f_carry / G
-
-        print("step=", -f_carry/G, "  xnew=", xnew)
-
         x.append(xnew)
         f_carry = f(xnew)
         if abs(f_carry) < tol:
@@ -67,16 +64,26 @@ def newton_damped(f, g, x0, max_iter, tol, beta):
     x = [x0]
     k = 0
     f_carry = f(x0)
+    delta=None
     while True:
+        delta_carry=delta
         G = g(x[k])
         if abs(G) < 10**-8:
             return x, k+1, ExitFlag.DivideByZero
+
+        # Use damping
         delta = f_carry / G
         alpha = 1 / ( 1 + beta*abs(delta) )
         xnew = x[k] - alpha * delta
 
         x.append(xnew)
         f_carry = f(xnew)
+
+        # Update beta
+        if delta_carry != None:
+            U = abs(delta/delta_carry)
+            beta = beta * U
+
 
         if abs(f_carry) < tol:
             return x, k+1, ExitFlag.Converged

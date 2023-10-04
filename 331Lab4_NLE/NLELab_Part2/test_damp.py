@@ -23,6 +23,7 @@ def reset():
     core.f_eval=0
     core.g_eval=0
 
+j=(-1)**0.5
 print(f'Method       Estimate     Value       Iterations  Func Evals  Deriv Evals  Exit Flag')
 print('-------------------------------------------------------------------------------------------------')
 reset()
