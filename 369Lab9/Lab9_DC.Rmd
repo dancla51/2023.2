@@ -1,0 +1,80 @@
+---
+title: "Lab9_DC"
+output: html_document
+date: "2023-10-05"
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(keras)
+library(tensorflow)
+
+```
+
+## Task 1 - Fit a network with one hidden layer, 8 nodes, ReLU activation, and squared error loss to predict the log times from Run 1.  Compare to the results from Lab 4
+
+From Lab 4:
+```{r}
+# Read in data
+sgemm_df = read_csv("sgemm_product.csv", show_col_types = FALSE)
+# Sample
+set.seed(502)
+sgemm1<-sgemm_df[sample(241600, 500),]
+sgemm2<-sgemm1
+```
+
+```{r}
+# Create column for log of run1
+sgemm1$logrun1 = log(sgemm1$"Run1 (ms)")
+sgemm1 = sgemm1 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+
+#Do same for run2 for future
+sgemm2$logrun2 = log(sgemm2$"Run2 (ms)")
+sgemm2 = sgemm2 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+
+#Do similar for all observations
+sgemm_copy = sgemm_df
+sgemm_copy$logrun2 = log(sgemm_copy$"Run2 (ms)")
+sgemm_copy = sgemm_copy %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+```
+
+Lab 9 new code:
+```{r}
+# Test code from lecture
+#model = keras_model_sequential()
+#model %>% layer_dense(units = 16, activation = 'sigmoid', input_shape = c(784)) %>%
+
+
+```
+
+
+
+I attempted many times to run the keras and tensorflow packages, and tested this each time by running a snippet of code from the lab as shown above. I am working on a lab computer and had some trouble installing packages in Pycharm/Anaconda because of issues with the virtual environment. I wonder if this might be causing issues now in R too. I have attempted installing tensorflow, loading tensorflow, and loading keras in many different orders, and just doin g a subset of these, but none of them have worked. 
+
+I either get an error when loading a package saying:
+"Error in virtualenv_install(envname = envname, packages = packages, ignore_installed = pip_ignore_installed,  : 
+  'r-tensorflow' exists but is not a virtual environment"
+  
+Or during the keras_model_sequential line, getting an error saying:
+"ModuleNotFoundError: No module named 'tensorflow'"
+
+I have also attempted to fix this by running code found on Git from one of the provided links, which is supposed to install things succesffuly, but this does not seem to work, and it still says tensorflow is not found. I understand this process can be difficult on Windows operating system, so perhaps this is also the issue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
