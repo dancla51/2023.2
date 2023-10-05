@@ -1,15 +1,15 @@
 ---
-title: "Ass3_DC"
+title: "Ass4_DC"
 author: "Daniel Clark"
-date: "2023-09-21"
+date: "2023-10-05"
 output: html_document
 ---
 
 ```{r setup, message=False, warning=False}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(rpart)
-library(caret)
+library(readxl)
+library(ggplot2)
 ```
 
 ## Task 1
@@ -24,21 +24,15 @@ set.seed(502)
 
 ```{r}
 # Load data
-load("spam.rda")
-spam.df = data.frame(df$is_spam, wordmatrix)
+df=read.csv("bank_marketing.csv", sep=";")
 
 ```
 
 *C*
 
-```{r}
-num.obs = count(spam.df)[1,1]
-# Random Sample
-sample = sample(num.obs, 0.8*num.obs)
-train.df = spam.df[sample,]
-test.df = spam.df[-sample,]
+The variable 'pdays' should not be considered, as it appears to be coming through with a very large percentage of values at 999, which is unrealistic and is a flaw in the data, so should be removed.
 
-```
+This is the only variable we should immediately remove, as all of the others could be used to build a predictive model. We may choose to remove more during cross-validation.
 
 
 ## Task 2
@@ -46,79 +40,97 @@ test.df = spam.df[-sample,]
 *A*
 
 ```{r}
-# Generate tree
-tree = rpart(df.is_spam~., data=train.df, method="class")
+# Remove column
+df = df %>% mutate(pdays=NULL)
 
-#Prune the tree
-tree$cptable
+# Fix up datatypes
+df$job = as.factor(df$job)
+df$marital = as.factor(df$marital)
+df$education = as.factor(df$education)
+df$default = as.factor(df$default)
+df$contact = as.factor(df$contact)
+df$month = as.factor(df$month)
+df$day_of_week = as.factor(df$day_of_week)
+df$poutcome = as.factor(df$poutcome)
+
+# Code response variable
+df$y = as.numeric(ifelse(df$y=="yes", 1, 0))
+
+# Split into training and test
+dfyes = filter(df, y==1)
+dfno = filter(df, y==0)
+
+numy=count(dfyes)[1,1]
+numn=count(dfno)[1,1]
+ysamp = sample(numy, numy*0.9)
+nsamp = sample(numn,numn*0.9)
+
+train.df = rbind(dfyes[ysamp,], dfno[nsamp,])
+test.df = rbind(dfyes[-ysamp,], dfno[-nsamp,])
+
+
+
 ```
-REDO THIS
-From this, we can see that the minimum cross-validation error comes from nsplit=14. For this tree, we add the xerror and xstd to get 0.422299 . All trees with nsplit>=9 satisfy this requirement, so we will choose the minimum of these, nsplit=9 with cp=0.023179 as our tuning parameter.
+
+*B and C*
 
 ```{r}
-cp=0.023179
-#Prune the tree
-tree_p = rpart(df.is_spam~., data=train.df, method="class", cp=0.023179)
-plot(tree_p)
+# Summary Table of education
+df %>% group_by(education) %>% summarise(percent_yes = mean(y)*100)
 ```
 
-This classification tree is very strongly leaning one direction, because the response variable is very unbalanced. As approximately 80% of email are ham, and only 20% are spam, most of the operations will be doing a similar thing to classify the spam email, and leaving a much larger number in the left leaning branch, which will split again while the right branch will not.
+From this visualisation, we can see there is some correlation between education type and the chance of subscribing to a term deposit. However, we do not know if this relationship is causal. We can see that the most likely individuals to subscribe are those with a university degree, or who have not disclosed their education status to the bank. This makes sense as people who have completed university education would tend to earn more and therefore have more disposable income available to invest. Contrastingly, those with only a 'basic' income are far less likely to subscribe for the opposite reason.
 
-*C*
 
 ```{r}
-# Predict and confusion table
-pred = predict(tree, test.df, type="class")
-conf = with(test.df, table(actual=df.is_spam, predicted=pred))
-conf = confusionMatrix(data=as.factor(test.df$df.is_spam), reference = as.factor(pred))
-conf
+# Plot
+ggplot(data=df, aes(x=age, y=job, col=factor(y))) + geom_jitter(alpha=0.8)
+
 ```
 
+From this plot we can see that there is a correlation between someone's job and their likelihood of subscribing. We can tell this because there is a much higher percentage of blue dots for people who are retired, work in admin or management, than for other jobs including being unemployed, a student, a housemaid, or an entrepreneur. We can also see that there is a strong relationship between age and employment status, which indicates age may also be a correlated variable.
+
 ```{r}
-# Misclassification rate
-miscl = (conf[2,1]+conf[1,2]) / sum(conf)
-miscl
+by_age = group_by(df, age) %>% summarise(m=mean(y))
+ggplot(data=by_age, aes(x=age, y=m)) + geom_line()
 ```
-The misclassification rate is 4.3%
+
+From this graph we can see that the fraction of people who will subscribe to the term deposit appears to be bimodal, with one peak for very young people, quickly dropping down for middle aged (30-60) people, and then increasing to a much higher chance for people 60 years or older.
+
+
+*D*
+
+I predict that age, education status, and poutcome (whether or not they have subscribed to a term deposit before) will be three of the main predictive variables. The first two I have decided on because of the visualisations, and I chose poutcome because previous behaviour can often indicate future behavious as well.
 
 
 ## Task 3
-
-*A*,*B*,*C*,*D*
-
-```{r, cache=TRUE}
-prob.df = data.frame(test.df$df.is_spam)
-tr.obs = count(train.df)[,]
-# Random Sample
-for (i in 1:50) {
-  sample2 = sample(tr.obs, tr.obs, replace=TRUE)
-  train2.df = train.df[sample2,]
-  treex = rpart(df.is_spam~., data=train2.df, method="class", cp=0.0001)
-  predx = predict(treex, test.df)
-  prob_spam = predx[,2]
-  # Assign to DF
-  prob.df[ , ncol(prob.df) + 1] = prob_spam                
-  colnames(prob.df)[ncol(prob.df)] = paste0("pred", i)
-}
-prob.df$average = rowMeans(prob.df[2:50])
-prob.df$pred = ifelse(prob.df$average > 0.5, TRUE, FALSE)
-
-saveRDS(prob.df, file="SaveProbData")
-```
-
-```{r}
-prob.df = readRDS("SaveProbData")
-conf_table = confusionMatrix(data=as.factor(prob.df$pred), reference = as.factor(prob.df$test.df.df.is_spam))
-print(conf_table)
-```
-
-## Task 4
 
 *A*
 
 ```{r}
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
