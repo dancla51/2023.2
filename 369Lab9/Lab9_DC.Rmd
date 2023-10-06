@@ -1,0 +1,73 @@
+---
+title: "Lab9_DC"
+output: html_document
+date: "2023-10-05"
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(keras)
+```
+
+## Task 1 - Fit a network with one hidden layer, 8 nodes, ReLU activation, and squared error loss to predict the log times from Run 1.  Compare to the results from Lab 4
+
+From Lab 4:
+```{r}
+# Read in data
+sgemm_df = read_csv("sgemm_product.csv", show_col_types = FALSE)
+# Sample
+set.seed(502)
+sgemm1<-sgemm_df[sample(241600, 500),]
+sgemm2<-sgemm1
+```
+
+```{r}
+# Create column for log of run1
+sgemm1$logrun1 = log(sgemm1$"Run1 (ms)")
+sgemm1 = sgemm1 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+
+#Do same for run2 for future
+sgemm2$logrun2 = log(sgemm2$"Run2 (ms)")
+sgemm2 = sgemm2 %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+
+#Do similar for all observations
+sgemm_copy = sgemm_df
+sgemm_copy$logrun2 = log(sgemm_copy$"Run2 (ms)")
+sgemm_copy = sgemm_copy %>% select(!("Run1 (ms)":"Run4 (ms)")) #Remove non-logged run columns
+```
+
+Lab 9 new code:
+```{r}
+model %>%
+  layer_dense(units = 16, activation = 'sigmoid', input_shape = c(784)) %>%
+  layer_dense(units = 16, activation = 'sigmoid') %>%
+  layer_dense(units = 10, activation = 'softmax')
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
