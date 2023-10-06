@@ -39,23 +39,34 @@ class SolverPoissonXY(object):
             poisson (callable): Poisson function.
         """
         # TODO: define the integer number of mesh points, including boundaries, based on desired mesh spacing
-        self.nx = round((xlim[1]-xlim[0]) / delta)
-        self.ny = round((ylim[1]-ylim[0]) / delta)
+        self.nx = round((xlim[1]-xlim[0]) / delta) + 1
+        self.ny = round((ylim[1]-ylim[0]) / delta) + 1
         self.n = self.nx * self.ny
 
         # TODO: calculate the x and y values/coordinates of mesh as one-dimensional numpy arrays
-        self.x = np.array([])
-        self.y = np.array([])
-        for x in range()
+        # Goes across rows first
+        self.x = np.zeros([self.n])
+        self.y = np.zeros([self.n])
+        # For each row
+        for i in range(self.ny):
+            self.x[self.nx*i:self.nx*i+self.nx] = np.linspace(xlim[0], xlim[1], self.nx)
+        for j in range(self.nx):
+            self.y[self.ny*j:self.ny*j+self.ny] = np.linspace(ylim[0], ylim[1], self.ny)[j]
 
         # TODO: calculate the actual mesh spacing in x and y, may not be same as delta if not exactly divisible
         self.dx = (xlim[1]-xlim[0]) / self.nx
         self.dy = (ylim[1]-ylim[0]) / self.ny
 
         # TODO: initialise the linear algebra matrices for, A solution = b
-        # self.a =
-        # self.b =
-        # self.solution =
+        self.a = np.zeros([self.n, self.n])
+        for r in range(self.n):
+            if r == 0:
+                pass
+            elif r == self.n-1:
+                pass
+
+        self.b = np.zeros([self.n])
+        self.solution = np.zeros([self.n])
 
         # store the four boundary conditions
         self.bc_x0 = bc_x0
