@@ -10,6 +10,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
 library(ggplot2)
+library(ranger)
+library(glmnet)
+library(xgboost)
+library(caret)
 ```
 
 ## Task 1
@@ -32,7 +36,7 @@ df=read.csv("bank_marketing.csv", sep=";")
 
 The variable 'pdays' should not be considered, as it appears to be coming through with a very large percentage of values at 999, which is unrealistic and is a flaw in the data, so should be removed.
 
-This is the only variable we should immediately remove, as all of the others could be used to build a predictive model. We may choose to remove more during cross-validation.
+We should also remove the variable 'duration' because, as described in the data dictionary, "last contact duration, in seconds (numeric). Important note: this attribute highly affects the output target (e.g., if duration=0 then y='no'). Yet, the duration is not known before a call is performed. Also, after the end of the call y is obviously known. Thus, this input should only be included for benchmark purposes and should be discarded if the intention is to have a realistic predictive model.". This clearly indicates that it should be removed when creating a predictive model, so that we don't introduce any bias.
 
 
 ## Task 2
@@ -41,7 +45,7 @@ This is the only variable we should immediately remove, as all of the others cou
 
 ```{r}
 # Remove column
-df = df %>% mutate(pdays=NULL)
+df = df %>% mutate(pdays=NULL, duration=NULL)
 
 # Fix up datatypes
 df$job = as.factor(df$job)
@@ -67,8 +71,6 @@ nsamp = sample(numn,numn*0.9)
 
 train.df = rbind(dfyes[ysamp,], dfno[nsamp,])
 test.df = rbind(dfyes[-ysamp,], dfno[-nsamp,])
-
-
 
 ```
 
@@ -100,24 +102,77 @@ From this graph we can see that the fraction of people who will subscribe to the
 
 *D*
 
-I predict that age, education status, and poutcome (whether or not they have subscribed to a term deposit before) will be three of the main predictive variables. The first two I have decided on because of the visualisations, and I chose poutcome because previous behaviour can often indicate future behavious as well.
+I predict that age, education status, and poutcome (whether or not they have subscribed to a term deposit before) will be three of the main predictive variables. The first two I have decided on because of the visualisations, and I chose poutcome because previous behaviour can often indicate future behaviours as well.
 
 
 ## Task 3
 
 *A*
 
+i) Logistic Regression with GLM
+
 ```{r}
+log_fit = glm(y~., data=train.df)
+summary(log_fit)
+```
+
+ii) Ridge Regression
+
+```{r}
+ridge_fit = glmnet(data.matrix(train.df[,-19]), train.df$y, alpha = 0)
+
+```
+
+
+iii) Random Forest
+
+```{r}
+
+forest_fit = ranger(y~., data=train.df, importance="impurity")
 
 ```
 
 
 
+iv) XGBoost
+
+```{r}
+
+xgb_fit = bst <- xgboost(data = data.matrix(train.df), label = train.df$y, nrounds=2, objective = "binary:logistic")
+
+```
 
 
+*B*
+Predictions and confusion Matrices
+
+```{r}
+#Logistic Regression
+log_pred = predict(log_fit, test.df[,-19])
+log_pred = ifelse(log_pred<0.5, 0, 1)
+confusionMatrix(as.factor(log_pred), as.factor(test.df$y))
+
+```
 
 
+```{r}
+#Ridge
+ridge_pred = predict(ridge_fit, data.matrix(test.df[,-19]))[,100]
+ridge_pred = ifelse(ridge_pred<0.5, 0, 1)
+confusionMatrix(as.factor(ridge_pred), as.factor(test.df$y))
+```
 
+```{r}
+#Random Forest
+forest_pred = predict(forest_fit, data.matrix(test.df[,-19]))$predictions
+forest_pred = ifelse(forest_pred<0.5, 0, 1)
+confusionMatrix(as.factor(forest_pred), as.factor(test.df$y))
+```
+
+```{r}
+#XGBoost
+forest_pred = 1
+```
 
 
 
