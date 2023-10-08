@@ -5,7 +5,7 @@ date: "2023-10-05"
 output: html_document
 ---
 
-```{r setup, message=False, warning=False}
+```{r setup, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
@@ -127,7 +127,6 @@ ridge_fit = glmnet(data.matrix(train.df[,-19]), train.df$y, alpha = 0)
 iii) Random Forest
 
 ```{r}
-
 forest_fit = ranger(y~., data=train.df, importance="impurity")
 
 ```
@@ -137,8 +136,9 @@ forest_fit = ranger(y~., data=train.df, importance="impurity")
 iv) XGBoost
 
 ```{r}
-
-xgb_fit = bst <- xgboost(data = data.matrix(train.df), label = train.df$y, nrounds=2, objective = "binary:logistic")
+# Scale Data and Fit
+xgb_train = xgb.DMatrix(data = data.matrix(train.df[, -19]), label = train.df[, 19])
+xgb_fit = bst <- xgboost(xgb_train, nrounds=2, objective = "binary:logistic", lambda=1)
 
 ```
 
@@ -150,8 +150,9 @@ Predictions and confusion Matrices
 #Logistic Regression
 log_pred = predict(log_fit, test.df[,-19])
 log_pred = ifelse(log_pred<0.5, 0, 1)
-confusionMatrix(as.factor(log_pred), as.factor(test.df$y))
-
+# Confusion Matrix
+log_conf = confusionMatrix(as.factor(log_pred), as.factor(test.df$y))
+log_conf
 ```
 
 
@@ -159,37 +160,73 @@ confusionMatrix(as.factor(log_pred), as.factor(test.df$y))
 #Ridge
 ridge_pred = predict(ridge_fit, data.matrix(test.df[,-19]))[,100]
 ridge_pred = ifelse(ridge_pred<0.5, 0, 1)
-confusionMatrix(as.factor(ridge_pred), as.factor(test.df$y))
+# Confusion Matrix
+ridge_conf = confusionMatrix(as.factor(ridge_pred), as.factor(test.df$y))
+ridge_conf
 ```
 
 ```{r}
 #Random Forest
 forest_pred = predict(forest_fit, data.matrix(test.df[,-19]))$predictions
 forest_pred = ifelse(forest_pred<0.5, 0, 1)
-confusionMatrix(as.factor(forest_pred), as.factor(test.df$y))
+# Confusion Matrix
+forest_conf = confusionMatrix(as.factor(forest_pred), as.factor(test.df$y))
+forest_conf
 ```
 
 ```{r}
 #XGBoost
-forest_pred = 1
+xgb_test = xgb.DMatrix(data = data.matrix(test.df[, -19]), label = test.df[, 19])
+xgb_pred = predict(xgb_fit, newdata=xgb_test)
+xgb_pred = ifelse(xgb_pred<0.5, 0, 1)
+# Confusion Matrix
+xgb_conf = confusionMatrix(as.factor(xgb_pred), as.factor(test.df$y))
+xgb_conf
 ```
 
+## Task 4 - Compare and Summarise
+
+*A*
+
+Compare 6 most important variables from ranger and xgboost methods
+
+```{r}
+# Ranger
+forest_imp = forest_fit$variable.importance/sum(forest_fit$variable.importance)*100
+forest_imp %>% sort(decreasing=TRUE) %>% head(6)
+```
+
+```{r}
+# Ranger
+xgb_imp = xgb.importance(colnames(train.df[,-19]), model=xgb_fit)
+xgb_imp %>% head(6)
+```
+
+We can see from these two outputs that the top 6 most important variables in each model are very different. The XGboost model's most important feature is nr_employed, the number of people employed by the company. This is a very surprising feature that we wouldn't expect to have a high importance on whether an individual client subscribes to a term deposit. Perhaps this is a spurious correlation, or maybe there is a more hidden link of causation here. This feature is also the third most important in the ranger (random forest) model so there must be some relation. The ranger model's two most important variables are euribor3m (the 3 month economic forecast) and age, which are both variables that I would expect to be relevant, so it does seem that the models are working correctly.
+
+```{r, message=FALSE}
+# Plot of nremplyed vs y
+df_empl = group_by(df, nr_employed) %>% summarise("proportion" = mean(y), "num_of_observations" = n())
+ggplot(data=df_empl, aes(x=nr_employed, y=proportion)) + geom_point(aes(size=num_of_observations)) + geom_smooth(method="lm", se=FALSE) + ggtitle("Proportion of clients that subscribe, by the number of employees")
+```
+
+From this plot we can see that there appears to be a strong negative (approximately linear) relationship between the number of employees and the proportion of clients that subscribe to a term deposit. From the counts that I have displayed, we can see that there are relatively few observations from when there were few employees, compared to a lot of observations with many employees. There may have been a company policy change or another confounding/lurking variable that makes this relationship occur.
+
+*B*
+
+```{r}
+misclassification = data.frame(Logistic = 1 - log_conf$overall[1], Ridge = 1 - ridge_conf$overall[1], Ranger = 1 - forest_conf$overall[1], XGBoost = 1 - xgb_conf$overall[1], row.names = "Misclassification Rate")
+misclassification
+```
+
+Overall, each of the methods have a fairly similar misclassification rate, being around 9%. The model with the lowest misclassification rate is the XGBoost model, followed by Logistic Regression, Ridge Regression, and then Random forest with Ranger. For this reason, I would select the XGBoost model as my preferred model of these 4 options. It is also the second best model at predicting True-True, which is important in this scenario.
 
 
+*C* 
+Suppose you are a Data Scientist working for a bank, and you are tasked to present the results to your marketing manager. Write a short ‘Executive Summary’ paragraph summarising the work in plain English.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+I have undertaken a statistical investigation into what factors are the most important when it comes to clients subscribing for a term deposit, and therefore how to maximise the number of clients that choose to purchase term deposits. I have used four statistical modelling approaches to model the situation, including logistic regression, ridge regression, random forests, and boosting methods. These methods all have different pros and cons, but I found the XGboost method to be the most successful when tested on unseen data. From these methods, I have also identified that having LESS employees at the bank appears to be a strong indicator for clients being more likely to apply for a deposit, and that client age, and the Euribor 3 month rate also have a strong correlation. Overall, my best model has a accuracy rate of 90.5% . Another variable that is highly important is the previous outcome (if the client has been with the bank previously), so this can be used to 'target' customers that are more likely to subscribe to a term deposit, for future 'proactive' marketing campaigns.
 
 
 
