@@ -1,0 +1,209 @@
+---
+title: "CombinedAnalysis"
+author: "Abigail Swanepoel"
+date: "2023-10-16"
+output: html_document
+---
+```{r}
+require(dplyr)
+library(stringr)
+library(tidyverse)
+```
+
+# Read in Data
+```{r}
+# Read in the data
+nullStrings = c("this.SimTime/1[h]", "Scenario", "Replication",  "this.obj",
+                "Event", "EventTime")
+PatientData = read.table("complete_model-patient-event-logger.log", sep="\t",
+                      col.names=c("SimTime", "Scenario", "Replication",
+                      "Object", "Event", "EventTime"),
+                      skip=15, na.strings=nullStrings, skipNul=TRUE)
+orderlydata=read.table("complete_model-PatientTransit.orderly-event-logger.log", sep="\t",
+                      col.names=c("SimTime", "Scenario", "Replication",
+                      "Object", "Event", "EventTime"),
+                      skip=15, na.strings=nullStrings, skipNul=TRUE)
+PatientData=na.omit(PatientData)
+orderlyData=na.omit(orderlydata)
+```
+
+
+# Target 1
+
+```{r}
+nullStrings = c("this.SimTime/1[h]", "Scenario", "Replication",  "this.obj",
+                "Event", "EventTime")
+
+Hospitaldata = read.table("complete_model-patient-event-logger.log", sep="\t",
+                      col.names=c("LeaveTime", "Scenario", "Replication",
+                      "Object", "Event", "EventTime"),
+                      skip=15, na.strings=nullStrings, skipNul=TRUE)
+
+Hospitaldata = na.omit(Hospitaldata)
+Hospitaldata <- Hospitaldata %>% mutate(PEvent = lag(Event))
+Target1=Hospitaldata%>%filter((PEvent=="ED.consultation"&Event=="patient-leave")|(PEvent=="second-consultation"&Event=="patient-leave"))
+Target1=Hospitaldata%>%inner_join(Target1)
+EDarrival = Hospitaldata %>%
+  group_by(Object) %>%
+  summarise(ArriveTime=min(EventTime))
+Target1=EDarrival%>%inner_join(Target1)
+#Arrivaldf = Arrivaldf %>%  filter(Event != 'ED.register')
+
+Target1$TotalTime=Target1$LeaveTime-Target1$ArriveTime
+
+
+#EDleave = Hospitaldata %>%
+  #group_by(Object, Replication) %>%
+  #summarise(EventTime=max(EventTime))
+
+#Leavedf = Hospitaldata %>% inner_join(EDleave)
+
+# join with Arrivaldf
+#Leavedf$Arrivetime=EDarrival$EventTime
+
+#Arrivaldf$Totaltime=Arrivaldf$LeaveTime-Arrivaldf$EventTime
+T1=Target1%>%group_by(Replication)%>%summarize(quantile(TotalTime,prob=0.95))
+T1$`quantile(TotalTime, prob = 0.95)`
+Totaltime_95=quantile(Target1$TotalTime,prob=0.95)
+Totaltime_95
+```
+
+# Target 2
+
+```{r}
+Patientdata2 <- PatientData %>% mutate(NextEvent=lead(Event), NextEventTime=lead(EventTime))
+
+# Filter observation-related data
+Consultation=Patientdata2%>%filter(Event=="ED.wait-for-consultation"|Event=="ED.wait-for-second-consultation"|Event=="ED.observation"|Event=="ED.consultation"|Event=="ED.second-consultation"|Event=="ED.wait-for-tests")
+
+# 3 situation for observation to occur, combine them as result df:
+firstobservation <- Consultation %>% 
+  filter(Event == "ED.wait-for-consultation"& NextEvent == "ED.observation")
+secondobservation <- Consultation %>% 
+  filter(NextEvent == "ED.observation" & Event == "ED.wait-for-second-consultation")
+test_observation<- Consultation %>% 
+  filter(NextEvent == "ED.observation" & Event == "ED.wait-for-tests")
+result=rbind(firstobservation, secondobservation,test_observation)
+
+#using next event time minus event time, then minus additional 30mins
+result$waitTime=result$NextEventTime-result$EventTime
+# In hour
+meanwait2=result%>%group_by(Replication)%>%summarize(mean(waitTime)-0.5)
+meanwait2
+# Convert to minute
+meanwait2=meanwait2$`mean(waitTime) - 0.5`*60
+meanwait2
+totalavg2=mean(meanwait2)
+totalavg2
+
+```
+
+# Target 3
+
+```{r}
+waitPT=PatientData%>%filter(Event=="PatientTransit.wait-for-assignment")
+pickPT=PatientData%>%filter(Event=="PatientTransit.pickup")
+pickPT$waittime=pickPT$EventTime-waitPT$EventTime
+# Get overall mean and convert to minutes
+timegap3=pickPT%>%group_by(Replication)%>%summarize(mean(waittime)*60)
+timegap3
+print(timegap3$`mean(waittime) * 60`)
+totalavg3=mean(timegap3$`mean(waittime) * 60`)
+totalavg3
+```
+
+# Target 4
+```{r}
+
+DoCheck4Replication = function(df, rep_num) {
+  df_obs = df %>% filter(Event=="Wards.ward-stay" | Event=="Wards.observation" | Event=="Wards.discharge") %>% filter(Replication==rep_num)
+  df_obs$EventTime = as.numeric(df_obs$EventTime)
+  # Create empty df
+  df_need_obs = df_obs %>% filter(Object=="lol")
+  
+  # For each row
+  for (row in 1:length(df_obs[,1])) {
+    # If it is new stay
+    if (df_obs[row,5]=="Wards.ward-stay") {
+      # Add new row for when observation will be needed
+      newline = df_obs[row,]
+      newline$Event = "NeedObservation"
+      newline$EventTime = df_obs[row,6] + 2 #2 hours
+      df_need_obs = rbind(df_need_obs, newline)
+    }
+  }   # This takes a while
+  
+  
+  df_combined = rbind(df_obs, df_need_obs) %>% filter(Event != "Wards.ward-stay")
+  # Reorder
+  df_ordered <- df_combined[order(df_combined$Object,df_combined$EventTime, df_combined$Event),]
+  
+  obs_wait_times = c()
+  
+  # For each row
+  for (row in 1:length(df_ordered[,1])) {
+    # Check if is need obs
+    if (df_ordered[row,5]=="NeedObservation") {
+      # Calculate time
+      # Get patient ID
+      pat = df_ordered[row,4]
+      # Deal with first row issue
+      if (row==1) {
+        prev_disch = FALSE
+      } else {
+        prev_disch = (df_ordered[row-1,4] == pat & df_ordered[row-1,5]=="Wards.discharge")
+      }
+      if (row==length(df_ordered[,1])) {
+        next_disch = TRUE
+      } else {
+        next_disch = (df_ordered[row+1,4] == pat & df_ordered[row+1,5]=="Wards.discharge")
+      }
+      # If NOT discharged instead
+      if ( prev_disch | next_disch ) {
+        # Then got discharged, not observed
+      } else {
+        # Add their discharge time to list
+        obs_wait_time = df_ordered[row+1,6] - df_ordered[row,6]
+        obs_wait_times <- append(obs_wait_times, obs_wait_time)
+        
+      }
+    }
+  }   # This takes a while
+  DoCheck4Replication = obs_wait_times
+}
+
+# run function for each replication
+times1 = DoCheck4Replication(PatientData, 1)
+#times2 = DoCheck4Replication(PatientData, 2)
+#times3 = DoCheck4Replication(PatientData, 3)
+#times4 = DoCheck4Replication(PatientData, 4)
+#times5 = DoCheck4Replication(PatientData, 5)
+# Combine results
+#observ_wait_times = c(times1, times2, times3, times4, times5)
+observ_wait_times = c(times1)
+
+t4 <- quantile(observ_wait_times, prob=0.95)
+t4
+less15min_perc4 = ifelse(observ_wait_times<0.25, 1, 0) %>% mean() * 100
+less15min_perc4
+```
+
+
+# Target 5
+
+```{r}
+test.df <- PatientData %>% filter(Event=="Wards.wait-for-test" | Event == "Wards.perform-test") %>%
+  pivot_wider(names_from=Event, values_from=EventTime)
+
+test.df$`Wards.perform-test` = as.numeric(test.df$`Wards.perform-test`)
+test.df$`Wards.wait-for-test` = as.numeric(test.df$`Wards.wait-for-test`)
+test.df$WaitTime = test.df$`Wards.perform-test` - test.df$`Wards.wait-for-test`
+
+mean_wait_time5 <- mean(test.df$WaitTime) * 60
+print(mean_wait_time5)
+```
+
+
+
+
+

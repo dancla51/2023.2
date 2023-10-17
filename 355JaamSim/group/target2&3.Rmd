@@ -1,0 +1,77 @@
+---
+title: "target2&3"
+output: html_document
+date: "2023-10-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(dplyr)
+library(stringr)
+```
+
+
+```{r }
+# Read data and na.omit
+nullStrings = c("this.SimTime/1[h]", "Scenario", "Replication",  "this.obj",
+                "Event", "EventTime")
+Patientdata = read.table("complete_model-patient-event-logger.log", sep="\t",
+                      col.names=c("SimTime", "Scenario", "Replication",
+                      "Object", "Event", "EventTime"),
+                      skip=15, na.strings=nullStrings, skipNul=TRUE)
+orderlydata=read.table("complete_model-PatientTransit.orderly-event-logger.log", sep="\t",
+                      col.names=c("SimTime", "Scenario", "Replication",
+                      "Object", "Event", "EventTime"),
+                      skip=15, na.strings=nullStrings, skipNul=TRUE)
+Patientdata=na.omit(Patientdata)
+orderlydata=na.omit(orderlydata)
+```
+
+```{r}
+Patientdata <- Patientdata %>% mutate(NextEvent = lead(Event))
+Patientdata <- Patientdata %>% mutate(NextEventTime = lead(EventTime))
+```
+
+
+```{r, echo=FALSE}
+#Target2: filter observation-related data
+Consultation=Patientdata%>%filter(Event=="ED.wait-for-consultation"|Event=="ED.wait-for-second-consultation"|Event=="ED.observation"|Event=="ED.consultation"|Event=="ED.second-consultation"|Event=="ED.wait-for-tests")
+
+```
+
+```{r}
+# 3 situation for observation to occur, combine them as result df:
+firstobservation <- Consultation %>% 
+  filter(Event == "ED.wait-for-consultation"& NextEvent == "ED.observation")
+secondobservation <- Consultation %>% 
+  filter(NextEvent == "ED.observation" & Event == "ED.wait-for-second-consultation")
+test_observation<- Consultation %>% 
+  filter(NextEvent == "ED.observation" & Event == "ED.wait-for-tests")
+result=rbind(firstobservation, secondobservation,test_observation)
+```
+
+```{r}
+#using next event time minus event time, then minus additional 30mins
+result$waitTime=result$NextEventTime-result$EventTime
+# In hour
+meanwait1=result%>%group_by(Replication)%>%summarize(mean(waitTime)-0.5)
+meanwait1
+# Convert to minute
+meanwait=meanwait1$`mean(waitTime) - 0.5`*60
+meanwait
+totalavg1=mean(meanwait)
+totalavg1
+```
+```{r}
+#Target3
+waitPT=Patientdata%>%filter(Event=="PatientTransit.wait-for-assignment")
+pickPT=Patientdata%>%filter(Event=="PatientTransit.pickup")
+pickPT$waittime=pickPT$EventTime-waitPT$EventTime
+# Get overall mean and convert to minutes
+timegap=pickPT%>%group_by(Replication)%>%summarize(mean(waittime)*60)
+timegap
+print(timegap$`mean(waittime) * 60`)
+totalavg=mean(timegap$`mean(waittime) * 60`)
+totalavg
+```
+
