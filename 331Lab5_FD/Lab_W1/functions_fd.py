@@ -94,7 +94,6 @@ class SolverPoissonXY(object):
             for i in range(self.nx):
                 x = self.x[i]
                 # b
-                print(self.nx*(self.ny-1)+i, self.bc_y1.get("function")(x, y))
                 self.b[self.nx*(self.ny-1)+i] = self.bc_y1.get("function")(x, y)
                 # a
                 self.a[self.nx*(self.ny-1)+i, self.nx*(self.ny-1)+i] = 1
