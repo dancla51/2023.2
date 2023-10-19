@@ -166,7 +166,7 @@ class SolverPoissonXY(object):
         Z = self.solution
 
         # plot
-        levels = np.linspace(np.min(Z), np.max(Z), 20)
         fig, ax = plt.subplots()
-        ax.contourf(X, Y, Z, levels=levels)
+        contour = ax.contour(X, Y, Z, levels=20)
+        ax.clabel(contour, fontsize=12)
         plt.show()
