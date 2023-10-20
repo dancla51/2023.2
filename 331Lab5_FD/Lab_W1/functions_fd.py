@@ -260,18 +260,15 @@ class SolverHeatXT(object):
 
     def __init__(self, xlim, tlim, dx, dt, alpha, theta, bc_x0, bc_x1, ic_t0):
 
-        # TODO: define the integer number of mesh points, including boundaries, based on desired mesh spacing
-        # self.nx =
-        # self.nt =
-        # self.n =
+        self.nx = round((xlim[1] - xlim[0]) / dx) + 1
+        self.nt = round((tlim[1] - tlim[0]) / dt) + 1
+        self.n = self.nx * self.nt
 
-        # TODO: calculate the x and t values/coordinates of mesh as one-dimensional numpy arrays
-        # self.x =
-        # self.t =
+        self.x = np.linspace(xlim[0], xlim[1], self.nx)
+        self.t = np.linspace(tlim[0], tlim[1], self.nt)
 
-        # TODO: calculate the actual mesh spacing in x and y, should be similar or same as the dx and dy arguments
-        # self.dx =
-        # self.dt =
+        self.dx = (xlim[1] - xlim[0]) / self.nx
+        self.dt = (tlim[1] - tlim[0]) / self.nt
 
         # set alpha, ratio of step sizes, and weight in implicit method
         self.alpha = alpha
@@ -283,15 +280,44 @@ class SolverHeatXT(object):
         self.bc_x1 = bc_x1
         self.ic_t0 = ic_t0
 
-        # TODO: initialise solution matrix, apply the Dirichlet boundary and initial conditions to it now
-        # self.solution =
+        # initialise solution matrix, apply the Dirichlet boundary and initial conditions to it now
+        self.solution = np.zeros([self.nx, self.nt])
+        # apply soln for bcs
+        if self.bc_x0.get("type")=="dirichlet":
+            # Left edge
+            x = self.x[0]
+            # for each edge point
+            for s in range(self.nt):
+                t = self.t[s]
+                self.solution[0, s] = self.bc_x0.get("function")(x, t)
+        if self.bc_x1.get("type") == "dirichlet":
+            # Right edge
+            x = self.x[-1]
+            # for each edge point
+            for s in range(self.nt):
+                t = self.t[s]
+                self.solution[-1, s] = self.bc_x1.get("function")(x, t)
+        # Apply soln for ICs
+        if self.ic_t0.get("type")=="initial":
+            # 'Bottom' edge
+            t = self.t[0]
+            # for each edge point
+            for i in range(self.nx):
+                x = self.x[i]
+                self.solution[i, 0] = self.ic_t0.get("function")(x, t)
+
+
 
     def solve_explicit(self):
         """
         Solve the 1D heat equation using an explicit solution method.
         """
-        # TODO: complete this method
-        pass
+        # Explicit method
+        for n in range(self.nt-1):
+            for i in range(1, self.nx-1):
+                # Solve point
+                self.solution[i, n+1] = self.r * self.solution[i-1, n] + (1-2*self.r)*self.solution[i, n] + self.r*self.solution[i+1, n]
+
 
     def implicit_update_a(self):
         """
@@ -301,8 +327,21 @@ class SolverHeatXT(object):
         Returns:
             a (2D array): coefficient matrix for implicit method (dimension 2 n_x by 2 n_x)
         """
-        # TODO: complete this method, ensure you return the matrix A.
-        pass
+        # returns A matrix
+        a = np.zeros([self.nx*2, self.nx*2])
+        for k in range(self.nx*2):
+            if (k <= self.nx or k == self.nx*2-1) :
+                a[k, k] = 1
+            else:
+                # from this timestep
+                a[k, k - 1] = self.theta * self.r
+                a[k, k] = -1 * (1+2*self.theta*self.r)
+                a[k, k + 1] = self.theta * self.r
+                # from previous timestep
+                a[k, k - 1 - self.nx] = (1-self.theta) * self.r
+                a[k, k - self.nx] = 1 - 2*(1-self.theta)*self.r
+                a[k, k + 1 - self.nx] = (1-self.theta) * self.r
+        return a
 
     def implicit_update_b(self, indx_t):
         """
@@ -314,15 +353,29 @@ class SolverHeatXT(object):
         Returns:
             b (1D array): vector of constants for implicit method (length of 2 n_x)
         """
-        # TODO: complete this method, ensure you return the updated b.
-        pass
+        # complete this method, ensure you return the updated b.
+        b = np.zeros([self.nx*2])
+        for k in range(self.nx*2):
+            # top half from prev iteration / IC
+            if k < self.nx:
+                b[k] = self.solution[k, indx_t-1]
+            elif (k==self.nx or k==2*self.nx-1):
+                # BCs
+                b[k] = self.solution[k-self.nx, indx_t]
+        return b
 
     def solve_implicit(self):
         """
         Solve the 1D heat equation using an implicit solution method.
         """
         # TODO: complete this method. Recall you only need to set A once, though b must be updated each time step.
-        pass
+        a = self.implicit_update_a()
+        for indx_t in range(1, self.nt):
+            b = self.implicit_update_b(indx_t)
+            sol = np.linalg.solve(a, b)
+            # Take bottom half of solution vector
+            self.solution[:,indx_t] = sol[self.nx:]
+
 
 
     def plot_solution(self, times=None, save_to_file=False, save_file_name='fig_HeatXT.png'):
@@ -335,4 +388,17 @@ class SolverHeatXT(object):
             save_file_name (string): name of figure to save if save_to_file is true.
         """
         # TODO: complete this method
-        pass
+        nplots = 4
+        fig, ax = plt.subplots(nplots, 1)
+
+        mult = np.floor(self.nt / (nplots-1))
+        for ind, time in enumerate(np.linspace(self.t[0], self.t[-1], nplots)):
+            ax[ind].plot(self.x, self.solution[:, round(ind*mult)])
+            ax[ind].set_title("Time = %.2f s" % time, x=0.5, y=0.6)
+            ax[ind].set_xlabel("x")
+            ax[ind].set_ylabel("Temperature")
+
+        fig.suptitle('Solution behaviour over time for heat system')
+        plt.show()
+
+
