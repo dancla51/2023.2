@@ -19,5 +19,9 @@ bc_y1 = {'type': 'dirichlet', 'function': lambda x, y: x * y - 1.}
 
 # create an object of SolverPoissonXY and then solve it
 solver1 = SolverPoissonXY(xlim, ylim, 2., bc_x0, bc_x1, bc_y0, bc_y1, poisson)
+solver1.solve()
+solver1.plot_solution()
 
-# TODO: your code below
+solver2 = SolverPoissonXY(xlim, ylim, 0.1, bc_x0, bc_x1, bc_y0, bc_y1, poisson)
+solver2.solve()
+solver2.plot_solution()
