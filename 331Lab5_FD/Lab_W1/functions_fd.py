@@ -391,14 +391,17 @@ class SolverHeatXT(object):
         nplots = 4
         fig, ax = plt.subplots(nplots, 1)
 
-        mult = np.floor(self.nt / (nplots-1))
+        mult = np.floor(self.nt / (nplots))
         for ind, time in enumerate(np.linspace(self.t[0], self.t[-1], nplots)):
             ax[ind].plot(self.x, self.solution[:, round(ind*mult)])
             ax[ind].set_title("Time = %.2f s" % time, x=0.5, y=0.6)
             ax[ind].set_xlabel("x")
             ax[ind].set_ylabel("Temperature")
 
-        fig.suptitle('Solution behaviour over time for heat system')
-        plt.show()
+        fig.suptitle('Solution behaviour over time for heat system ('+save_file_name+')')
+        if save_to_file:
+            plt.savefig(fname=save_file_name+".jpg")
+        else:
+            plt.show()
 
 
