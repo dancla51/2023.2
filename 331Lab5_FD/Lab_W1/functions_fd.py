@@ -1,4 +1,6 @@
 # import statements
+import random
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -223,6 +225,10 @@ class SolverPoissonXY(object):
         fig, ax = plt.subplots()
         contour = ax.contour(X, Y, Z, levels=20)
         ax.clabel(contour, fontsize=12)
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        ax.set_title("Poisson Equation Solution for given boundary conditions")
+        #plt.savefig("task1_delta="+str(round(self.dx,2))+".jpg")
         plt.show()
 
 
