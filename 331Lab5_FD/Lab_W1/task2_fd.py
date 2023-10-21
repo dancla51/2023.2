@@ -13,7 +13,7 @@ dx = 0.1
 dt = 0.001
 dt2 = 0.005
 
-alpha = 1
+alpha = 1.5
 theta = 0.5
 
 solver3 = SolverHeatXT(xlim, tlim, dx, dt, alpha, theta, bc_x0, bc_x1, ic_t0)
@@ -29,3 +29,36 @@ solver3.plot_solution(save_to_file=True, save_file_name="dt=0.001,implicit")
 
 solver4.solve_implicit()
 solver4.plot_solution(save_to_file=True, save_file_name="dt=0.005,implicit")
+
+
+# Part 3 - Solve 3 rods
+# Use implicit, dt=0.005
+
+# Silver rod
+alpha = 1.5
+silver = SolverHeatXT(xlim, tlim, dx, dt2, alpha, theta, bc_x0, bc_x1, ic_t0)
+silver.solve_implicit()
+if np.all(silver.solution[:, -1] >= 170):
+    print("The silver all reaches a temperature of at least 170 degrees in 4 seconds")
+else:
+    print("the silver does not")
+
+# Copper rod
+alpha = 1.25
+copper = SolverHeatXT(xlim, tlim, dx, dt2, alpha, theta, bc_x0, bc_x1, ic_t0)
+copper.solve_implicit()
+if np.all(copper.solution[:, -1] >= 170):
+    print("The copper all reaches a temperature of at least 170 degrees in 4 seconds")
+else:
+    print("the copper does not")
+
+# Aluminium rod
+alpha = 1
+aluminium = SolverHeatXT(xlim, tlim, dx, dt2, alpha, theta, bc_x0, bc_x1, ic_t0)
+aluminium.solve_implicit()
+if np.all(aluminium.solution[:, -1] >= 170):
+    print("The aluminium all reaches a temperature of at least 170 degrees in 4 seconds")
+else:
+    print("the aluminium does not")
+
+
